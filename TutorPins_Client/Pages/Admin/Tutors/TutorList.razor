@@ -1,0 +1,81 @@
+﻿@page "/Tutors"
+@inject IJSRuntime JSRuntime
+@inject ITutorService tutorService
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Tutors
+        </h4>
+    </div>
+    <div class="col-3 offset-1">
+        <NavLink href="tutors/create" class="btn btn-info form-control">
+            Add New
+        </NavLink>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th> Name</th>
+                    <th> Email</th>
+                    <th> Contact No</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Tutors.Any())
+                {
+                    foreach (var c in Tutors)
+                    {
+                        <tr>
+                            <td>
+                                @c.TutorName
+                            </td>
+                            <td>
+                                @c.TutorEmail
+                            </td>
+                            <td>
+                                @c.TutorPhoneNo
+                            </td>
+                            <td>
+                                @c.TutorGender
+                            </td>
+                            <td>
+                                @c.TutorCategory
+                            </td>
+                            <td>
+                                @c.TutorRating
+                            </td>                           
+                            <td>
+                                @c.TutorStatus
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-success">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code {
+    private IEnumerable<TutorDto> Tutors { get; set; } = new List<TutorDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(5000);
+        await LoadTutors();
+
+    }
+    private async Task LoadTutors()
+    {
+        Tutors = await tutorService.GetAllTutors();
+    }
+}

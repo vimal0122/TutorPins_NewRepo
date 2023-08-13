@@ -1,0 +1,44 @@
+﻿@page "/coursecategory/create"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject ICourseCategoryService courseCategoryService
+
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info mb-3 ml-3">@Title Course Category</h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-2">
+                    <label for="CategoryName">Category Name</label>
+                    <input form="CategoryName" class="form-control" @bind="@CourseCategoryModel.CategoryName" />
+                </div>
+                <div class="form-group mt-2">                    
+                    <input type="checkbox" class="form-check-input" @bind="@CourseCategoryModel.IsActive" />
+                    <label for="IsActive">Active</label>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private CourseCategoryDto CourseCategoryModel { get; set; } = new CourseCategoryDto();
+    private string Title { get; set; } = "Create";
+    protected async Task Save()
+    {
+        var response = await courseCategoryService.CreateCourseCategory(CourseCategoryModel);
+        if(response)
+        {
+            NavigationManager.NavigateTo("coursecategories");
+        }
+    }
+    void Back()
+    {
+        NavigationManager.NavigateTo("coursecategories");
+    }
+}

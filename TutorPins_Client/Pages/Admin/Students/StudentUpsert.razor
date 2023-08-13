@@ -1,0 +1,79 @@
+﻿@page "/students/create"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject IStudentService studentService
+
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info mb-3 ml-3">@Title Student </h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-2">
+                    <label for="StudentName">Student Name</label>
+                    <input form="StudentName" class="form-control" @bind="@StudentModel.StudentName" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentEmail">Student Email</label>
+                    <input form="StudentEmail" class="form-control" @bind="@StudentModel.StudentEmail" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentName">Student Phone No</label>
+                    <input form="StudentName" class="form-control" @bind="@StudentModel.StudentPhoneNo" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentEmail">Parent Name</label>
+                    <input form="StudentEmail" class="form-control" @bind="@StudentModel.ParentName" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentName">Relationship</label>
+                    <input form="StudentName" class="form-control" @bind="@StudentModel.ParentRelation" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentEmail">Parent Email</label>
+                    <input form="StudentEmail" class="form-control" @bind="@StudentModel.ParentEmail" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentName">Parent Phone No</label>
+                    <input form="StudentName" class="form-control" @bind="@StudentModel.ParentPhoneNo" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="StudentEmail">Remarks</label>
+                    <input form="StudentEmail" class="form-control" @bind="@StudentModel.AdminRemarks" />
+                </div>
+                <div class="form-group mt-2">
+                    <div class="col-md-4">
+                        <label for="StudentStatus">Status</label>
+                        <select class="form-control" @bind="@StudentModel.StudentStatus">
+                            <option value="">-- Select Status --</option>                            
+                                <option value="active">Active</option>
+                            <option value="inactive">Active</option>
+                            <option value="blacklist">BlackListed</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string Title { get; set; } = "Create";
+    private StudentDto StudentModel { get; set; } = new StudentDto();
+    protected async Task Save()
+    {
+        var response = await studentService.CreateStudent(StudentModel);
+        if (response)
+        {
+            NavigationManager.NavigateTo("students");
+        }
+    }
+    void Back()
+    {
+        NavigationManager.NavigateTo("students");
+    }
+}

@@ -1,0 +1,88 @@
+﻿@page "/students"
+@inject IJSRuntime JSRuntime
+@inject IStudentService studentService
+
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Students
+        </h4>
+    </div>
+    <div class="col-3 offset-1">
+        <NavLink href="students/create" class="btn btn-info form-control">
+            Add New
+        </NavLink>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th> Name</th>
+                    <th> Email</th>
+                    <th> Contact No</th>
+                    <th>Parent Name</th>
+                    <th>Parent Email</th>
+                    <th>Parent ContactNo</th>
+                    <th>Relationship</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Students.Any())
+                {
+                    foreach (var c in Students)
+                    {
+                        <tr>
+                            <td>
+                                @c.StudentName
+                            </td>
+                            <td>
+                                @c.StudentEmail
+                            </td>
+                            <td>
+                                @c.StudentPhoneNo
+
+                            </td>
+                            <td>
+                                @c.ParentName
+                            </td>
+                            <td>
+                                @c.ParentEmail
+                            </td>
+                            <td>
+                                @c.ParentPhoneNo
+
+                            </td>
+                            <td>
+                                @c.ParentRelation
+                            </td>
+                            <td>
+                                @c.StudentStatus
+
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-success">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code {
+    private IEnumerable<StudentDto> Students { get; set; } = new List<StudentDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(5000);
+        await LoadStudents();
+       
+    }
+    private async Task LoadStudents()
+    {
+        Students = await studentService.GetAllStudents();
+    }
+}

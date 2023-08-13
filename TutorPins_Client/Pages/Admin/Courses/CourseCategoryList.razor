@@ -1,0 +1,86 @@
+﻿@page "/coursecategories"
+@inject IJSRuntime jsRuntime
+@inject ICourseCategoryService courseCategoryService
+
+
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Course Categories
+        </h4>
+    </div>
+    <div class="col-3 offset-1">
+        <NavLink href="coursecategory/create" class="btn btn-info form-control">
+            Add New 
+        </NavLink>
+    </div>
+</div>
+@if (!CourseCategories.Any())
+{
+    <div class="spinner"></div>
+}
+else
+{
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    
+                    <th>Category Name</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @if (CourseCategories.Any())
+                {
+                    foreach (var c in CourseCategories)
+                    {
+                        <tr>
+                            <td>
+                                @c.CategoryName
+                            </td>
+                            
+                            <td>
+                                @if (c.IsActive)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>Yes</span>
+                                }
+
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-success">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+@code {
+    private IEnumerable<CourseCategoryDto>? CourseCategories { get; set; } = new List<CourseCategoryDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(5000);
+        await LoadCourseCategories();
+        /*
+        List<CourseDto> lstCourse = new List<CourseDto>();
+        lstCourse.Add(new CourseDto { Id = 1, CourseCategory = "Primary", CourseName = "Pre School", IsActive = true });
+        lstCourse.Add(new CourseDto { Id = 1, CourseCategory = "Secondary", CourseName = "Secondary 1", IsActive = true });
+        lstCourse.Add(new CourseDto { Id = 1, CourseCategory = "Junior College", CourseName = "JC1", IsActive = true });
+        Courses = lstCourse;
+        */
+    }
+    private async Task LoadCourseCategories()
+    {
+        CourseCategories = await courseCategoryService.GetCourseCategories();
+    }
+}

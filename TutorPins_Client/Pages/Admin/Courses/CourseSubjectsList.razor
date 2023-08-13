@@ -1,0 +1,75 @@
+﻿@page "/coursesubjectlist"
+@inject IJSRuntime JSRuntime
+@inject ICourseSubjectService courseSubjectService
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Course Subjects
+        </h4>
+    </div>
+    <div class="col-3 offset-1">
+        <NavLink href="subjects/create" class="btn btn-info form-control">
+            Add New
+        </NavLink>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Course Category</th>
+                    <th>Course Name</th>
+                    <th>Subject</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (CourseSubjects.Any())
+                {
+                    foreach (var c in CourseSubjects)
+                    {
+                        <tr>
+                            <td>
+                                @c.Course.CourseCategory.CategoryName
+                            </td>
+                            <td>
+                                @c.Course.CourseName
+                            </td>
+                            <td>
+                                @c.SubjectName
+                            </td>
+                            <td>
+                                @if (c.IsActive)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>Yes</span>
+                                }
+
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-success">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code {
+    private IEnumerable<CourseSubjectDto> CourseSubjects { get; set; } = new List<CourseSubjectDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(5000);
+        await LoadCourseSubjects();        
+    }
+    private async Task LoadCourseSubjects()
+    {
+        CourseSubjects = await courseSubjectService.GetCourseSubjects();
+    }
+}

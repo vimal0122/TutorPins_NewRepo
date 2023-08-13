@@ -1,0 +1,92 @@
+﻿@page "/subjects/create"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject ICourseCategoryService courseCategoryService
+@inject ICourseService courseService
+@inject ICourseSubjectService courseSubjectService
+
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info mb-3 ml-3">@Title Course Subject </h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-2">
+                    <div class="col-md-4">
+                        <label for="CourseName">Course Category</label>
+                        <select class="form-control" @onchange="CourseCategoryClicked">
+                            <option value="">-- Select Category --</option>
+                            @foreach (var ct in courseCategoryList)
+                            {
+                                <option value="@ct.Id">@ct.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <div class="col-md-4">
+                        <label for="CourseName">Course</label>
+                        <select class="form-control" @bind="@CourseSubjectModel.CourseId">
+                            <option value="">-- Select Course --</option>
+                            @foreach (var ct in courseList)
+                            {
+                                <option value="@ct.Id">@ct.CourseName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="CourseName">Subject Name</label>
+                    <input form="CourseName" class="form-control" @bind="@CourseSubjectModel.SubjectName" />
+                </div>
+                <div class="form-group mt-2">
+                    <input type="checkbox" class="form-check-input" @bind="@CourseSubjectModel.IsActive" />
+                    <label for="IsActive">Active</label>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    private CourseCategoryDto CourseCategoryModel { get; set; } = new CourseCategoryDto();
+    List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
+    List<CourseDto> courseList = new List<CourseDto>();
+
+    private CourseSubjectDto CourseSubjectModel { get; set; } = new CourseSubjectDto();
+
+    private string Title { get; set; } = "Create";
+    string courseCategoryId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+        
+        courseCategoryList = courseCategories.ToList();
+
+    }
+    protected async Task Save()
+    {
+        var response = await courseSubjectService.CreateCourseSubject(CourseSubjectModel);
+        if (response)
+        {
+            NavigationManager.NavigateTo("coursesubjectlist");
+        }
+    }
+    void Back()
+    {
+        NavigationManager.NavigateTo("coursesubjectlist");
+    }
+    protected async void CourseCategoryClicked(ChangeEventArgs courseCategoryEvent)
+    {
+        courseList.Clear();
+
+        courseCategoryId = courseCategoryEvent.Value.ToString();
+        IEnumerable<CourseDto> courses = await courseService.GetCoursesByCategory(courseCategoryId);
+        courseList = courses.ToList();
+        
+        this.StateHasChanged();
+    }
+}

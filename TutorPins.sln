@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorPins_Client", "TutorPins_Client\TutorPins_Client.csproj", "{D74FE602-4F43-4439-A31E-1950F8212A2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{F3D41CE2-5EAE-49F0-85A7-BC411B315456}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{40DC7AE7-9BDE-4D25-9D1F-23A47C64C5F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{E25F3561-3944-4A88-A47C-9F4A1D7C6B0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{83EF20A7-8C03-4E98-8155-D467BD5B5B25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorPins_Api", "TutorPins_Api\TutorPins_Api.csproj", "{3D629B42-68C5-4327-B863-E0C959B93A7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D74FE602-4F43-4439-A31E-1950F8212A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D74FE602-4F43-4439-A31E-1950F8212A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D74FE602-4F43-4439-A31E-1950F8212A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D74FE602-4F43-4439-A31E-1950F8212A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D41CE2-5EAE-49F0-85A7-BC411B315456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D41CE2-5EAE-49F0-85A7-BC411B315456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D41CE2-5EAE-49F0-85A7-BC411B315456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D41CE2-5EAE-49F0-85A7-BC411B315456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40DC7AE7-9BDE-4D25-9D1F-23A47C64C5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40DC7AE7-9BDE-4D25-9D1F-23A47C64C5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40DC7AE7-9BDE-4D25-9D1F-23A47C64C5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40DC7AE7-9BDE-4D25-9D1F-23A47C64C5F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25F3561-3944-4A88-A47C-9F4A1D7C6B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25F3561-3944-4A88-A47C-9F4A1D7C6B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25F3561-3944-4A88-A47C-9F4A1D7C6B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25F3561-3944-4A88-A47C-9F4A1D7C6B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83EF20A7-8C03-4E98-8155-D467BD5B5B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EF20A7-8C03-4E98-8155-D467BD5B5B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EF20A7-8C03-4E98-8155-D467BD5B5B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EF20A7-8C03-4E98-8155-D467BD5B5B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D629B42-68C5-4327-B863-E0C959B93A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D629B42-68C5-4327-B863-E0C959B93A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D629B42-68C5-4327-B863-E0C959B93A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D629B42-68C5-4327-B863-E0C959B93A7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF470571-E5C4-4169-8095-658E5DCC1B2F}
+	EndGlobalSection
+EndGlobal

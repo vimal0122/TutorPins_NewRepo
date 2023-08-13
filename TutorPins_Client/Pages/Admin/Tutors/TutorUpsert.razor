@@ -1,0 +1,458 @@
+﻿@page "/tutors/create"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject ITutorService tutorService
+@inject ICourseCategoryService courseCategoryService
+@inject ICourseService courseService
+@inject ICourseSubjectService courseSubjectService
+
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info mb-3 ml-3">@Title Tutor - In Progress</h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="cold-md-10 mt-2" style="background-color:beige;">Personal Details</div>
+            <div class="card-body">                
+                <div class="form-group mt-2">
+                    <label for="TutorName"> Name</label>
+                    <input form="TutorName" class="form-control" @bind="@TutorModel.TutorName" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="TutorEmail"> Email</label>
+                    <input form="TutorEmail" class="form-control" @bind="@TutorModel.TutorEmail" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="TutorPhoneNo"> Phone No</label>
+                    <input form="TutorPhoneNo" class="form-control" @bind="@TutorModel.TutorPhoneNo" />
+                </div>
+                 <div class="form-group mt-2">
+                    <label for="TutorPhoneNo">Gender</label>
+                    <input form="TutorPhoneNo" class="form-control" @bind="@TutorModel.TutorPhoneNo" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="TutorDOB">Date of Birth</label>
+                    <input form="TutorDOB" class="form-control" @bind="@TutorModel.TutorDOB" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="TutorRace">Race</label>
+                    <input form="TutorRace" class="form-control" @bind="@TutorModel.TutorRace" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="TutorCategory">Category</label>
+                    <input form="TutorCategory" class="form-control" @bind="@TutorModel.TutorCategory" />
+                </div>
+                <div class="form-group mt-2">
+                    <label for="TutorImage">TutorImage</label>
+                    <input type="file" form="TutorImage" class="form-control" @bind="@TutorModel.TutorImage" />
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="cold-md-10 mt-2" style="background-color:beige;">Tutor Qualification</div>
+            <div class="card-body">
+                <div class="container mt-2 ">
+                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Qualification</button>
+                </div>
+                <table id="subdetails" class="table table-sm table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Subjects</th>
+                            <th>Year of Completion</th>
+                            <th>Grade</th>                            
+                            <th>View Certificate</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @*@foreach (var listitem in StoreSubjectDetails)
+                        {*@
+                            <tr>
+                                <td>Diploma</td>
+                                <td>Physics, Maths</td>
+                                <td>2020</td>
+                                <td>I</td>
+                                <td><img src="" /></td>
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-outline-secondary"  value="delete" />
+                                </td>
+                            </tr>
+
+                        @*}*@
+                    </tbody>
+                </table>
+                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Subject</h5>
+                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Category</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="CourseCategoryClicked">
+                                        <option value="">-- Select Category --</option>
+                                        @foreach (var ct in courseCategoryList)
+                                        {
+                                            <option value="@ct.Id">@ct.CategoryName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Level</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="CourseClicked">
+                                        <option value="">-- Select Level --</option>
+                                        @foreach (var ct in courseList)
+                                        {
+                                            <option value="@ct.Id">@ct.CourseName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Subject</div>
+                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="SubjectClicked">
+                                        <option value="">-- Select Subject --</option>
+                                        @foreach (var ct in courseSubjectList)
+                                        {
+                                            <option value="@ct.Id">@ct.SubjectName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Hourly Rate</div>
+                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="cold-md-10 mt-2" style="background-color:beige;">Subject Details</div>
+            <div class="card-body">
+                <div class="container mt-2 ">
+                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Subject</button>
+                </div>
+                <table id="subdetails" class="table table-sm table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Level Name</th>
+                            <th>Subject Name</th>
+                            <th>Hourly Rate</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var listitem in StoreSubjectDetails)
+                        {
+                            <tr>
+                                <td>@listitem.CategoryName</td>
+                                <td>@listitem.CourseName</td>
+                                <td>@listitem.SubjectName</td>
+                                <td>@listitem.TutorRate</td>
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-outline-secondary" @onclick="() => deleteSubject(listitem)" value="delete" />
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Subject</h5>
+                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Category</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
+                                    <select class="form-control"  @onchange="CourseCategoryClicked">
+                                        <option value="">-- Select Category --</option>
+                                        @foreach (var ct in courseCategoryList)
+                                        {
+                                            <option value="@ct.Id">@ct.CategoryName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Level</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="CourseClicked">
+                                        <option value="">-- Select Level --</option>
+                                        @foreach (var ct in courseList)
+                                        {
+                                            <option value="@ct.Id">@ct.CourseName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Subject</div>
+                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="SubjectClicked" >
+                                        <option value="">-- Select Subject --</option>
+                                        @foreach (var ct in courseSubjectList)
+                                        {
+                                            <option value="@ct.Id">@ct.SubjectName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Hourly Rate</div>
+                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="cold-md-10 mt-2" style="background-color:beige;">Prefered Locations</div>
+            <div class="card-body">
+                <div class="container mt-2 ">
+                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Location</button>
+                </div>
+                <table id="subdetails" class="table table-sm table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>Name</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @*@foreach (var listitem in StoreSubjectDetails)
+                        {*@
+                            <tr>
+                                <td>Central Region</td>                                
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-outline-secondary"  value="delete" />
+                                </td>
+                            </tr>
+
+                        @*}*@
+                    </tbody>
+                </table>
+                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Subject</h5>
+                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Category</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="CourseCategoryClicked">
+                                        <option value="">-- Select Category --</option>
+                                        @foreach (var ct in courseCategoryList)
+                                        {
+                                            <option value="@ct.Id">@ct.CategoryName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Level</div>
+                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="CourseClicked">
+                                        <option value="">-- Select Level --</option>
+                                        @foreach (var ct in courseList)
+                                        {
+                                            <option value="@ct.Id">@ct.CourseName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Subject</div>
+                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
+                                    <select class="form-control" @onchange="SubjectClicked">
+                                        <option value="">-- Select Subject --</option>
+                                        @foreach (var ct in courseSubjectList)
+                                        {
+                                            <option value="@ct.Id">@ct.SubjectName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-3">Hourly Rate</div>
+                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-2">
+                    <div class="col-md-4">
+                        <label for="TutorStatus">Status</label>
+                        <select class="form-control" @bind="@TutorModel.TutorStatus">
+                            <option value="">-- Select Status --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Active</option>
+                            <option value="blacklist">BlackListed</option>
+
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group mt-2">
+                    <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+@code {
+    private string Title { get; set; } = "Create";
+    private TutorDto TutorModel { get; set; } = new TutorDto();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+
+    private string CategoryId = string.Empty;
+    private string LevelId = string.Empty;
+    private string SubjectId= string.Empty;
+
+    private string CategoryName = string.Empty;
+    private string LevelName = string.Empty;
+    private string SubjectName = string.Empty;
+    private string HourlyRate = string.Empty;
+    string courseCategoryId { get; set; }
+
+    public List<TutorSubjectDto> StoreSubjectDetails = new List<TutorSubjectDto>();
+    TutorSubjectDto tutorSubject;
+    List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
+    List<CourseDto> courseList = new List<CourseDto>();
+    List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
+    int i = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+        courseCategoryList = courseCategories.ToList();
+    }
+    public void SaveSubjectData()
+    {
+        try
+        {
+            var tutorSubject = new TutorSubjectDto();
+            //tutorSubject.Id = ++i;
+            tutorSubject.CategoryName = CategoryName;
+            tutorSubject.CourseName = LevelName;
+            tutorSubject.SubjectName = SubjectName;
+            tutorSubject.SubjectId = Convert.ToInt32(this.SubjectId);
+            tutorSubject.TutorRate = HourlyRate;
+
+            StoreSubjectDetails.Add(tutorSubject);
+        }
+        catch(Exception ex)
+        {
+
+        }
+
+        CategoryId = LevelId = SubjectId = HourlyRate = CategoryName = LevelName = SubjectName=string.Empty;
+    }
+    protected async Task Save()
+    {
+        TutorModel.TutorSubjects = StoreSubjectDetails;
+        var response = await tutorService.CreateTutor(TutorModel);
+        if (response)
+        {
+            NavigationManager.NavigateTo("tutors");
+        }
+    }
+    void Back()
+    {
+        NavigationManager.NavigateTo("tutors");
+    }
+    public void deleteSubject(TutorSubjectDto deleteinfo)
+    {
+        StoreSubjectDetails.Remove(deleteinfo);
+    }
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+    protected async void CourseCategoryClicked(ChangeEventArgs courseCategoryEvent)
+    {
+        courseList.Clear();
+
+        CategoryId = courseCategoryEvent.Value.ToString();
+        IEnumerable<CourseDto> courses = await courseService.GetCoursesByCategory(CategoryId);
+        CategoryName = courses.FirstOrDefault().CourseCategory.CategoryName;
+        courseList = courses.ToList();
+
+        this.StateHasChanged();
+    }
+    protected async void CourseClicked(ChangeEventArgs courseCategoryEvent)
+    {
+        courseSubjectList.Clear();
+
+        LevelId = courseCategoryEvent.Value.ToString();
+        IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetSubjectsByCourse(Convert.ToInt32(LevelId));
+        LevelName = courseSubjects.FirstOrDefault().Course.CourseName;
+        courseSubjectList = courseSubjects.ToList();
+
+        this.StateHasChanged();
+    }
+    protected async void SubjectClicked(ChangeEventArgs courseCategoryEvent)
+    {
+        await Task.Delay(1);
+        SubjectId = courseCategoryEvent.Value.ToString();
+        SubjectName = courseSubjectList.Where(t=>t.Id==Convert.ToInt32(SubjectId)).FirstOrDefault().SubjectName;       
+        this.StateHasChanged();
+    }
+}
