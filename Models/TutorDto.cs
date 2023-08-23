@@ -13,7 +13,7 @@ namespace Models
         public string TutorEmail { get; set; }
         public string TutorPhoneNo { get; set; }
         public string TutorGender { get; set; }
-        public string TutorDOB { get; set; }
+        public DateTime? TutorDOB { get; set; }
         public string TutorRace { get; set; }
         public string TutorCategory { get; set; }
         public string TutorRate { get; set; }
@@ -29,5 +29,6 @@ namespace Models
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<TutorSubjectDto> TutorSubjects { get; set; }
+        public virtual ICollection<TutorLocationDto> TutorLocations { get; set; }
     }
 }

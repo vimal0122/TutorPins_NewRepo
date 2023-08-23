@@ -15,6 +15,11 @@ namespace DataAccess.Data
         public DbSet<CourseSubject> CourseSubjects { get; set;}
         public DbSet<Student> Students { get; set; }
         public DbSet<Tutor> Tutors { get; set; }
-
+        public DbSet<TutorSubject> TutorSubjects { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<OtherLocation> OtherLocations { get; set; }
+        public DbSet<TutorLocation> TutorLocations { get; set; }
+        public DbSet<Qualification> Qualifications { get; set; }
+        public DbSet<TutorQualification> TutorQualifications { get; set; }
     }
 }

@@ -20,6 +20,6 @@ namespace Models
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public CourseDto Course { get; set; }
-        public virtual ICollection<TutorSubjectDto> TutorSubjects { get; set; }
+        public virtual ICollection<TutorSubjectDto> TutorSubject { get; set; }
     }
 }

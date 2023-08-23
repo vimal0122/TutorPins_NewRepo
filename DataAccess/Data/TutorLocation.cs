@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models
+namespace DataAccess.Data
 {
-    public class TutorSubjectDto
+    public class TutorLocation
     {
+        [Key]
         public int Id { get; set; }
-        
+        [ForeignKey("Tutor")]
         public int TutorId { get; set; }
-        
-        public int SubjectId { get; set; }
-        public string TutorRate { get; set; }
+        [ForeignKey("Location")]
+        public int LocationId { get; set; }
+        public string OtherLocation { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
-        public string CategoryName { get; set; }
-        public string CourseName { get; set; }
-        public string SubjectName { get; set; }
-        public virtual TutorDto Tutors { get; set; }
-        public virtual CourseSubjectDto CourseSubject { get; set; }
+        public virtual Tutor Tutor { get; set; }
+        public virtual Location Location { get; set; }
     }
 }

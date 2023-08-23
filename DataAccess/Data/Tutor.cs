@@ -15,7 +15,7 @@ namespace DataAccess.Data
 		public string TutorEmail	{get;set;}
 		public string TutorPhoneNo	{get;set;}
 		public string TutorGender	{get;set;}
-		public string TutorDOB		{get;set;}
+		public DateTime? TutorDOB		{get;set;}
 		public string TutorRace		{get;set;}
 		public string TutorCategory	{get;set;}
 		public string TutorRate		{get;set;}
@@ -31,5 +31,7 @@ namespace DataAccess.Data
 		public string UpdatedBy				{get;set;}
 		public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<TutorSubject> TutorSubjects { get; set; }
+        public virtual ICollection<TutorLocation> TutorLocations { get; set; }
+        public virtual ICollection<TutorQualification> TutorQualifications { get; set; }
     }
 }

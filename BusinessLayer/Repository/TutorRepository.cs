@@ -19,11 +19,12 @@ namespace BusinessLayer.Repository
             _db = db;
             _mapper = mapper;
         }
-        public async Task<TutorDto> CreateTutor(TutorDto studentDto)
+        public async Task<TutorDto> CreateTutor(TutorDto tutorDto)
         {
             try
             {
-                Tutor tutor = _mapper.Map<TutorDto, Tutor>(studentDto);
+                Tutor tutor = _mapper.Map<TutorDto, Tutor>(tutorDto);
+                
                 tutor.CreatedDate = DateTime.Now;
                 tutor.CreatedBy = "1";
                 var addedTutor = await _db.Tutors.AddAsync(tutor);
@@ -52,7 +53,7 @@ namespace BusinessLayer.Repository
             }
         }
 
-        public Task<TutorDto> GetTutor(int studentId)
+        public Task<TutorDto> GetTutor(int tutorId)
         {
             throw new NotImplementedException();
         }
