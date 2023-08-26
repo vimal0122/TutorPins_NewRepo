@@ -8,5 +8,7 @@ namespace TutorPins_Client.Service.IService
         public Task<bool> CreateCourseCategory(CourseCategoryDto courseCategoryDto);
         public Task<CourseCategoryDto> UpdateCourseCategory(int courseCategoryId, CourseCategoryDto courseCategoryDto);
         public Task<CourseCategoryDto> GetCourseCategory(int courseCategoryId);
+        public Task<IEnumerable<LocationDto>> GetAllLocations();
+        public Task<IEnumerable<QualificationDto>> GetAllQualifications();
     }
 }

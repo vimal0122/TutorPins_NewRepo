@@ -13,5 +13,7 @@ namespace BusinessLayer.Repository.IRepository
         public Task<CourseCategoryDto> UpdateCourseCategory(int courseCategoryId, CourseCategoryDto courseCategoryDto);
         public Task<CourseCategoryDto> GetCourseCategory(int courseCategoryId);
         public Task<IEnumerable<CourseCategoryDto>> GetAllCourseCategories();
+        public Task<IEnumerable<LocationDto>> GetAllLocations();
+        public Task<IEnumerable<QualificationDto>> GetAllQualifications();
     }
 }

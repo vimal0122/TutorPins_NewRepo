@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Repository.IRepository;
+﻿using BusinessLayer.Repository;
+using BusinessLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -33,6 +34,20 @@ namespace TutorPins_Api.Controllers
         public async Task<CourseCategoryDto> Get(int id)
         {
             return await _courseCategoryRepository.GetCourseCategory(id);
+        }
+        [HttpGet]
+        [Route("GetLocations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var allLocations = await _courseCategoryRepository.GetAllLocations();
+            return Ok(allLocations);
+        }
+        [HttpGet]
+        [Route("GetQualifications")]
+        public async Task<IActionResult> GetQualifications()
+        {
+            var allLocations = await _courseCategoryRepository.GetAllQualifications();
+            return Ok(allLocations);
         }
     }
 }

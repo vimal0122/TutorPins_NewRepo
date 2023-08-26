@@ -38,5 +38,19 @@ namespace TutorPins_Client.Service
         {
             throw new NotImplementedException();
         }
+        public async Task<IEnumerable<LocationDto>> GetAllLocations()
+        {
+            var response = await _client.GetAsync($"api/coursecategory/GetLocations");
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<IEnumerable<LocationDto>>(content);
+            return data;
+        }
+        public async Task<IEnumerable<QualificationDto>> GetAllQualifications()
+        {
+            var response = await _client.GetAsync($"api/coursecategory/GetQualifications");
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<IEnumerable<QualificationDto>>(content);
+            return data;
+        }
     }
 }

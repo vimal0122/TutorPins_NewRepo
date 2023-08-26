@@ -5,6 +5,7 @@
 @inject ICourseCategoryService courseCategoryService
 @inject ICourseService courseService
 @inject ICourseSubjectService courseSubjectService
+@inject ILocationService locationService
 
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info mb-3 ml-3">@Title Tutor - In Progress</h3>
@@ -25,8 +26,8 @@
                     <input form="TutorPhoneNo" class="form-control" @bind="@TutorModel.TutorPhoneNo" />
                 </div>
                  <div class="form-group mt-2">
-                    <label for="TutorPhoneNo">Gender</label>
-                    <input form="TutorPhoneNo" class="form-control" @bind="@TutorModel.TutorPhoneNo" />
+                    <label for="TutorGender">Gender</label>
+                    <input form="TutorGender" class="form-control" @bind="@TutorModel.TutorGender" />
                 </div>
                 <div class="form-group mt-2">
                     <label for="TutorDOB">Date of Birth</label>
@@ -82,61 +83,7 @@
                         @*}*@
                     </tbody>
                 </table>
-                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Subject</h5>
-                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Category</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="CourseCategoryClicked">
-                                        <option value="">-- Select Category --</option>
-                                        @foreach (var ct in courseCategoryList)
-                                        {
-                                            <option value="@ct.Id">@ct.CategoryName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Level</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="CourseClicked">
-                                        <option value="">-- Select Level --</option>
-                                        @foreach (var ct in courseList)
-                                        {
-                                            <option value="@ct.Id">@ct.CourseName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Subject</div>
-                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="SubjectClicked">
-                                        <option value="">-- Select Subject --</option>
-                                        @foreach (var ct in courseSubjectList)
-                                        {
-                                            <option value="@ct.Id">@ct.SubjectName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Hourly Rate</div>
-                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         </div>
@@ -173,61 +120,7 @@
                         }
                     </tbody>
                 </table>
-                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Subject</h5>
-                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Category</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
-                                    <select class="form-control"  @onchange="CourseCategoryClicked">
-                                        <option value="">-- Select Category --</option>
-                                        @foreach (var ct in courseCategoryList)
-                                        {
-                                            <option value="@ct.Id">@ct.CategoryName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Level</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="CourseClicked">
-                                        <option value="">-- Select Level --</option>
-                                        @foreach (var ct in courseList)
-                                        {
-                                            <option value="@ct.Id">@ct.CourseName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Subject</div>
-                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="SubjectClicked" >
-                                        <option value="">-- Select Subject --</option>
-                                        @foreach (var ct in courseSubjectList)
-                                        {
-                                            <option value="@ct.Id">@ct.SubjectName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Hourly Rate</div>
-                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         </div>
@@ -281,18 +174,21 @@
                                 <div class="row mb-3">
                                     <div class="col-lg-3">Level</div>
                                     @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="CourseClicked">
+                                    
+                                    <select class="form-control" multiple @onchange="CourseClicked">
                                         <option value="">-- Select Level --</option>
                                         @foreach (var ct in courseList)
                                         {
                                             <option value="@ct.Id">@ct.CourseName</option>
+                                            
+                                            
                                         }
                                     </select>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-lg-3">Subject</div>
                                     @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="SubjectClicked">
+                                    <select class="form-control" multiple @onchange="SubjectClicked">
                                         <option value="">-- Select Subject --</option>
                                         @foreach (var ct in courseSubjectList)
                                         {
@@ -363,28 +259,43 @@
     public List<TutorSubjectDto> StoreSubjectDetails = new List<TutorSubjectDto>();
     TutorSubjectDto tutorSubject;
     List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
+    List<LocationDto> locationList = new List<LocationDto>();
     List<CourseDto> courseList = new List<CourseDto>();
     List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
     int i = 0;
+    public List<string> selectedLevels = new List<string>();
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(2000);
         IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
         courseCategoryList = courseCategories.ToList();
+        IEnumerable<LocationDto> locations = await courseCategoryService.GetAllLocations();
+        locationList = locations.ToList();
+    }
+    public void CheckboxClicked(ChangeEventArgs e)
+    {
+        selectedLevels.Add(e.Value as string);
     }
     public void SaveSubjectData()
     {
         try
         {
-            var tutorSubject = new TutorSubjectDto();
+            TutorSubjectDto tutorSubject = new TutorSubjectDto();
             //tutorSubject.Id = ++i;
-            tutorSubject.CategoryName = CategoryName;
-            tutorSubject.CourseName = LevelName;
-            tutorSubject.SubjectName = SubjectName;
-            tutorSubject.SubjectId = Convert.ToInt32(this.SubjectId);
-            tutorSubject.TutorRate = HourlyRate;
+            string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            
+            foreach (string s in subjects)
+            {
+                tutorSubject = new TutorSubjectDto();
+                tutorSubject.CategoryName = CategoryName;
+                var t = courseSubjectList.Where(t => t.Id == Convert.ToInt32(s)).FirstOrDefault();
+                tutorSubject.CourseName = t.Course.CourseName;
+                tutorSubject.SubjectName = t.SubjectName;
+                tutorSubject.SubjectId = Convert.ToInt32(t.Id);
+                tutorSubject.TutorRate = HourlyRate;
 
-            StoreSubjectDetails.Add(tutorSubject);
+                StoreSubjectDetails.Add(tutorSubject);
+            }
         }
         catch(Exception ex)
         {
@@ -441,18 +352,24 @@
     {
         courseSubjectList.Clear();
 
-        LevelId = courseCategoryEvent.Value.ToString();
-        IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetSubjectsByCourse(Convert.ToInt32(LevelId));
+        var obj = courseCategoryEvent.Value;
+        string[] arr = Array.ConvertAll((object[])obj, Convert.ToString);
+        var LevelId = string.Join(",", arr);
+        IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetSubjectsByCourse(LevelId);
         LevelName = courseSubjects.FirstOrDefault().Course.CourseName;
         courseSubjectList = courseSubjects.ToList();
+        
 
         this.StateHasChanged();
     }
     protected async void SubjectClicked(ChangeEventArgs courseCategoryEvent)
     {
         await Task.Delay(1);
-        SubjectId = courseCategoryEvent.Value.ToString();
-        SubjectName = courseSubjectList.Where(t=>t.Id==Convert.ToInt32(SubjectId)).FirstOrDefault().SubjectName;       
+        var obj = courseCategoryEvent.Value;
+        string[] arr = Array.ConvertAll((object[])obj, Convert.ToString);
+        SubjectId = string.Join(",", arr);
+        //SubjectId = courseCategoryEvent.Value.ToString();
+        //SubjectName = courseSubjectList.Where(t=>t.Id==Convert.ToInt32(SubjectId)).FirstOrDefault().SubjectName;       
         this.StateHasChanged();
     }
 }

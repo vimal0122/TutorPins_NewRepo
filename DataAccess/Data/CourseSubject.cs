@@ -17,9 +17,9 @@ namespace DataAccess.Data
         [ForeignKey("Course")]
         public int CourseId { get; set; }
         public bool IsActive { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual Course Course { get; set; }
         public virtual ICollection<TutorSubject> TutorSubject { get; set; }

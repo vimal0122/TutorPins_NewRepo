@@ -81,5 +81,31 @@ namespace BusinessLayer.Repository
                 return null;
             }
         }
+        public async Task<IEnumerable<LocationDto>> GetAllLocations()
+        {
+            try
+            {
+                await Task.Delay(1);
+                IEnumerable<LocationDto> courseDtos = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationDto>>(_db.Locations);
+                return courseDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<IEnumerable<QualificationDto>> GetAllQualifications()
+        {
+            try
+            {
+                await Task.Delay(1);
+                IEnumerable<QualificationDto> objectDtos = _mapper.Map<IEnumerable<Qualification>, IEnumerable<QualificationDto>>(_db.Qualifications);
+                return objectDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

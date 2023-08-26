@@ -16,9 +16,9 @@ namespace Models
         public string LocationId { get; set; }
         public string OtherLocation { get; set; }
         public string CreatedBy { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
-        public string UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public virtual TutorDto Tutor { get; set; }
         public virtual LocationDto Location { get; set; }
     }

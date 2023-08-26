@@ -15,9 +15,9 @@ namespace Models
         public string SubjectName { get; set; }
         public int CourseId { get; set; }
         public bool IsActive { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public CourseDto Course { get; set; }
         public virtual ICollection<TutorSubjectDto> TutorSubject { get; set; }

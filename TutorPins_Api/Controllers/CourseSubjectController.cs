@@ -16,10 +16,10 @@ namespace TutorPins_Api.Controllers
             _courseSubjectRepository = courseSubjectRepository;
         }
         [HttpGet]
-        [Route("GetCourseSubjects")]
-        public async Task<IActionResult> GetCourseSubjects()
+        [Route("GetCourseSubjects/{ids}")]
+        public async Task<IActionResult> GetCourseSubjects(string ids)
         {
-            var allCourses = await _courseSubjectRepository.GetAllSubjects();
+            var allCourses = await _courseSubjectRepository.GetAllSubjects(ids);
             return Ok(allCourses);
         }
         [HttpPost]
@@ -37,7 +37,7 @@ namespace TutorPins_Api.Controllers
         [Route("GetSubjectsByCourse/{id}")]
         public async Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourse(string id)
         {
-            return await _courseSubjectRepository.GetSubjectsByCourse(Convert.ToInt32(id));
+            return await _courseSubjectRepository.GetSubjectsByCourse(id);
         }
     }
 }

@@ -15,6 +15,6 @@ builder.Services.AddScoped<ICourseCategoryService, CourseCategoryService>();
 builder.Services.AddScoped<ICourseSubjectService, CourseSubjectService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ITutorService, TutorService>();
-
+builder.Services.AddScoped<ILocationService, LocationService>();
 
 await builder.Build().RunAsync();

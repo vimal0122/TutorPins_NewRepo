@@ -18,9 +18,9 @@ namespace DataAccess.Data
         public int LocationId { get; set; }
         public string OtherLocation { get; set; }
         public string CreatedBy { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
-        public string UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public virtual Tutor Tutor { get; set; }
         public virtual Location Location { get; set; }
     }

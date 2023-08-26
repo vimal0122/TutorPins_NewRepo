@@ -12,7 +12,7 @@ namespace BusinessLayer.Repository.IRepository
         public Task<CourseSubjectDto> CreateSubject(CourseSubjectDto courseSubjectDto);
         public Task<CourseSubjectDto> UpdateSubject(int courseSubjectId, CourseSubjectDto courseSubjectDto);
         public Task<CourseSubjectDto> GetSubject(int courseSubjectId);
-        public Task<IEnumerable<CourseSubjectDto>> GetAllSubjects();
-        public Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourse(int courseId);
+        public Task<IEnumerable<CourseSubjectDto>> GetAllSubjects(string Ids=null);
+        public Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourse(string courseId);
     }
 }
