@@ -20,9 +20,9 @@ namespace TutorPins_Client.Service
             return true;
         }
 
-        public async Task<IEnumerable<CourseSubjectDto>> GetCourseSubjects(string ids = null)
+        public async Task<IEnumerable<CourseSubjectDto>> GetCourseSubjects()
         {
-            var response = await _client.GetAsync($"api/coursesubject/GetCourseSubjects/" + ids==null?string.Empty:ids);
+            var response = await _client.GetAsync($"api/coursesubject/GetCourseSubjects/");
             var content = await response.Content.ReadAsStringAsync();
             var courseSubjects = JsonConvert.DeserializeObject<IEnumerable<CourseSubjectDto>>(content);
             return courseSubjects;

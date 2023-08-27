@@ -38,18 +38,18 @@ namespace BusinessLayer.Repository
             return null;
         }
 
-        public async Task<IEnumerable<CourseSubjectDto>> GetAllSubjects(string Ids)
+        public async Task<IEnumerable<CourseSubjectDto>> GetAllSubjects()
         {
             try
             {
                 await Task.Delay(1);
 
                 IEnumerable<CourseSubjectDto> courseSubjectDtos = _mapper.Map<IEnumerable<CourseSubject>, IEnumerable<CourseSubjectDto>>(_db.CourseSubjects.Include(x=>x.Course).ThenInclude(t=>t.CourseCategory));
-                if (!string.IsNullOrEmpty(Ids))
-                {
-                    string[] subjects = Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                    courseSubjectDtos = courseSubjectDtos.Where(t => subjects.Contains(t.Id.ToString()));
-                }
+                //if (!string.IsNullOrEmpty(Ids))
+                //{
+                //    string[] subjects = Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                //    courseSubjectDtos = courseSubjectDtos.Where(t => subjects.Contains(t.Id.ToString()));
+                //}
                 return courseSubjectDtos;
             }
             catch (Exception ex)

@@ -16,10 +16,10 @@ namespace TutorPins_Api.Controllers
             _courseSubjectRepository = courseSubjectRepository;
         }
         [HttpGet]
-        [Route("GetCourseSubjects/{ids}")]
-        public async Task<IActionResult> GetCourseSubjects(string ids)
+        [Route("GetCourseSubjects")]
+        public async Task<IActionResult> GetCourseSubjects()
         {
-            var allCourses = await _courseSubjectRepository.GetAllSubjects(ids);
+            var allCourses = await _courseSubjectRepository.GetAllSubjects();
             return Ok(allCourses);
         }
         [HttpPost]
