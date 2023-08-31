@@ -1,6 +1,11 @@
 ﻿@page "/coursesubjectlist"
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @inject ICourseSubjectService courseSubjectService
+@inject ICourseCategoryService courseCategoryService
+@inject ICourseService courseService
+
+
 <div class="row mt-4">
     <div class="col-8">
         <h4 class="card-title text-info">
@@ -8,68 +13,225 @@
         </h4>
     </div>
     <div class="col-3 offset-1">
-        <NavLink href="subjects/create" class="btn btn-info form-control">
+       @*  <NavLink href="subjects/create" class="btn btn-info form-control">
             Add New
-        </NavLink>
+        </NavLink> *@
+        <SfButton IsPrimary="true" CssClass="btn btn-sm btn-info form-control" @onclick="@Open">Add New</SfButton>
+
     </div>
 </div>
+
 <div class="row mt-4">
     <div class="col-12">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Level</th>
-                    <th>Subject</th>
-                    <th>Active</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (CourseSubjects.Any())
-                {
-                    foreach (var c in CourseSubjects)
-                    {
-                        <tr>
-                            <td>
-                                @c.Course.CourseCategory.CategoryName
-                            </td>
-                            <td>
-                                @c.Course.CourseName
-                            </td>
-                            <td>
-                                @c.SubjectName
-                            </td>
-                            <td>
-                                @if (c.IsActive)
-                                {
-                                    <span>Yes</span>
-                                }
-                                else
-                                {
-                                    <span>Yes</span>
-                                }
+        <SfGrid DataSource="@CourseSubjects" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(CourseSubjectDto.Course.CourseCategory.CategoryName) HeaderText="Categoy"
+                FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+                    <Template>
+                        @{
+                            var cAtegoryName = (context as CourseSubjectDto);
+                            var Cname = cAtegoryName.Course.CourseCategory.CategoryName;
+                            <span>@Cname</span>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(CourseSubjectDto.Course.CourseName) HeaderText="Level"
+                            FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+                    <Template>
+                        @{
+                            var LevelName = (context as CourseSubjectDto);
+                            var lname = LevelName.Course.CourseName;
+                            <span>@lname</span>
+                        }
+                    </Template>
+                </GridColumn>               
+                <GridColumn Field=@nameof(CourseSubjectDto.SubjectName) HeaderText="Subject"></GridColumn>
+                <GridColumn Field=@nameof(CourseSubjectDto.IsActive) HeaderText="Status" FilterSettings="@(new 
+                FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })">
+                    <Template>
+                        @{
+                            var cc = (context as CourseSubjectDto);
+                           
+                            if (cc.IsActive == true)
+                            {
+                                <div class="statustemp e-activecolor ">
+                                    <span class="statustxt e-activecolor alert-success">Active</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="statustemp e-inactivecolor ">
+                                    <span class="statustxt e-inactivecolor alert-warning">InActive</span>
+                                </div>
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+         <SfSpinner @ref="@SpinnerObj"></SfSpinner>
+    </div>
 
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-success">Edit</a>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+
+</div>
+
+<div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @*  <div class="modal-header">
+            <h3 class="card-title text-info mb-3 ml-3">@Title Course Category</h3>
+            <button type="button" class="btn-close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> *@
+            <div class="modal-body">
+                <div class="row mt-2 mb-5">
+                    <h3 class="card-title text-info mb-3 ml-3">@Title Course Subject </h3>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group mt-2">
+                                   
+                                        <label for="CourseName">Course Category</label>
+                                        <select class="form-control" @onchange="CourseCategoryClicked">
+                                            <option value="">-- Select Category --</option>
+                                            @foreach (var ct in courseCategoryList)
+                                            {
+                                                <option value="@ct.Id">@ct.CategoryName</option>
+                                            }
+                                        </select>
+                                   
+                                </div>
+                                <div class="form-group mt-2">
+                                   
+                                        <label for="CourseName">Course</label>
+                                        <select class="form-control" @bind="@CourseSubjectModel.CourseId">
+                                            <option value="">-- Select Course --</option>
+                                            @foreach (var ct in courseList)
+                                            {
+                                                <option value="@ct.Id">@ct.CourseName</option>
+                                            }
+                                        </select>
+                                    
+                                </div>
+                                <div class="form-group mt-2">
+                                  
+                                    <SfTextBox CssClass="e-outline" Placeholder="Course Name" FloatLabelType="@FloatLabelType.Auto"
+                                    @bind-Value="@CourseSubjectModel.SubjectName"></SfTextBox>
+
+                                </div>
+                                <div class="form-group mt-2">
+
+                                    <label style="padding: 10px 70px 10px 0">Active</label>
+                                    <SfSwitch @bind-Checked="@CourseSubjectModel.IsActive"></SfSwitch>
+
+                                   
+                                </div>
+                                <div class="form-group mt-2">
+                                   
+                                    <SfButton IsPrimary="true" CssClass="e-outline" @onclick="@Save">Save</SfButton>
+                                    <SfButton IsPrimary="false" CssClass="e-outline" @onclick="@Back">Back</SfButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+
 @code {
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
     private IEnumerable<CourseSubjectDto> CourseSubjects { get; set; } = new List<CourseSubjectDto>();
+    SfSpinner SpinnerObj;
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(5000);
-        await LoadCourseSubjects();        
+        await LoadCourseSubjects(); 
+        await SpinnerObj.HideAsync();
+
+        await Task.Delay(1000);
+        IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+
+        courseCategoryList = courseCategories.ToList();
+
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SpinnerObj.ShowAsync();
+        }
     }
     private async Task LoadCourseSubjects()
     {
         CourseSubjects = await courseSubjectService.GetCourseSubjects();
     }
+
+
+
+
+    private CourseCategoryDto CourseCategoryModel { get; set; } = new CourseCategoryDto();
+    List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
+    List<CourseDto> courseList = new List<CourseDto>();
+
+    private CourseSubjectDto CourseSubjectModel { get; set; } = new CourseSubjectDto();
+
+    private string Title { get; set; } = "Create";
+    string courseCategoryId { get; set; }
+   
+    protected async Task Save()
+    {
+        var response = await courseSubjectService.CreateCourseSubject(CourseSubjectModel);
+        if (response)
+        {
+           // NavigationManager.NavigateTo("coursesubjectlist");
+            Close();
+            await LoadCourseSubjects();
+        }
+    }
+    void Back()
+    {
+        Close();
+        // NavigationManager.NavigateTo("coursesubjectlist");
+    }
+    protected async void CourseCategoryClicked(ChangeEventArgs courseCategoryEvent)
+    {
+        courseList.Clear();
+
+        courseCategoryId = courseCategoryEvent.Value.ToString();
+        IEnumerable<CourseDto> courses = await courseService.GetCoursesByCategory(courseCategoryId);
+        courseList = courses.ToList();
+
+        this.StateHasChanged();
+    }
+
 }

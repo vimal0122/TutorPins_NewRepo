@@ -19,16 +19,21 @@
                             {  
                                 <option value="@ct.Id">@ct.CategoryName</option>  
                             }  
-                        </select>  
+                        </select>
                     </div>  
                 </div>
                 <div class="form-group mt-2">
-                    <label for="CourseName">Course Name</label>
-                    <input form="CourseName" class="form-control" @bind="@CourseModel.CourseName" />
+                   
+                    <SfTextBox CssClass="e-outline" Placeholder="Course Name" FloatLabelType="@FloatLabelType.Auto"
+                    @bind-Value="@CourseCategoryModel.CategoryName"></SfTextBox>
                 </div>
-                <div class="form-group mt-2">
-                    <input type="checkbox" class="form-check-input" @bind="@CourseModel.IsActive" />
-                    <label for="IsActive">Active</label>
+                <div class="form-group mt-2">                  
+
+                    <div>
+                        <label style="padding: 10px 70px 10px 0">Active</label>
+                        <SfSwitch @bind-Checked="@CourseModel.IsActive"></SfSwitch>
+                    </div>
+
                 </div>
                 <div class="form-group mt-2">
                     <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />

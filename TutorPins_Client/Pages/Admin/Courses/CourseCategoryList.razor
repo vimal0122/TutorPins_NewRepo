@@ -1,7 +1,7 @@
 ﻿@page "/coursecategories"
 @inject IJSRuntime jsRuntime
 @inject ICourseCategoryService courseCategoryService
-
+@inject NavigationManager NavigationManager
 
 <div class="row mt-4">
     <div class="col-8">
@@ -10,9 +10,11 @@
         </h4>
     </div>
     <div class="col-3 offset-1">
-        <NavLink href="coursecategory/create" class="btn btn-info form-control">
+      @*   <NavLink href="coursecategory/create" class="btn btn-sm btn-info form-control">
             Add New 
-        </NavLink>
+        </NavLink> *@
+
+        <SfButton IsPrimary="true" CssClass="btn btn-sm btn-info form-control" @onclick="@Open">Add New</SfButton>
     </div>
 </div>
 <div class="row mt-4">
@@ -28,14 +30,14 @@
                             var cc = (context as CourseCategoryDto);
                             if (cc.IsActive == true)
                             {
-                                <div class="statustemp e-activecolor">
-                                    <span class="statustxt e-activecolor">Active</span>
+                                <div class="statustemp e-activecolor ">
+                                    <span class="statustxt e-activecolor alert-success">Active</span>
                                 </div>
                             }
                             else
                             {
-                                <div class="statustemp e-inactivecolor">
-                                    <span class="statustxt e-inactivecolor">InActive</span>
+                                <div class="statustemp e-inactivecolor ">
+                                    <span class="statustxt e-inactivecolor alert-warning">InActive</span>
                                 </div>
                             }
                         }
@@ -50,13 +52,90 @@
 
 </div>
 
+<div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           @*  <div class="modal-header">
+                <h3 class="card-title text-info mb-3 ml-3">@Title Course Category</h3>
+                <button type="button" class="btn-close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> *@
+            <div class="modal-body">
+                <div class="row mt-2 mb-5">
+                    <h3 class="card-title text-info mb-3 ml-3">@Title Course Category</h3>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group mt-2">
+                                    <SfTextBox CssClass="e-outline" Placeholder="Category Name" FloatLabelType="@FloatLabelType.Auto"
+                                    @bind-Value="@CourseCategoryModel.CategoryName"></SfTextBox>
+                                </div>
+
+                                <div class="container switch-control">
+
+                                    <div>
+                                        <label style="padding: 10px 70px 10px 0">Active</label>
+                                        <SfSwitch @bind-Checked="@CourseCategoryModel.IsActive"></SfSwitch>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group mt-2">
+                                    @* <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" /> *@
+                                    <SfButton IsPrimary="true" CssClass="e-outline" @onclick="@Save">Save</SfButton>
+                                    <SfButton IsPrimary="false" CssClass="e-outline" @onclick="@Back">Back</SfButton>
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+
+
+
+
+
 @code {
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+
     private IEnumerable<CourseCategoryDto> CourseCategories { get; set; } = new List<CourseCategoryDto>();
     SfSpinner SpinnerObj;
     protected override async Task OnInitializedAsync()
     {
         //await Task.Delay(5000);
-        
+
         await LoadCourseCategories();
         await SpinnerObj.HideAsync();
 
@@ -79,4 +158,24 @@
             await SpinnerObj.ShowAsync();
         }
     }
+
+
+    private CourseCategoryDto CourseCategoryModel { get; set; } = new CourseCategoryDto();
+    private string Title { get; set; } = "Create";
+    protected async Task Save()
+    {
+        var response = await courseCategoryService.CreateCourseCategory(CourseCategoryModel);
+        if (response)
+        {
+            //NavigationManager.NavigateTo("coursecategories");
+            await LoadCourseCategories();
+            Close();
+        }
+    }
+    void Back()
+    {
+        //NavigationManager.NavigateTo("coursecategories");
+        Close();
+    }
+
 }
