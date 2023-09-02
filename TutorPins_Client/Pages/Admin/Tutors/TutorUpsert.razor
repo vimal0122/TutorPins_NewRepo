@@ -6,234 +6,121 @@
 @inject ICourseService courseService
 @inject ICourseSubjectService courseSubjectService
 @inject ILocationService locationService
+@inject HttpClient Http
 
-<div class="row mt-2 mb-5">
-    <h3 class="card-title text-info mb-3 ml-3">@Title Tutor - In Progress</h3>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="cold-md-10 mt-2" style="background-color:beige;">Personal Details</div>
-            <div class="card-body">                
-                <div class="form-group mt-2">
-                    <label for="TutorName"> Name</label>
-                    <input form="TutorName" class="form-control" @bind="@TutorModel.TutorName" />
-                </div>
-                <div class="form-group mt-2">
-                    <label for="TutorEmail"> Email</label>
-                    <input form="TutorEmail" class="form-control" @bind="@TutorModel.TutorEmail" />
-                </div>
-                <div class="form-group mt-2">
-                    <label for="TutorPhoneNo"> Phone No</label>
-                    <input form="TutorPhoneNo" class="form-control" @bind="@TutorModel.TutorPhoneNo" />
-                </div>
-                 <div class="form-group mt-2">
-                    <label for="TutorGender">Gender</label>
-                    <input form="TutorGender" class="form-control" @bind="@TutorModel.TutorGender" />
-                </div>
-                <div class="form-group mt-2">
-                    <label for="TutorDOB">Date of Birth</label>
-                    <input form="TutorDOB" class="form-control" @bind="@TutorModel.TutorDOB" />
-                </div>
+<div class="row mt-2 mb-1">
+    <h3 class="card-title text-info mb-3 ml-3">Tutor Registration</h3>    
+</div>
 
-                <div class="form-group mt-2">
-                    <label for="TutorRace">Race</label>
-                    <input form="TutorRace" class="form-control" @bind="@TutorModel.TutorRace" />
-                </div>
-                <div class="form-group mt-2">
-                    <label for="TutorCategory">Category</label>
-                    <input form="TutorCategory" class="form-control" @bind="@TutorModel.TutorCategory" />
-                </div>
-                <div class="form-group mt-2">
-                    <label for="TutorImage">TutorImage</label>
-                    <input type="file" form="TutorImage" class="form-control" @bind="@TutorModel.TutorImage" />
-                </div>
+<div class="col-lg-12 control-section">
+    @* <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <h2>Tutor Registration</h2>
+        </div> *@
+    <div class="content-wrapper">
+        
+        <div class="row">
+            <div class="form-group col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox Placeholder="First Name" @bind-Value="@TutorModel.FirstName" CssClass="e-corner" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox EnableRtl="false" Placeholder="Last Name" CssClass="e-corner" @bind-Value="@TutorModel.LastName" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
             </div>
         </div>
-        <div class="card">
-            <div class="cold-md-10 mt-2" style="background-color:beige;">Tutor Qualification</div>
-            <div class="card-body">
-                <div class="container mt-2 ">
-                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Qualification</button>
-                </div>
-                <table id="subdetails" class="table table-sm table-responsive-sm">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Subjects</th>
-                            <th>Year of Completion</th>
-                            <th>Grade</th>                            
-                            <th>View Certificate</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @*@foreach (var listitem in StoreSubjectDetails)
-                        {*@
-                            <tr>
-                                <td>Diploma</td>
-                                <td>Physics, Maths</td>
-                                <td>2020</td>
-                                <td>I</td>
-                                <td><img src="" /></td>
-                                <td>
-                                    <input type="button" class="btn btn-sm btn-outline-secondary"  value="delete" />
-                                </td>
-                            </tr>
-
-                        @*}*@
-                    </tbody>
-                </table>
-                
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox Placeholder="Email" @bind-Value="@TutorModel.TutorEmail" CssClass="e-corner" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox EnableRtl="false" Placeholder="Contact No" CssClass="e-corner" @bind-Value="@TutorModel.TutorPhoneNo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+           
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDatePicker TValue="DateTime?" @bind-Value="@DOBValue" Placeholder="Select Birth Date" Min="@MinDate" Max="@MaxDate" FloatLabelType="@FloatLabelType.Auto">
+                </SfDatePicker>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Gender" @bind-Value="@TutorModel.TutorGender" DataSource="@Genders" FloatLabelType="@FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
 
             </div>
         </div>
-        <div class="card">
-            <div class="cold-md-10 mt-2" style="background-color:beige;">Subject Details</div>
-            <div class="card-body">
-                <div class="container mt-2 ">
-                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Subject</button>
-                </div>
-                <table id="subdetails" class="table table-sm table-responsive-sm">
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Level Name</th>
-                            <th>Subject Name</th>
-                            <th>Hourly Rate</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var listitem in StoreSubjectDetails)
-                        {
-                            <tr>
-                                <td>@listitem.CategoryName</td>
-                                <td>@listitem.CourseName</td>
-                                <td>@listitem.SubjectName</td>
-                                <td>@listitem.TutorRate</td>
-                                <td>
-                                    <input type="button" class="btn btn-sm btn-outline-secondary" @onclick="() => deleteSubject(listitem)" value="delete" />
-                                </td>
-                            </tr>
-
-                        }
-                    </tbody>
-                </table>
-                
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Race" @bind-Value="@TutorModel.TutorRace" DataSource="@Race" FloatLabelType="@FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
 
             </div>
-        </div>
-        <div class="card">
-            <div class="cold-md-10 mt-2" style="background-color:beige;">Prefered Locations</div>
-            <div class="card-body">
-                <div class="container mt-2 ">
-                    <button style="float:right" class="btn btn-primary btn-sm" @onclick="() => Open()">Add Location</button>
-                </div>
-                <table id="subdetails" class="table table-sm table-responsive-sm">
-                    <thead>
-                        <tr>
-                            <th>Name</th>                            
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @*@foreach (var listitem in StoreSubjectDetails)
-                        {*@
-                            <tr>
-                                <td>Central Region</td>                                
-                                <td>
-                                    <input type="button" class="btn btn-sm btn-outline-secondary"  value="delete" />
-                                </td>
-                            </tr>
-
-                        @*}*@
-                    </tbody>
-                </table>
-                <div class="modal @ModalClass" tabindex="0" role="dialog" style="display:@ModalDisplay">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Subject</h5>
-                                <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Category</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="CategoryId" id="CategoryId" class="form-control" /></div>*@
-                                    <select class="form-control" @onchange="CourseCategoryClicked">
-                                        <option value="">-- Select Category --</option>
-                                        @foreach (var ct in courseCategoryList)
-                                        {
-                                            <option value="@ct.Id">@ct.CategoryName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Level</div>
-                                    @*<div class="col-lg-8"><input type="text" @bind="LevelId" id="LevelId" class="form-control" /></div>*@
-                                    
-                                    <select class="form-control" multiple @onchange="CourseClicked">
-                                        <option value="">-- Select Level --</option>
-                                        @foreach (var ct in courseList)
-                                        {
-                                            <option value="@ct.Id">@ct.CourseName</option>
-                                            
-                                            
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Subject</div>
-                                    @*<div class="col-lg-8"><input type="text" id="SubjectId" @bind="SubjectId" class="form-control" /></div>*@
-                                    <select class="form-control" multiple @onchange="SubjectClicked">
-                                        <option value="">-- Select Subject --</option>
-                                        @foreach (var ct in courseSubjectList)
-                                        {
-                                            <option value="@ct.Id">@ct.SubjectName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-3">Hourly Rate</div>
-                                    <div class="col-lg-8"><input type="text" id="HourlyRate" @bind="HourlyRate" class="form-control" /></div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @onclick="SaveSubjectData">Save changes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group mt-2">
-                    <div class="col-md-4">
-                        <label for="TutorStatus">Status</label>
-                        <select class="form-control" @bind="@TutorModel.TutorStatus">
-                            <option value="">-- Select Status --</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Active</option>
-                            <option value="blacklist">BlackListed</option>
-
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group mt-2">
-                    <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
-                    <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
-                </div>
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfMultiSelect TValue="string[]" TItem="LocationDto" Placeholder="Prefered Locations" @bind-Value="@SelectedLocations" DataSource="@locationList" FloatLabelType="FloatLabelType.Auto">
+                    <MultiSelectFieldSettings Text="LocationName" Value="Id"></MultiSelectFieldSettings>
+                </SfMultiSelect>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Tutoring Mode" @bind-Value="@TutorModel.TutorMode" DataSource="@TutorMode" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
             </div>
         </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox Placeholder="Specify locations, if not listed above" @bind-Value="@TutorOtherLocations" CssClass="e-corner" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfDropDownList TValue="int" TItem="QualificationDto" Placeholder="Highest Qualification" @bind-Value="@SelectedHighestQualification" DataSource="@defaultQualificationList" FloatLabelType="FloatLabelType.Auto">
+                <DropDownListFieldSettings Text="QualificationName" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </div>
+        </div>        
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfMultiSelect TValue="int[]" TItem="CourseSubjectDto" Mode="VisualMode.CheckBox" FilterBarPlaceholder="Search Subjects" Placeholder="Prefered Subjects" AllowFiltering="true" @bind-Value="@SelectedSubjects" DataSource="@courseSubjectList" FloatLabelType="FloatLabelType.Auto" EnableGroupCheckBox="true">
+                    <MultiSelectFieldSettings GroupBy="LevelName" Text="SubjectFullName" Value="Id"></MultiSelectFieldSettings>
+                </SfMultiSelect>
+            </div>            
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox Multiline=true FloatLabelType="@FloatLabelType.Auto" @bind-Value="@TutorModel.TutorAcademicResults" Placeholder="Academics & Grades"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox Multiline=true FloatLabelType="@FloatLabelType.Auto" @bind-Value="@TutorModel.TutorSelf"  Placeholder="Describe Yourself"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <span  style="color:#343a40; font-size:12px; font-weight:bold;">Upload Photo</span>
+                <SfUploader ID="UploadFiles" Placeholder="Upload Photo" FloatLabelType="@FloatLabelType.Auto" AllowedExtensions=".jpg, .png" MinFileSize=10000 MaxFileSize=50000>
+                    <UploaderEvents ValueChange="@OnChange"></UploaderEvents>
+                </SfUploader>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2 text-end float-end">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <input type="button" class="btn btn-primary" @onclick="@Save" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@Back" value="Back" />
+            </div>
+        </div>
+        
     </div>
 </div>
+@* </div> *@
 @if (ShowBackdrop)
 {
     <div class="modal-backdrop fade show"></div>
@@ -243,27 +130,78 @@
     private TutorDto TutorModel { get; set; } = new TutorDto();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
+    public string TutorOtherLocations;
     public bool ShowBackdrop = false;
-
+    public DateTime? DOBValue { get; set; } = null;
 
     private string CategoryId = string.Empty;
     private string LevelId = string.Empty;
     private string SubjectId= string.Empty;
+    public int SelectedHighestQualification;
 
     private string CategoryName = string.Empty;
     private string LevelName = string.Empty;
     private string SubjectName = string.Empty;
     private string HourlyRate = string.Empty;
+    string imagePath = string.Empty;
+
     string courseCategoryId { get; set; }
+    public DateTime MinDate { get; set; } = new DateTime(DateTime.Now.Year-85, 1, 01);
+    public DateTime MaxDate { get; set; } = new DateTime(DateTime.Now.Year-10, 12, 31);
 
     public List<TutorSubjectDto> StoreSubjectDetails = new List<TutorSubjectDto>();
+    public List<TutorLocationDto> StoreLocationDetails = new List<TutorLocationDto>();
+    public List<TutorQualificationDto> StoreQualificationDetails = new List<TutorQualificationDto>();
+
     TutorSubjectDto tutorSubject;
+    ImageFileDto filesBase64= new ImageFileDto();
+
     List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
     List<LocationDto> locationList = new List<LocationDto>();
     List<CourseDto> courseList = new List<CourseDto>();
     List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
+    List<QualificationDto> defaultQualificationList = new List<QualificationDto>();
+    public string[] SelectedLocations { get; set; } = new string[] { };
+    public int[] SelectedSubjects { get; set; } = new int[] { };
+
     int i = 0;
     public List<string> selectedLevels = new List<string>();
+    public class GeneralText
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    List<GeneralText> Genders = new List<GeneralText>
+    {
+        new GeneralText() { Id = "1", Name = "Male" },
+        new GeneralText() { Id = "2", Name = "Female" }
+
+    };
+    List<GeneralText> Race = new List<GeneralText>
+    {
+        new GeneralText() { Id = "1", Name = "Indian" },
+        new GeneralText() { Id = "2", Name = "Malay" },
+        new GeneralText() { Id = "3", Name = "Chinese" },
+        new GeneralText() { Id = "4", Name = "Others" }
+
+    };
+    List<GeneralText> Category = new List<GeneralText>
+    {
+        new GeneralText() { Id = "1", Name = "PartTime" },
+        new GeneralText() { Id = "2", Name = "FullTime" },
+        new GeneralText() { Id = "3", Name = "Ex-MOE" },
+        new GeneralText() { Id = "3", Name = "Current MOE" }
+
+    };
+    List<GeneralText> TutorMode = new List<GeneralText>
+    {
+        new GeneralText() { Id = "1", Name = "Online" },
+        new GeneralText() { Id = "2", Name = "Offline" },
+        new GeneralText() { Id = "3", Name = "Both" },
+
+    };
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(2000);
@@ -271,6 +209,14 @@
         courseCategoryList = courseCategories.ToList();
         IEnumerable<LocationDto> locations = await courseCategoryService.GetAllLocations();
         locationList = locations.ToList();
+
+        IEnumerable<QualificationDto> defaultQualifications = await courseCategoryService.GetAllQualifications();
+        defaultQualificationList = defaultQualifications.ToList();
+
+        IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetCourseSubjects();       
+        courseSubjectList = courseSubjects.ToList();
+
+
     }
     public void CheckboxClicked(ChangeEventArgs e)
     {
@@ -282,13 +228,14 @@
         {
             TutorSubjectDto tutorSubject = new TutorSubjectDto();
             //tutorSubject.Id = ++i;
-            string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            
-            foreach (string s in subjects)
+            //string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (int s in SelectedSubjects)
             {
                 tutorSubject = new TutorSubjectDto();
-                tutorSubject.CategoryName = CategoryName;
-                var t = courseSubjectList.Where(t => t.Id == Convert.ToInt32(s)).FirstOrDefault();
+
+                var t = courseSubjectList.Where(t => t.Id == s).FirstOrDefault();
+                tutorSubject.CategoryName = t.Course.CourseCategory.CategoryName;
                 tutorSubject.CourseName = t.Course.CourseName;
                 tutorSubject.SubjectName = t.SubjectName;
                 tutorSubject.SubjectId = Convert.ToInt32(t.Id);
@@ -304,9 +251,67 @@
 
         CategoryId = LevelId = SubjectId = HourlyRate = CategoryName = LevelName = SubjectName=string.Empty;
     }
+    public void SaveLocationData()
+    {
+        try
+        {
+            TutorLocationDto tutorLocation = new TutorLocationDto();
+            //tutorSubject.Id = ++i;
+            //string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string s in SelectedLocations)
+            {
+                tutorLocation = new TutorLocationDto();
+
+                var t = locationList.Where(t => t.Id == Convert.ToInt32(s)).FirstOrDefault();
+                tutorLocation.LocationId = t.Id.ToString();
+
+
+                StoreLocationDetails.Add(tutorLocation);
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        CategoryId = LevelId = SubjectId = HourlyRate = CategoryName = LevelName = SubjectName = string.Empty;
+    }
+    public void SaveQualificationData()
+    {
+        try
+        {
+            TutorQualificationDto tutorQualification = new TutorQualificationDto();
+            //tutorSubject.Id = ++i;
+            //string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+
+            tutorQualification = new TutorQualificationDto();
+
+            var t = defaultQualificationList.Where(t => t.Id == SelectedHighestQualification).FirstOrDefault();
+            tutorQualification.QualificationId = t.Id;
+
+
+            StoreQualificationDetails.Add(tutorQualification);
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        CategoryId = LevelId = SubjectId = HourlyRate = CategoryName = LevelName = SubjectName = string.Empty;
+    }
     protected async Task Save()
     {
+        SaveSubjectData();
+        SaveLocationData();
+        SaveQualificationData();
         TutorModel.TutorSubjects = StoreSubjectDetails;
+        TutorModel.TutorLocations = StoreLocationDetails;
+        TutorModel.TutorQualifications = StoreQualificationDetails;
+        TutorModel.TutorDOB = DOBValue;
+        TutorModel.TutorName = string.Format("{0} {1}", TutorModel.FirstName, TutorModel.LastName);
         var response = await tutorService.CreateTutor(TutorModel);
         if (response)
         {
@@ -358,7 +363,7 @@
         IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetSubjectsByCourse(LevelId);
         LevelName = courseSubjects.FirstOrDefault().Course.CourseName;
         courseSubjectList = courseSubjects.ToList();
-        
+
 
         this.StateHasChanged();
     }
@@ -371,5 +376,41 @@
         //SubjectId = courseCategoryEvent.Value.ToString();
         //SubjectName = courseSubjectList.Where(t=>t.Id==Convert.ToInt32(SubjectId)).FirstOrDefault().SubjectName;       
         this.StateHasChanged();
+    }
+    private async Task OnChange(UploadChangeEventArgs args)
+    {
+        await Task.Delay(1);
+        try
+        {
+            
+            foreach (var file in args.Files)
+            {
+                // string rootpath = AppContext.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "");
+                //  path = Path.GetFullPath("wwwroot\\uploads\\") + file.FileInfo.Name; //System.IO.Path.Combine(rootpath, Guid.NewGuid().ToString() + "_" + file.FileInfo.Name);
+                // FileStream filestream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                //  file.File.OpenReadStream(long.MaxValue).CopyTo(filestream);
+                // filestream.Close();
+                // path =  file.FileInfo.Name;
+                MemoryStream memoryStream = new MemoryStream();
+                using var fileStream = file.File.OpenReadStream(long.MaxValue);                
+                await fileStream.CopyToAsync(memoryStream);
+                byte[] bytes = memoryStream.ToArray();
+
+                //var resizedFile = await file.File.RequestImageFileAsync(file.FileInfo.MimeContentType, 640, 480); // resize the image file
+                var formContent = new MultipartFormDataContent
+                {
+                { new StreamContent(file.File.OpenReadStream(file.File.Size)), "upload", file.File.Name },
+                { new StringContent(file.File.ContentType), "content-type" }
+                };
+                imagePath = Path.GetRandomFileName() + "_" + file.FileInfo.Name;
+                filesBase64 = new ImageFileDto { base64data = Convert.ToBase64String(bytes), contentType = file.File.ContentType, fileName = imagePath }; // convert to a base64 string!!
+            }
+            TutorModel.TutorImage = imagePath;
+            await Http.PostAsJsonAsync<ImageFileDto>("/api/ImageData", filesBase64, System.Threading.CancellationToken.None);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

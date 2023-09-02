@@ -13,10 +13,22 @@ namespace TutorPins_Client.Service
         }
         public async Task<bool> CreateTutor(TutorDto tutorDto)
         {
-            var dataString = JsonConvert.SerializeObject(tutorDto);
-            var content = new StringContent(dataString);
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = await _client.PostAsync($"api/tutor/AddTutor", content);
+            try
+            {
+                //string rootpath = AppContext.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "");
+                //string path = System.IO.Path.Combine(rootpath, Guid.NewGuid().ToString() + "_" + tutorDto.TutorImage);
+                //FileStream filestream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                //await tutorDto.TutorImageStream.CopyToAsync(filestream);
+                //filestream.Close();
+                var dataString = JsonConvert.SerializeObject(tutorDto);
+                var content = new StringContent(dataString);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var response = await _client.PostAsync($"api/tutor/AddTutor", content);
+            }
+            catch(Exception ex)
+            {
+
+            }
             return true;
         }
 

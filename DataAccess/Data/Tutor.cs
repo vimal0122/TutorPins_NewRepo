@@ -11,7 +11,9 @@ namespace DataAccess.Data
     {
 		[Key]
         public int Id			{get;set;}
-		public string TutorName		{get;set;}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string TutorName		{get;set;}
 		public string TutorEmail	{get;set;}
 		public string TutorPhoneNo	{get;set;}
 		public string TutorGender	{get;set;}
@@ -19,8 +21,9 @@ namespace DataAccess.Data
 		public string TutorRace		{get;set;}
 		public string TutorCategory	{get;set;}
 		public string TutorRate		{get;set;}
-		public string TutorImage	{get;set;}
-		public string TutorMode { get; set; }
+		public string TutorImage	{get;set;}        
+        
+        public string TutorMode { get; set; }
 		public string TutorAcademicResults	{get;set;}
 		public string TutorSelf				{get;set;}
 		public string TutorRating			{get;set;}

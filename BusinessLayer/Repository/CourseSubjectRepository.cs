@@ -45,7 +45,11 @@ namespace BusinessLayer.Repository
                 await Task.Delay(1);
 
                 IEnumerable<CourseSubjectDto> courseSubjectDtos = _mapper.Map<IEnumerable<CourseSubject>, IEnumerable<CourseSubjectDto>>(_db.CourseSubjects.Include(x=>x.Course).ThenInclude(t=>t.CourseCategory));
-                //if (!string.IsNullOrEmpty(Ids))
+                foreach (var courseSubject in courseSubjectDtos)
+                {
+                    courseSubject.LevelName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName;
+                    courseSubject.SubjectFullName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName + " - " + courseSubject.SubjectName;
+                } 
                 //{
                 //    string[] subjects = Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 //    courseSubjectDtos = courseSubjectDtos.Where(t => subjects.Contains(t.Id.ToString()));
