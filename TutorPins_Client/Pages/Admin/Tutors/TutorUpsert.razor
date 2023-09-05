@@ -92,16 +92,45 @@
         </div>        
         <div class="row mt-1">
             <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                @* <SfMultiSelect TValue="int[]" EnableSelectionOrder="false" TItem="CourseSubjectDto" Mode="VisualMode.CheckBox" FilterBarPlaceholder="Search Subjects" Placeholder="Prefered Subjects" AllowFiltering="true" @bind-Value="@SelectedSubjects" DataSource="@courseSubjectList" FloatLabelType="FloatLabelType.Auto" EnableGroupCheckBox="true">
+                <SfMultiSelect TValue="string[]" EnableSelectionOrder="false" TItem="CourseSubjectDto" Mode="VisualMode.CheckBox" FilterBarPlaceholder="Search Subjects" Placeholder="Prefered Subjects" AllowFiltering="true" @bind-Value="@SelectedSubjects" DataSource="@courseSubjectList" FloatLabelType="FloatLabelType.Auto" EnableGroupCheckBox="true">
+                <MultiSelectEvents TItem="CourseSubjectDto" TValue="string[]" ValueChange="@SubjectChangeHandler"></MultiSelectEvents>
                     <MultiSelectFieldSettings  GroupBy="LevelName" Text="SubjectFullName" Value="Id"></MultiSelectFieldSettings>
-                </SfMultiSelect> *@
-                <div class="control-wrapper">
-                    <label class="example-label">Grouping with CheckBox</label>
-                    <SfMultiSelect TValue="string[]" AllowFiltering="true" TItem="CourseSubjectDto" Mode="@VisualMode.CheckBox" Placeholder="Prefered Subjects" DataSource="@courseSubjectList" ShowSelectAll="false"
-                                   EnableSelectionOrder="false" FilterBarPlaceholder="Search Subjects" EnableGroupCheckBox="true" PopupHeight="350px">
+                </SfMultiSelect>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 mt-1" >
+                    @* <SfMultiSelect TValue="int[]" AllowFiltering="true" TItem="CourseSubjectDto" Mode="@VisualMode.CheckBox" Placeholder="Prefered Subjects" DataSource="@courseSubjectList" ShowSelectAll="false"
+                                   EnableSelectionOrder="false" FilterBarPlaceholder="Search Subjects" EnableGroupCheckBox="true" PopupHeight="350px" >
+                        <MultiSelectEvents TItem="CourseSubjectDto" TValue="string[]" ValueChange="@SubjectChangeHandler"></MultiSelectEvents>
                         <MultiSelectFieldSettings GroupBy="LevelName" Value="SubjectFullName"></MultiSelectFieldSettings>
-                    </SfMultiSelect>
+                    </SfMultiSelect> *@
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width: 10%; font-size: 10px">Subject Name</th>
+                                <th style="width: 10%; font-size: 10px"> Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (StoreSubjectDetails.Any())
+                            {
+                                foreach (var c in StoreSubjectDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            @c.SubjectName
+                                        </td>
+                                        <td>
+                                            <SfNumericTextBox TValue="int?" Value=0></SfNumericTextBox>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
+                
+                
+                        
             </div>            
         </div>
         <div class="row mt-1">
@@ -174,7 +203,7 @@
     List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
     List<QualificationDto> defaultQualificationList = new List<QualificationDto>();
     public string[] SelectedLocations { get; set; } = new string[] { };
-    public int[] SelectedSubjects { get; set; } = new int[] { };
+    public string[] SelectedSubjects { get; set; } = new string[] { };
 
     int i = 0;
     public List<string> selectedLevels = new List<string>();
@@ -238,18 +267,19 @@
     {
         try
         {
+            StoreSubjectDetails.Clear();
             TutorSubjectDto tutorSubject = new TutorSubjectDto();
             //tutorSubject.Id = ++i;
             //string[] subjects = SubjectId.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (int s in SelectedSubjects)
+            foreach (string s in SelectedSubjects)
             {
                 tutorSubject = new TutorSubjectDto();
 
-                var t = courseSubjectList.Where(t => t.Id == s).FirstOrDefault();
+                var t = courseSubjectList.Where(t => t.Id == Convert.ToInt32(s)).FirstOrDefault();
                 tutorSubject.CategoryName = t.Course.CourseCategory.CategoryName;
                 tutorSubject.CourseName = t.Course.CourseName;
-                tutorSubject.SubjectName = t.SubjectName;
+                tutorSubject.SubjectName = t.SubjectFullName;
                 tutorSubject.SubjectId = Convert.ToInt32(t.Id);
                 tutorSubject.TutorRate = HourlyRate;
 
@@ -394,7 +424,7 @@
         await Task.Delay(1);
         try
         {
-            
+
             foreach (var file in args.Files)
             {
                 // string rootpath = AppContext.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "");
@@ -424,5 +454,9 @@
         {
             Console.WriteLine(ex.Message);
         }
+    }
+    private void SubjectChangeHandler(MultiSelectChangeEventArgs<string[]> args)
+    {
+        SaveSubjectData();
     }
 }
