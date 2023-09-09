@@ -26,6 +26,7 @@ namespace BusinessLayer.Repository
             {
                 Student student = _mapper.Map<StudentDto, Student>(studentDto);
                 student.CreatedDate = DateTime.Now;
+                student.StudentStatus = "Registered";
                 student.CreatedBy = "1";
                 var addedStudent = await _db.Students.AddAsync(student);
                 await _db.SaveChangesAsync();

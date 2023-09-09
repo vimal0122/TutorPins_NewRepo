@@ -19,6 +19,7 @@ builder.Services.AddScoped<ICourseSubjectService, CourseSubjectService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ITutorService, TutorService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IGenericService, GenericService>();
 
 builder.Services.AddSyncfusionBlazor();
 await builder.Build().RunAsync();

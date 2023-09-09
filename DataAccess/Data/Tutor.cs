@@ -20,8 +20,8 @@ namespace DataAccess.Data
 		public DateTime? TutorDOB		{get;set;}
 		public string TutorRace		{get;set;}
 		public string TutorCategory	{get;set;}
-		public string TutorRate		{get;set;}
-		public string TutorImage	{get;set;}        
+		public string TutorRate		{get;set;}        
+        public string TutorImage	{get;set;}        
         
         public string TutorMode { get; set; }
 		public string TutorAcademicResults	{get;set;}

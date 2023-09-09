@@ -48,6 +48,9 @@ namespace BusinessLayer.Mapper
             CreateMap<TutorQualificationDto, TutorQualification>();
             CreateMap<TutorQualification, TutorQualificationDto>();
 
+            CreateMap<StudentSubjectDto, StudentSubject>();
+            CreateMap<StudentSubject, StudentSubjectDto>();
+
         }
     }
 }

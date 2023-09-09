@@ -22,5 +22,20 @@ namespace Models
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string RequestFrom { get; set; }
+        public string PostalCode { get; set; }
+        public string PreferedContactMode { get; set; }
+        public string PreferedTutorCategory { get; set; }
+        public string CurrentInstitution { get; set; }
+        public DateTime? EarliestStartDate { get; set; }
+        public string PreferedTimeSlots { get; set; }
+        public string TutorCommitment { get; set; }
+        public string PreferedTutorRace { get; set; }
+        public string PreferedTutorGender { get; set; }
+        public string HoursPerWeek { get; set; }
+        public string HoursPerSubject { get; set; }
+        public string AdditionalDetails { get; set; }
+        public int? ApproxBudget { get; set; }
+        public virtual ICollection<StudentSubjectDto> StudentSubjects { get; set; }
     }
 }

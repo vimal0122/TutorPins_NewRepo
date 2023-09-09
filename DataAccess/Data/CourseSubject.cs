@@ -23,5 +23,6 @@ namespace DataAccess.Data
         public DateTime? UpdatedDate { get; set; }
         public virtual Course Course { get; set; }
         public virtual ICollection<TutorSubject> TutorSubject { get; set; }
+        public virtual ICollection<StudentSubject> StudentSubject   { get; set; }
     }
 }

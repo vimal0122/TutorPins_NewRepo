@@ -18,13 +18,13 @@ namespace Models
         public DateTime? TutorDOB { get; set; }
         public string TutorRace { get; set; }
         public string TutorCategory { get; set; }
-        public string TutorRate { get; set; }
-        public string TutorImage { get; set; }
-        
+        public string TutorRate { get; set; }        
         public string TutorMode { get; set; }
         public string TutorAcademicResults { get; set; }
         public string TutorSelf { get; set; }
         public string TutorRating { get; set; }
+        public string TutorImage { get; set; }
+        
         public string AdminRemarks { get; set; }
         public string TutorStatus { get; set; }        
         public string CreatedBy { get; set; }
