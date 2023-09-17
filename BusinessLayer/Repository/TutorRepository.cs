@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Repository.IRepository;
 using DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,8 @@ namespace BusinessLayer.Repository
             try
             {
                 await Task.Delay(1);
-                IEnumerable<TutorDto> tutorDtos = _mapper.Map<IEnumerable<Tutor>, IEnumerable<TutorDto>>(_db.Tutors);
+                IEnumerable<TutorDto> tutorDtos = _mapper.Map<IEnumerable<Tutor>, IEnumerable<TutorDto>>(_db.Tutors.Include(t=>t.TutorLocations).ThenInclude(x=>x.Location).Include(t=>t.TutorQualifications).ThenInclude(t=>t.Qualification).Include(t=>t.TutorSubjects).ThenInclude(x=>x.CourseSubject));
+                
                 return tutorDtos;
             }
             catch (Exception ex)

@@ -29,6 +29,7 @@ namespace DataAccess.Data
 		public string TutorRating			{get;set;}
 		public string AdminRemarks			{get;set;}
 		public string TutorStatus			{get;set;}
+		public string OtherLocation { get; set;}
 		public string CreatedBy				{get;set;}
 		public DateTime? CreatedDate			{get;set;}
 		public string UpdatedBy				{get;set;}

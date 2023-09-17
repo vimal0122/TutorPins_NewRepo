@@ -12,6 +12,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="22.2.10" />
     <PackageReference Include="Syncfusion.Blazor.Inputs" Version="22.2.10" />
+    <PackageReference Include="Syncfusion.Blazor.Notifications" Version="22.2.10" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="22.2.10" />
   </ItemGroup>
 

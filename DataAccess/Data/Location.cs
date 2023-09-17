@@ -18,5 +18,6 @@ namespace DataAccess.Data
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<TutorLocation> TutorLocations { get; set; }
+        public virtual ICollection<StudentLocation> StudentLocations { get; set; }
     }
 }

@@ -17,6 +17,8 @@ namespace DataAccess.Data
         [ForeignKey("CourseSubject")]
         public int SubjectId { get; set; }
         public string DurationPerWeek { get; set; }
+        public string PreferedTimeSlots { get; set; }
+        public string SubjectFullName { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

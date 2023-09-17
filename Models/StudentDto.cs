@@ -26,6 +26,7 @@ namespace Models
         public string PostalCode { get; set; }
         public string PreferedContactMode { get; set; }
         public string PreferedTutorCategory { get; set; }
+        public string PreferedTutoringMode { get; set; }
         public string CurrentInstitution { get; set; }
         public DateTime? EarliestStartDate { get; set; }
         public string PreferedTimeSlots { get; set; }
@@ -36,6 +37,8 @@ namespace Models
         public string HoursPerSubject { get; set; }
         public string AdditionalDetails { get; set; }
         public int? ApproxBudget { get; set; }
+        public string OtherLocation { get; set; }
         public virtual ICollection<StudentSubjectDto> StudentSubjects { get; set; }
+        public virtual ICollection<StudentLocationDto> StudentLocations { get; set; }
     }
 }

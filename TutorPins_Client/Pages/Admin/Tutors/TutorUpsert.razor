@@ -326,6 +326,7 @@
         TutorModel.TutorSubjects = StoreSubjectDetails;
         TutorModel.TutorLocations = StoreLocationDetails;
         TutorModel.TutorQualifications = StoreQualificationDetails;
+        TutorModel.OtherLocation = TutorOtherLocations;
         TutorModel.TutorDOB = DOBValue;
         TutorModel.TutorName = string.Format("{0} {1}", TutorModel.FirstName, TutorModel.LastName);
         var response = await tutorService.CreateTutor(TutorModel);

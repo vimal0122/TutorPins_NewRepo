@@ -1,0 +1,150 @@
+﻿@page "/public/tutorregister"
+@inherits RegisterTutorBase
+<link href="https://cdn.syncfusion.com/blazor/22.2.10/styles/bootstrap4.css" rel="stylesheet" />
+<div class="row mt-2 mb-1">
+    <h3 class="card-title text-info mb-3 ml-3">Tutor Registration</h3>
+</div>
+
+<div class="col-lg-12 control-section">
+    <SfToast ID="toast_default" @ref="ToastObj" Title="Success !" Content="@ToastContent" Timeout="5000" CssClass="e-toast-success">
+        <ToastPosition X="@ToastPosition"></ToastPosition>
+    </SfToast>
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="form-group col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox Placeholder="First Name" @bind-Value="@TutorModel.FirstName" CssClass="e-corner e-input-group" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox EnableRtl="false" Placeholder="Last Name" CssClass="e-corner e-input-group" @bind-Value="@TutorModel.LastName" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox Placeholder="Email" @bind-Value="@TutorModel.TutorEmail" CssClass="e-corner e-input-group" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfTextBox EnableRtl="false" Placeholder="Contact No" CssClass="e-corner e-input-group" @bind-Value="@TutorModel.TutorPhoneNo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDatePicker TValue="DateTime?" @bind-Value="@DOBValue" Placeholder="Select Birth Date" Min="@MinDate" Max="@MaxDate" FloatLabelType="@FloatLabelType.Auto">
+                </SfDatePicker>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Gender" @bind-Value="@TutorModel.TutorGender" DataSource="@Genders" FloatLabelType="@FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Race" @bind-Value="@TutorModel.TutorRace" DataSource="@Race" FloatLabelType="@FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfMultiSelect TValue="string[]" TItem="LocationDto" Placeholder="Prefered Locations" @bind-Value="@SelectedLocations" DataSource="@locationList" FloatLabelType="FloatLabelType.Auto">
+                    <MultiSelectFieldSettings Text="LocationName" Value="Id"></MultiSelectFieldSettings>
+                </SfMultiSelect>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Tutoring Mode" @bind-Value="@TutorModel.TutorMode" DataSource="@TutorMode" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox Placeholder="Specify locations, if not listed above" @bind-Value="@TutorOtherLocations" CssClass="e-corner" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfDropDownList TValue="int" TItem="QualificationDto" Placeholder="Highest Qualification" @bind-Value="@SelectedHighestQualification" DataSource="@defaultQualificationList" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="QualificationName" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfMultiSelect TValue="string[]" EnableSelectionOrder="false" TItem="CourseSubjectDto" Mode="VisualMode.CheckBox" FilterBarPlaceholder="Search Subjects" Placeholder="Prefered Subjects" AllowFiltering="true" @bind-Value="@SelectedSubjects" DataSource="@courseSubjectList" FloatLabelType="FloatLabelType.Auto" EnableGroupCheckBox="true">
+                    <MultiSelectEvents TItem="CourseSubjectDto" TValue="string[]" ValueChange="@SubjectChangeHandler"></MultiSelectEvents>
+                    <MultiSelectFieldSettings GroupBy="LevelName" Text="SubjectFullName" Value="Id"></MultiSelectFieldSettings>
+                </SfMultiSelect>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 mt-1" style="display:@ModalDisplay">
+                    @* <SfMultiSelect TValue="int[]" AllowFiltering="true" TItem="CourseSubjectDto" Mode="@VisualMode.CheckBox" Placeholder="Prefered Subjects" DataSource="@courseSubjectList" ShowSelectAll="false"
+                    EnableSelectionOrder="false" FilterBarPlaceholder="Search Subjects" EnableGroupCheckBox="true" PopupHeight="350px" >
+                    <MultiSelectEvents TItem="CourseSubjectDto" TValue="string[]" ValueChange="@SubjectChangeHandler"></MultiSelectEvents>
+                    <MultiSelectFieldSettings GroupBy="LevelName" Value="SubjectFullName"></MultiSelectFieldSettings>
+                    </SfMultiSelect> *@
+                    <table class="table table-sm table-hover table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width: 10%; font-size: 14px;color:#212529; font-family:' Helvetica Neue','Helvetica','Arial','sans-serif','-apple-system','BlinkMacSystemFont'">Subject Name</th>
+                                <th style="width: 10%; font-size: 14px"> Rate ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (StoreSubjectDetails.Any())
+                            {
+                                foreach (var c in StoreSubjectDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            @c.SubjectName
+                                        </td>
+                                        <td>
+                                            <SfNumericTextBox TValue="int?" Min=1 @bind-Value="@c.TutorRateValue"></SfNumericTextBox>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox style="height: 100px" Multiline=true FloatLabelType="@FloatLabelType.Auto" @bind-Value="@TutorModel.TutorAcademicResults" Placeholder="Academics & Grades"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <SfTextBox style="height: 100px" Multiline=true FloatLabelType="@FloatLabelType.Auto" @bind-Value="@TutorModel.TutorSelf" Placeholder="Describe Yourself"></SfTextBox>
+            </div>
+        </div>
+        <div class="row mt-1">
+
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <span style="color:#343a40; font-size:12px; font-weight:bold;">Upload Photo</span>
+                <SfUploader ID="UploadFiles" Placeholder="Upload Photo" FloatLabelType="@FloatLabelType.Auto" AllowedExtensions=".jpg, .png" MinFileSize=10000 MaxFileSize=50000>
+                    <UploaderEvents ValueChange="@OnChange"></UploaderEvents>
+                </SfUploader>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2 text-end float-end">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <input type="button" class="btn btn-primary" @onclick="@Save" value="Submit" />                
+            </div>
+        </div>
+
+    </div>
+</div>

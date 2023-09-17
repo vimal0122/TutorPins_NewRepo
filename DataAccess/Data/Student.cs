@@ -20,6 +20,8 @@ namespace DataAccess.Data
         public string ParentPhoneNo {get;set;}
         public string AdminRemarks {get;set;}
         public string StudentStatus {get;set;}
+        public string PreferedTutoringMode {get;set;}
+        public string OtherLocation { get; set; }
         public string CreatedBy {get;set;}
         public DateTime? CreatedDate {get;set;}
         public string UpdatedBy {get;set;}
@@ -39,5 +41,6 @@ namespace DataAccess.Data
         public string AdditionalDetails { get; set; }
         public int? ApproxBudget { get; set; }
         public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
+        public virtual ICollection<StudentLocation> StudentLocations { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿@page "/Tutors"
 @inject IJSRuntime JSRuntime
 @inject ITutorService tutorService
+@inject IGenericService genericService
 @inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 @inject IConfiguration Configuration
+@using Syncfusion.Blazor.Popups;
 <div class="row mt-4">
     <div class="col-8">
         <h4 class="card-title text-info">
@@ -19,7 +21,8 @@
     <div class="col-12">
         <div class="row mt-4">
             <div class="col-12">
-                <SfGrid DataSource="@Tutors" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+                <SfGrid ID="gridTutors" DataSource="@Tutors" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+                    <GridEvents CommandClicked="OnCommandClicked" TValue="TutorDto"> </GridEvents>
                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                     <GridPageSettings PageSize="20"></GridPageSettings>
                     <GridColumns>
@@ -37,6 +40,11 @@
                         
                         <GridColumn Field=@nameof(TutorDto.TutorEmail) HeaderText="Email" Width="100"></GridColumn>
                         <GridColumn Field=@nameof(TutorDto.TutorPhoneNo) HeaderText="ContactNo" Width="100"></GridColumn>
+                        <GridColumn HeaderText="View Details" TextAlign="TextAlign.Center" Width="150">
+                            <GridCommandColumns>
+                                <GridCommandColumn ButtonOption="@(new CommandButtonOptions() { CssClass="e-icons e-view-details"})" Title="View"></GridCommandColumn>
+                            </GridCommandColumns>
+                        </GridColumn>
                     </GridColumns>
                 </SfGrid>
                 <SfSpinner @ref="@SpinnerObj"></SfSpinner>
@@ -47,9 +55,105 @@
         
     </div>
 </div>
+<SfDialog Width="580" @bind-Visible="@IsVisible" ShowCloseIcon="true" IsModal="false" Target="#MyGrid">
+    <DialogTemplates>
+        <Header>Tutor Information</Header>
+        <Content>
+            @{
+                <div style="display:inline-flex;padding-bottom:15px">
+                    @if (RowDetails != null)
+                    {
+                        <div style="float:left;padding: 45px;"><img class="photo" src="@UriHelper.ToAbsoluteUri($"{@Configuration["BaseAPIUrl"]}/api/imagedata/{RowDetails.TutorImage}")" alt="@RowDetails?.Id" /></div>
+                    }
+                    <div style="padding-top:20px;padding-left:30px;">
+                        <div style="padding-bottom:10px;padding-left:10px;">
+                            <span style="font-size:large;font-weight: bold">@RowDetails?.TutorName.ToUpper()</span>
+                        </div>
+                        <div>
+                            <span class="position"><SfRating ReadOnly=true Value=3></SfRating></span>
+                            
+                        </div>
+                        <div style="padding-top:10px;">
+                            <table class="table">
+                                <tr>
+                                    <th>Birth Date </th>
+                                    <td>&nbsp;&nbsp;@RowDetails?.TutorDOB?.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <th>Email </th>
+                                    <td>&nbsp;&nbsp;@RowDetails?.TutorEmail</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact No. </th>
+                                    <td>&nbsp;&nbsp;@RowDetails?.TutorPhoneNo</td>
+                                </tr>
+                                <tr>
+                                    <th>Status </th>
+                                    <td>&nbsp;&nbsp;@RowDetails?.TutorStatus</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                        <span class="span-style">Gender : </span><span>@RowDetails?.TutorGender; &nbsp;</span>
+                        <span class="span-style">Category : </span><span>@RowDetails?.TutorCategory; &nbsp;</span>
+                        <span class="span-style">Race : </span><span>@RowDetails?.TutorRace; &nbsp;</span>
+                        <span class="span-style">Mode : </span><span>@RowDetails?.TutorMode; &nbsp;</span>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                        <span class="span-style">Location : </span><span>@RowDetails?.LocationDetails; &nbsp;</span>                       
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                <div class="col">
+                        <table class="table table-sm table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 10%; font-size: 14px;color:#212529; font-family:' Helvetica Neue','Helvetica','Arial','sans-serif','-apple-system','BlinkMacSystemFont'">Subject Name</th>
+                                    <th style="width: 10%; font-size: 14px"> Rate ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (@RowDetails.TutorSubjects.Any())
+                                {
+                                    foreach (var c in @RowDetails.TutorSubjects)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @c.SubjectFullName
+                                            </td>
+                                            <td>
+                                                @c.TutorRateValue
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                </div>
+                </div>
+            }
+        </Content>
+    </DialogTemplates>
+    <DialogPositionData X="@Xvalue" Y="@Yvalue"></DialogPositionData>
+</SfDialog>
 @code {
     private IEnumerable<TutorDto> Tutors { get; set; } = new List<TutorDto>();
+    public TutorDto RowDetails { get; set; }
+    public bool IsVisible { get; set; } = false;
+    private string Xvalue = "center";
+    private string Yvalue = "center";
+
     SfSpinner SpinnerObj;
+
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1000);
@@ -67,5 +171,16 @@
         {
             await SpinnerObj.ShowAsync();
         }
+    }
+    public void OnCommandClicked(CommandClickEventArgs<TutorDto> args)
+    {
+        RowDetails = args.RowData;
+        RowDetails.TutorGender = genericService.GetGenders().Where(t => t.Id == RowDetails.TutorGender).FirstOrDefault().Name;
+        RowDetails.TutorCategory = genericService.GetCategories().Where(t => t.Id == RowDetails.TutorCategory).FirstOrDefault().Name;
+        RowDetails.TutorRace = genericService.GetRaces().Where(t => t.Id == RowDetails.TutorRace).FirstOrDefault().Name;
+        RowDetails.TutorMode = genericService.GetTutorModes().Where(t => t.Id == RowDetails.TutorMode).FirstOrDefault().Name;
+        RowDetails.LocationDetails = RowDetails.TutorLocations.Select(t => t.Location.LocationName).ToArray().Aggregate("", // start with empty string to handle empty list case.
+        (current, next) => current + ", " + next);
+        IsVisible = true;
     }
 }

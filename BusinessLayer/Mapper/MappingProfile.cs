@@ -51,6 +51,9 @@ namespace BusinessLayer.Mapper
             CreateMap<StudentSubjectDto, StudentSubject>();
             CreateMap<StudentSubject, StudentSubjectDto>();
 
+            CreateMap<StudentLocationDto, StudentLocation>();
+            CreateMap<StudentLocation, StudentLocationDto>();
+
         }
     }
 }

@@ -19,7 +19,8 @@
                 new GeneralText() { Id = "1", Name = "Indian" },
                 new GeneralText() { Id = "2", Name = "Malay" },
                 new GeneralText() { Id = "3", Name = "Chinese" },
-                new GeneralText() { Id = "4", Name = "Others" }
+                new GeneralText() { Id = "4", Name = "Others" },
+                new GeneralText() { Id = "5", Name = "No Preference" }
 
             };
             return Race;
@@ -31,7 +32,8 @@
                 new GeneralText() { Id = "1", Name = "PartTime" },
                 new GeneralText() { Id = "2", Name = "FullTime" },
                 new GeneralText() { Id = "3", Name = "Ex-MOE" },
-                new GeneralText() { Id = "3", Name = "Current MOE" }
+                new GeneralText() { Id = "4", Name = "Current MOE" },
+                new GeneralText() { Id = "5", Name = "No Preference" }
 
             };
             return Category;
@@ -41,8 +43,8 @@
             List<GeneralText> TutorMode = new List<GeneralText>
             {
                 new GeneralText() { Id = "1", Name = "Online" },
-                new GeneralText() { Id = "2", Name = "Offline" },
-                new GeneralText() { Id = "3", Name = "Both" },
+                new GeneralText() { Id = "2", Name = "Home" },
+                new GeneralText() { Id = "3", Name = "No Preference" },
 
             };
             return TutorMode;

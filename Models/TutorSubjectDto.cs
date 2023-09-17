@@ -16,6 +16,7 @@ namespace Models
         public int SubjectId { get; set; }
         public string TutorRate { get; set; }
         public int? TutorRateValue { get; set; } = 0;
+        public string SubjectFullName { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

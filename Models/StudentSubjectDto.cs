@@ -20,8 +20,10 @@ namespace Models
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
         public string CategoryName { get; set; }
+        public string SubjectFullName { get; set; }
         public string CourseName { get; set; }
         public string SubjectName { get; set; }
+        public string PreferedTimeSlots { get; set; }
         public virtual StudentDto Student { get; set; }
         public virtual CourseSubjectDto CourseSubject { get; set; }
     }
