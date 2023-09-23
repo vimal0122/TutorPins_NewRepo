@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public partial class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<CourseCategory> CourseCategories { get; set; }
@@ -23,5 +23,14 @@ namespace DataAccess.Data
         public DbSet<TutorQualification> TutorQualifications { get; set; }
         public DbSet<StudentSubject> StudentSubjects { get; set; }
         public DbSet<StudentLocation> StudentLocations { get; set; }
+        public DbSet<TutorCategory> TutorCategories { get; set; }
+        public DbSet<MatchedTuition> MatchedTuitions { get; set; }
+        public DbSet<spGetMatchedTutor> spGetMatchedTutors { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<spGetMatchedTutor>().HasNoKey();
+            OnModelCreatingPartial(modelBuilder);
+        }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

@@ -52,5 +52,20 @@ namespace TutorPins_Client.Service
             var data = JsonConvert.DeserializeObject<IEnumerable<QualificationDto>>(content);
             return data;
         }
+        public async Task<IEnumerable<TutorCategoryDto>> GetTutorCategories(string courseCategoryId)
+        {
+            var response = await _client.GetAsync("api/coursecategory/GetTutorCategories/" + courseCategoryId);
+            var content = await response.Content.ReadAsStringAsync();
+            var tutorCategories = JsonConvert.DeserializeObject<IEnumerable<TutorCategoryDto>>(content);
+            return tutorCategories;
+        }
+
+        public async Task<TutorCategoryDto> GetTutorCategory(string Id)
+        {
+            var response = await _client.GetAsync("api/coursecategory/GetTutorCategory/" + Id);
+            var content = await response.Content.ReadAsStringAsync();
+            var tutorCategory = JsonConvert.DeserializeObject<TutorCategoryDto>(content);
+            return tutorCategory;
+        }
     }
 }

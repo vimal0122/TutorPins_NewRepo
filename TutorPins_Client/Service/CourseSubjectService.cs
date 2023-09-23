@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DataAccess.Data;
+using Models;
 using Newtonsoft.Json;
 using TutorPins_Client.Service.IService;
 
@@ -31,6 +32,14 @@ namespace TutorPins_Client.Service
         public async Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourse(string courseId)
         {
             var response = await _client.GetAsync($"api/coursesubject/GetSubjectsByCourse/" + courseId);
+            var content = await response.Content.ReadAsStringAsync();
+            var courseSubjects = JsonConvert.DeserializeObject<IEnumerable<CourseSubjectDto>>(content);
+            return courseSubjects;
+        }
+
+        public async Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourseCategory(string courseCategoryId)
+        {
+            var response = await _client.GetAsync($"api/coursesubject/GetSubjectsByCourseCategory/" + courseCategoryId);
             var content = await response.Content.ReadAsStringAsync();
             var courseSubjects = JsonConvert.DeserializeObject<IEnumerable<CourseSubjectDto>>(content);
             return courseSubjects;

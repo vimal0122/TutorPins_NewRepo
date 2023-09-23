@@ -1,5 +1,6 @@
 ﻿using Models;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
 using TutorPins_Client.Service.IService;
 
 namespace TutorPins_Client.Service
@@ -50,14 +51,27 @@ namespace TutorPins_Client.Service
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TutorDto>> GetTutorsBySubject(int subjectId)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public Task<TutorDto> UpdateTutor(int tutorId, TutorDto tutorDto)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsBySubject(string Id)
+        {
+            var response = await _client.GetAsync($"api/tutor/GetTutorsBySubject/" + Id);
+            var content = await response.Content.ReadAsStringAsync();
+            var tutors = JsonConvert.DeserializeObject<IEnumerable<spGetMatchedTutorDto>>(content);
+            return tutors;
+        }
+
+        public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId)
+        {
+            var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId) };
+            var response = await _client.PostAsJsonAsync<SaveMatchedTutorRequest>($"api/tutor/SaveMatchedTutor/", request);
+            var content = await response.Content.ReadAsStringAsync();
+            return true;
         }
     }
 }

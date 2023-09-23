@@ -22,5 +22,6 @@ namespace DataAccess.Data
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<TutorCategory> TutorCategories { get; set; }
     }
 }

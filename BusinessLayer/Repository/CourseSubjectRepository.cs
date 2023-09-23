@@ -96,6 +96,33 @@ namespace BusinessLayer.Repository
             }
         }
 
+        public async Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourseCategory(string courseCategoryId)
+        {
+            try
+            {
+                await Task.Delay(1);
+
+                IEnumerable<CourseSubjectDto> courseSubjectDtos = _mapper.Map<IEnumerable<CourseSubject>, IEnumerable<CourseSubjectDto>>(_db.CourseSubjects.Include(x => x.Course).ThenInclude(t => t.CourseCategory).Where(o=>o.Course.CourseCategoryId==Convert.ToInt32(courseCategoryId)));
+                foreach (var courseSubject in courseSubjectDtos)
+                {
+                    courseSubject.LevelName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName;
+                    courseSubject.SubjectFullName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName + " - " + courseSubject.SubjectName;
+                }
+                //{
+                //    string[] subjects = Ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                //    courseSubjectDtos = courseSubjectDtos.Where(t => subjects.Contains(t.Id.ToString()));
+                //}
+                return courseSubjectDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+            
+        }
+
         public async Task<CourseSubjectDto> UpdateSubject(int courseSubjectId, CourseSubjectDto courseSubjectDto)
         {
             try

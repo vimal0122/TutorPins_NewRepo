@@ -10,5 +10,7 @@ namespace TutorPins_Client.Service.IService
         public Task<CourseCategoryDto> GetCourseCategory(int courseCategoryId);
         public Task<IEnumerable<LocationDto>> GetAllLocations();
         public Task<IEnumerable<QualificationDto>> GetAllQualifications();
+        public Task<IEnumerable<TutorCategoryDto>> GetTutorCategories(string courseCategoryId);
+        public Task<TutorCategoryDto> GetTutorCategory(string Id);
     }
 }

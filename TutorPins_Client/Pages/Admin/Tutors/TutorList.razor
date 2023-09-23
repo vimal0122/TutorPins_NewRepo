@@ -17,8 +17,7 @@
         </NavLink>
     </div>
 </div>
-<div class="row mt-4">
-    <div class="col-12">
+
         <div class="row mt-4">
             <div class="col-12">
                 <SfGrid ID="gridTutors" DataSource="@Tutors" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
@@ -40,6 +39,15 @@
                         
                         <GridColumn Field=@nameof(TutorDto.TutorEmail) HeaderText="Email" Width="100"></GridColumn>
                         <GridColumn Field=@nameof(TutorDto.TutorPhoneNo) HeaderText="ContactNo" Width="100"></GridColumn>
+                        <GridColumn Field=@nameof(TutorDto.TutorStatus) HeaderText="Status" Width="100"></GridColumn>
+                        <GridColumn Field=@nameof(TutorDto.CreatedDate) HeaderText="Registered Date" Width="100">
+                            <Template>
+                                @{
+                            var student = (context as TutorDto);
+                                    <span>@student?.CreatedDate.Value.ToString("dd-MMMM-yyyy")</span>
+                                }
+                            </Template>
+                        </GridColumn>
                         <GridColumn HeaderText="View Details" TextAlign="TextAlign.Center" Width="150">
                             <GridCommandColumns>
                                 <GridCommandColumn ButtonOption="@(new CommandButtonOptions() { CssClass="e-icons e-view-details"})" Title="View"></GridCommandColumn>
@@ -53,8 +61,7 @@
 
         </div>
         
-    </div>
-</div>
+ 
 <SfDialog Width="580" @bind-Visible="@IsVisible" ShowCloseIcon="true" IsModal="false" Target="#MyGrid">
     <DialogTemplates>
         <Header>Tutor Information</Header>
@@ -107,9 +114,15 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                        <span class="span-style">Qualification : </span><span>@RowDetails?.QualificationDetails; &nbsp;</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
                         <span class="span-style">Location : </span><span>@RowDetails?.LocationDetails; &nbsp;</span>                       
                     </div>
                 </div>
+                
                 <hr />
                 <div class="row">
                 <div class="col">
@@ -175,11 +188,13 @@
     public void OnCommandClicked(CommandClickEventArgs<TutorDto> args)
     {
         RowDetails = args.RowData;
-        RowDetails.TutorGender = genericService.GetGenders().Where(t => t.Id == RowDetails.TutorGender).FirstOrDefault().Name;
-        RowDetails.TutorCategory = genericService.GetCategories().Where(t => t.Id == RowDetails.TutorCategory).FirstOrDefault().Name;
-        RowDetails.TutorRace = genericService.GetRaces().Where(t => t.Id == RowDetails.TutorRace).FirstOrDefault().Name;
-        RowDetails.TutorMode = genericService.GetTutorModes().Where(t => t.Id == RowDetails.TutorMode).FirstOrDefault().Name;
+        RowDetails.TutorGender = genericService.GetGenders().Where(t => t.Id == RowDetails.TutorGender || t.Name == RowDetails.TutorGender).FirstOrDefault().Name;
+        RowDetails.TutorCategory = genericService.GetCategories().Where(t => t.Id == RowDetails.TutorCategory || t.Name == RowDetails.TutorCategory).FirstOrDefault().Name;
+        RowDetails.TutorRace = genericService.GetRaces().Where(t => t.Id == RowDetails.TutorRace || t.Name == RowDetails.TutorRace).FirstOrDefault().Name;
+        RowDetails.TutorMode = genericService.GetTutorModes().Where(t => t.Id == RowDetails.TutorMode || t.Name == RowDetails.TutorMode).FirstOrDefault().Name;
         RowDetails.LocationDetails = RowDetails.TutorLocations.Select(t => t.Location.LocationName).ToArray().Aggregate("", // start with empty string to handle empty list case.
+        (current, next) => current + ", " + next);
+        RowDetails.QualificationDetails = RowDetails.TutorQualifications.Select(t => t.Qualification.QualificationName).ToArray().Aggregate("", // start with empty string to handle empty list case.
         (current, next) => current + ", " + next);
         IsVisible = true;
     }

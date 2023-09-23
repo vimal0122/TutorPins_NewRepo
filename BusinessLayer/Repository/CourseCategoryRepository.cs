@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using BusinessLayer.Repository.IRepository;
 using DataAccess.Data;
+using DataAccess.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,6 +103,35 @@ namespace BusinessLayer.Repository
                 await Task.Delay(1);
                 IEnumerable<QualificationDto> objectDtos = _mapper.Map<IEnumerable<Qualification>, IEnumerable<QualificationDto>>(_db.Qualifications);
                 return objectDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<TutorCategoryDto>> GetTutorCategories(int courseCategoryId)
+        {
+            try
+            {
+                await Task.Delay(1);
+                IEnumerable<TutorCategoryDto> objectDtos = _mapper.Map<IEnumerable<TutorCategory>, IEnumerable<TutorCategoryDto>>(_db.TutorCategories.Where(t=>t.CourseCategoryId==courseCategoryId));
+                
+                return objectDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<TutorCategoryDto> GetTutorCategory(int Id)
+        {
+            try
+            {
+                await Task.Delay(1);
+                TutorCategoryDto objectDto = _mapper.Map<TutorCategory, TutorCategoryDto>(await _db.TutorCategories.FirstOrDefaultAsync(t => t.Id == Id));
+                return objectDto;
             }
             catch (Exception ex)
             {

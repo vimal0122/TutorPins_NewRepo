@@ -85,6 +85,19 @@
             </div>
         </div>
         <div class="row mt-1">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TItem="CourseCategoryDto" TValue="string" Placeholder="Select Category" @bind-Value="@SelectedCourseCategory" DataSource="@CourseCategoryList" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListEvents TItem="CourseCategoryDto" TValue="string" ValueChange="OnCourseCategoryChange" />
+                    <DropDownListFieldSettings Text="CategoryName" Value="Id" />
+                </SfDropDownList>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Tutor Category" @bind-Value="@StudentModel.PreferedTutorCategory" DataSource="@TutorCategory" FloatLabelType="FloatLabelType.Auto">
+                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </div>
+        </div>
+        <div class="row mt-1">
             <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                 <SfMultiSelect TValue="string[]" EnableSelectionOrder="false" TItem="CourseSubjectDto" Mode="VisualMode.CheckBox" FilterBarPlaceholder="Search Subjects" Placeholder="Subjects to be tutored" AllowFiltering="true" @bind-Value="@SelectedSubjects" DataSource="@courseSubjectList" FloatLabelType="FloatLabelType.Auto" EnableGroupCheckBox="true">
                     <MultiSelectEvents TItem="CourseSubjectDto" TValue="string[]" ValueChange="@SubjectChangeHandler"></MultiSelectEvents>
@@ -128,15 +141,13 @@
         </div>
         <div class="row mt-1">
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Category" @bind-Value="@StudentModel.PreferedTutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Tutoring Mode" @bind-Value="@StudentModel.PreferedTutoringMode" DataSource="@TutorMode" FloatLabelType="FloatLabelType.Auto">
                     <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                 </SfDropDownList>
 
             </div>
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Tutoring Mode" @bind-Value="@StudentModel.PreferedTutoringMode" DataSource="@TutorMode" FloatLabelType="FloatLabelType.Auto">
-                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
-                </SfDropDownList>
+                <SfNumericTextBox Placeholder="Approximate budget ($)" TValue="int?" Min=10 @bind-Value="@StudentModel.ApproxBudget" FloatLabelType="@FloatLabelType.Auto"></SfNumericTextBox>
             </div>
         </div>
 
@@ -152,11 +163,7 @@
                 
             </div>
         </div>
-        <div class="row mt-1">
-            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                <SfNumericTextBox Placeholder="Approximate budget ($)" TValue="int?" Min=10 @bind-Value="@StudentModel.ApproxBudget" FloatLabelType="@FloatLabelType.Auto"></SfNumericTextBox>
-            </div>
-        </div>
+        
         <div class="row mt-1">
 
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">

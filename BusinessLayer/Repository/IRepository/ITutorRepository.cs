@@ -13,7 +13,8 @@ namespace BusinessLayer.Repository.IRepository
         public Task<TutorDto> UpdateTutor(int tutorId, TutorDto tutorDto);
         public Task<TutorDto> GetTutor(int tutorId);
         public Task<IEnumerable<TutorDto>> GetAllTutors();
-        public Task<IEnumerable<TutorDto>> GetTutorsBySubject(int subjectId);
+        public Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsBySubject(int Id);
         public Task<IEnumerable<TutorDto>> GetTutorsByStatus(string status);
+        public Task<bool> SaveMatchedTutor(SaveMatchedTutorRequest request);
     }
 }

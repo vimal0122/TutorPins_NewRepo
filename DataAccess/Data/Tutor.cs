@@ -37,5 +37,6 @@ namespace DataAccess.Data
         public virtual ICollection<TutorSubject> TutorSubjects { get; set; }
         public virtual ICollection<TutorLocation> TutorLocations { get; set; }
         public virtual ICollection<TutorQualification> TutorQualifications { get; set; }
+        public virtual ICollection<MatchedTuition> MatchedTuitions { get; set; }
     }
 }

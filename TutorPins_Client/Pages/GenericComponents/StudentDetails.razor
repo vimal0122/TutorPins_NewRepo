@@ -1,0 +1,134 @@
+﻿@inherits StudentDetailsBase
+
+@if (StudentObject != null)
+{
+    @if (IsDetailed)
+    {
+        <div style="display:inline-flex;padding-bottom:15px">
+
+            <div style="padding-top:20px;padding-left:30px;">
+                <div style="padding-bottom:10px;">
+                    <span style="font-size:large;font-weight: bold">@StudentObject?.StudentName.ToUpper()</span>
+                </div>
+
+                <div style="padding-top:10px;">
+                    <table class="table">
+                        <tr>
+                            <th>Institution </th>
+                            <td>&nbsp;&nbsp;@StudentObject?.CurrentInstitution</td>
+                        </tr>
+                        <tr>
+                            <th>Email </th>
+                            <td>&nbsp;&nbsp;@StudentObject?.StudentEmail</td>
+                        </tr>
+                        <tr>
+                            <th>Contact No. </th>
+                            <td>&nbsp;&nbsp;@StudentObject?.StudentPhoneNo</td>
+                        </tr>
+                        <tr>
+                            <th>Status </th>
+                            <td>&nbsp;&nbsp;@StudentObject?.StudentStatus</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <span class="span-style">Prefered Gender : </span><span>@StudentObject?.PreferedTutorGender; &nbsp;</span>
+                <span class="span-style">Prefered Category : </span><span>@StudentObject?.PreferedTutorCategory; &nbsp;</span>
+                <span class="span-style">Prefered Race : </span><span>@StudentObject?.PreferedTutorRace; &nbsp;</span>
+                <span class="span-style">Prefered Mode : </span><span>@StudentObject?.PreferedTutoringMode; &nbsp;</span>
+                <span class="span-style">Earliest start Date : </span><span>@StudentObject?.EarliestStartDate.Value.ToString("dd-MMMM-yyyy"); &nbsp;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <span class="span-style">Location : </span><span>@StudentObject?.LocationDetails; &nbsp;</span>
+            </div>
+        </div>
+        <hr />
+        @if (@ShowSubjects)
+        {
+            <div class="row">
+                <div class="col">
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style=" font-size: 14px;color:#212529; font-family:' Helvetica Neue','Helvetica','Arial','sans-serif','-apple-system','BlinkMacSystemFont'">Subject Name</th>
+                                <th style=" font-size: 14px"> Frequency (hrs/Week)</th>
+                                <th style=" font-size: 14px"> Prefered Time Slots</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@StudentObject.StudentSubjects.Any())
+                            {
+                                foreach (var c in @StudentObject.StudentSubjects)
+                                {
+                                    <tr>
+                                        <td>
+                                        @c.SubjectFullName
+                                    </td>
+                                    <td>
+                                        @c.DurationPerWeek
+                                    </td>
+                                    <td>
+                                        @c.PreferedTimeSlots
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        }
+    }
+    else
+    {
+        <div class="row">            
+            <div class="form-group mt-1 col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Student Name : </span><span>@StudentObject?.StudentName; &nbsp;</span>
+            </div>
+            <div class="form-group  col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Institution : </span><span>@StudentObject?.CurrentInstitution; &nbsp;</span>
+            </div>
+            <div class="form-group  col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Email : </span><span>@StudentObject?.StudentEmail; &nbsp;</span>
+            </div>
+            <div class="form-group  col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Contact No : </span><span>@StudentObject?.StudentPhoneNo; &nbsp;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group mt-1 col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Status : </span><span>@StudentObject?.StudentStatus; &nbsp;</span>
+            </div>
+            <div class="form-group col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Prefered Gender : </span><span>@StudentObject?.PreferedTutorGender; &nbsp;</span>
+            </div>
+            <div class="form-group col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Prefered Category : </span><span>@StudentObject?.PreferedTutorCategory; &nbsp;</span>
+            </div>
+            <div class="form-group col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Prefered Race : </span><span>@StudentObject?.PreferedTutorRace; &nbsp;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group mt-1 col-xs-3 col-sm-3 col-lg-3 col-md-3">                         
+                <span class="span-style">Prefered Mode : </span><span>@StudentObject?.PreferedTutoringMode; &nbsp;</span>                
+            </div>
+            
+            <div class="form-group col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <span class="span-style">Location : </span><span>@StudentObject?.LocationDetails; &nbsp;</span>
+            </div>
+            <div class="form-group col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <span class="span-style">Earliest start Date : </span><span>@StudentObject?.EarliestStartDate.Value.ToString("dd-MMM-yyyy"); &nbsp;</span>
+            </div>
+        </div>
+        
+    }
+}

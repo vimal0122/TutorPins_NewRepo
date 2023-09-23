@@ -38,6 +38,9 @@ namespace Models
         public string AdditionalDetails { get; set; }
         public int? ApproxBudget { get; set; }
         public string OtherLocation { get; set; }
+        public string LocationDetails { get; set; }
+        public string SubjectDetails { get; set; }
+        public string MatchStatus { get; set; }
         public virtual ICollection<StudentSubjectDto> StudentSubjects { get; set; }
         public virtual ICollection<StudentLocationDto> StudentLocations { get; set; }
     }

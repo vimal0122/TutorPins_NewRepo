@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class TutorDto
+    public class spGetMatchedTutorDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -18,25 +18,19 @@ namespace Models
         public DateTime? TutorDOB { get; set; }
         public string TutorRace { get; set; }
         public string TutorCategory { get; set; }
-        public string TutorRate { get; set; }        
+        public string TutorRate { get; set; }
+        public string TutorImage { get; set; }
+        public string AlreadyMatched { get; set; }
         public string TutorMode { get; set; }
         public string TutorAcademicResults { get; set; }
         public string TutorSelf { get; set; }
         public string TutorRating { get; set; }
-        public string TutorImage { get; set; }
-        public string OtherLocation { get; set; }
         public string AdminRemarks { get; set; }
-        public string TutorStatus { get; set; }        
-        public string LocationDetails { get; set; }
-        public string SubjectDetails { get; set; }
-        public string QualificationDetails { get; set; }
+        public string TutorStatus { get; set; }
+        public string OtherLocation { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public virtual ICollection<TutorSubjectDto> TutorSubjects { get; set; }
-        public virtual ICollection<TutorLocationDto> TutorLocations { get; set; }
-        public virtual ICollection<TutorQualificationDto> TutorQualifications { get; set; }
-        public virtual ICollection<MatchedTuitionDto> MatchedTuitions { get; set; }
     }
 }

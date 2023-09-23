@@ -1,0 +1,126 @@
+﻿@page "/tutors/matchtutor/{id}"
+@inherits TutorMatchBase
+<style>
+    .rCorner{
+        border-radius: 25px;
+        border: 2px solid lightblue;
+        padding: 20px;
+        width: 98%;
+        /* height: 140px; */
+    }
+</style>
+<div class="row mt-1">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Tutors - [ @SubjectFullName ]
+        </h4>
+    </div>
+    <div class="col-4" style="text-align:right">
+        <SfButton CssClass="e-info" OnClick="@onStudentInfoClick">Student Info</SfButton>
+    </div>
+    <hr />
+</div>
+
+<div class="row mt-2">   
+    <div class="col-12 mt-1">
+        <p id="rcorners3" class="rCorner" style="height:130px;">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Tutoring Mode"  DataSource="@TutorMode" FloatLabelType="FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Gender" DataSource="@Genders" FloatLabelType="@FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Race" DataSource="@Race" FloatLabelType="@FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-1" style="text-align:right">
+                <SfButton IsPrimary="true" >Filter</SfButton>
+            </div>
+        </p>
+    </div>
+    <hr />
+    <div class="col-12 mt-2">
+        <SfGrid ID="gridTutors" DataSource="@Tutors" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <GridEvents CommandClicked="OnCommandClicked" TValue="spGetMatchedTutorDto"> </GridEvents>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridColumns>
+                <GridColumn HeaderText="Tutor Image" TextAlign="TextAlign.Center" Width="80">
+                    <Template>
+                        @{
+                            var TutorInfo = (context as spGetMatchedTutorDto);
+                            <div class="image">
+                                <img style="width:50px;border-radius: 50%" src="@UriHelper.ToAbsoluteUri($"{@Configuration["BaseAPIUrl"]}/api/imagedata/{TutorInfo.TutorImage}")" alt="@TutorInfo.TutorName" />
+                            </div>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(spGetMatchedTutorDto.TutorName) HeaderText="Name" Width="100"></GridColumn>
+
+                <GridColumn Field=@nameof(spGetMatchedTutorDto.TutorEmail) HeaderText="Email" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetMatchedTutorDto.TutorPhoneNo) HeaderText="ContactNo" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetMatchedTutorDto.TutorStatus) HeaderText="Status" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetMatchedTutorDto.AlreadyMatched) HeaderText="Assigned?" Width="100"></GridColumn>
+                @* <GridColumn Field=@nameof(spGetMatchedTutorDto.CreatedDate) HeaderText="Registered Date" Width="100">
+                    <Template>
+                        @{
+                            var student = (context as spGetMatchedTutorDto);
+                            <span>@student?.CreatedDate.Value.ToString("dd-MMMM-yyyy")</span>
+                        }
+                    </Template>
+                </GridColumn> *@
+                <GridColumn HeaderText="Details" TextAlign="TextAlign.Center" Width="100">
+                    <GridCommandColumns>
+                        <GridCommandColumn ButtonOption="@(new CommandButtonOptions() { CssClass="e-icons e-view-details"})" Title="View"></GridCommandColumn>
+                    </GridCommandColumns>
+                </GridColumn>
+                <GridColumn HeaderText="Assign" TextAlign="TextAlign.Center" Width="150">
+                    <GridCommandColumns>
+                        <GridCommandColumn ButtonOption="@(new CommandButtonOptions() { IconCss = "e-icons e-add"})" Title="add"></GridCommandColumn>
+                    </GridCommandColumns>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+        
+        
+       
+        <SfDialog @ref="Dialog" Width="250px" Visible="false" ShowCloseIcon="true" IsModal="true">
+            <DialogEvents Closed="Closed"></DialogEvents>
+            <DialogTemplates>
+                @*Here you can customize the Header and Content of delete confirmation dialog*@
+                <Header> Assign Tutor</Header>
+                <Content> Are you sure about match tutor ?</Content>
+            </DialogTemplates>
+            <DialogButtons>
+                <DialogButton OnClick="@OkClick" Content="OK" IsPrimary="true"></DialogButton>
+                <DialogButton OnClick="@CancelClick" Content="Cancel"></DialogButton>
+            </DialogButtons>
+        </SfDialog>
+        <SfDialog @ref="StudentDialog" Width="580" Visible="false" ShowCloseIcon="true" IsModal="true">
+            <DialogEvents Closed="StudentInfoClosed"></DialogEvents>
+            <DialogTemplates>
+                <Header>Student Information</Header>
+                <Content>
+                    
+                        <StudentDetails IsDetailed="true" ShowSubjects="false" StudentObject="@student"></StudentDetails>
+                   
+                </Content>
+            </DialogTemplates>
+            <DialogPositionData X="@Xvalue" Y="@Yvalue"></DialogPositionData>
+        </SfDialog>
+        <SfSpinner @ref="@SpinnerObj"></SfSpinner>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-2" style="text-align:right">
+        <SfButton IsPrimary="true" OnClick="@onBackclick">Back</SfButton>
+    </div>
+
+</div>

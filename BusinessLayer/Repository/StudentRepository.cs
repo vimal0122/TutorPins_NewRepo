@@ -45,7 +45,19 @@ namespace BusinessLayer.Repository
             try
             {
                 await Task.Delay(1);
-                IEnumerable<StudentDto> studentDtos = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(_db.Students);
+                IEnumerable<StudentDto> studentDtos = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(_db.Students.Include(t => t.StudentLocations).ThenInclude(x => x.Location).Include(t => t.StudentSubjects).ThenInclude(x => x.CourseSubject));
+                /*
+                using (var sequenceEnum = studentDtos.GetEnumerator())
+                {
+                    while (sequenceEnum.MoveNext())
+                    {
+                        // Do something with sequenceEnum.Current.
+                        int c = sequenceEnum.Current.StudentSubjects.Count();
+                        int m = sequenceEnum.Current.StudentSubjects.Where(t=>t.TutorMatched==true).Count();
+                        sequenceEnum.Current.MatchStatus = string.Format("{0}/{1}", m.ToString(), c.ToString());
+                    }
+                }
+                */
                 return studentDtos;
             }
             catch (Exception ex)
@@ -58,7 +70,7 @@ namespace BusinessLayer.Repository
         {
             try
             {                
-                StudentDto studentDto = _mapper.Map<Student, StudentDto>(await _db.Students.FirstOrDefaultAsync(t=>t.Id==studentId));
+                StudentDto studentDto = _mapper.Map<Student, StudentDto>(await _db.Students.Include(t => t.StudentLocations.Where(s=>s.IsActive==true)).ThenInclude(x => x.Location).Include(t => t.StudentSubjects).ThenInclude(x => x.CourseSubject).FirstOrDefaultAsync(t=>t.Id==studentId));
                 return studentDto;
             }
             catch (Exception ex)
@@ -84,6 +96,19 @@ namespace BusinessLayer.Repository
         public Task<IEnumerable<StudentDto>> GetStudentsBySubject(int subjectId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<StudentSubjectDto> GetStudentSubject(int Id)
+        {
+            try
+            {
+                StudentSubjectDto objDto = _mapper.Map<StudentSubject, StudentSubjectDto>(await _db.StudentSubjects.Include(t => t.Student).ThenInclude(t => t.StudentLocations.Where(s => s.IsActive == true)).ThenInclude(d=>d.Location).Include(x=>x.CourseSubject).FirstOrDefaultAsync(t => t.Id == Id));
+                return objDto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public Task<StudentDto> UpdateStudent(int studentId, StudentDto studentDto)

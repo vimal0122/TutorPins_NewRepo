@@ -1,0 +1,66 @@
+﻿@page "/students/studentsubjects/{id}"
+@inherits StudentSubjectsBase
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            @StudentName - Subjects
+        </h4>
+    </div>
+    
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+
+
+        <SfGrid ID="gridStudents" @ref="Grid" DataSource="@SubjectDetails" AllowPaging="true" AllowSorting="true" EnablePersistence=true AllowFiltering="true">
+           
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridColumns>
+                
+                <GridColumn Field=@nameof(StudentSubjectDto.SubjectFullName) HeaderText="Subject" Width="115"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.DurationPerWeek) HeaderText="(Hours/week)" Width="95"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.PreferedTimeSlots) HeaderText="Time Slots" Width="90"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.TutorMatched) HeaderText="Match Tutor" Width="70">
+                    <Template>
+                        @{
+                            var student = (context as StudentSubjectDto);
+                            <div class="template_checkbox">
+                                @if (student.TutorMatched.HasValue && student.TutorMatched.Value)
+                                {
+                                    <input type="checkbox" checked disabled>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" disabled>
+                                }
+                            </div>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.CreatedDate) HeaderText="Requested On" Width="80" >
+                    <Template>
+                        @{
+                            var student = (context as StudentSubjectDto);
+                            <span>@student?.CreatedDate.Value.ToString("dd-MMM-yyyy")</span>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn  TextAlign="TextAlign.Center" Width="100">
+                    <Template>
+                        @{
+                            var s = (context as StudentSubjectDto);
+                            <div>
+                                <a href="/tutors/matchtutor/@s.Id">Match Tutor</a>
+                            </div>
+                        }
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+        <SfSpinner @ref="@SpinnerObj"></SfSpinner>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-2" style="text-align:right">
+        <SfButton IsPrimary="true" OnClick="@onBackclick">Back</SfButton>
+    </div>
+</div>

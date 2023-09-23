@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Repository.IRepository;
+﻿using BusinessLayer.Repository;
+using BusinessLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -26,6 +27,18 @@ namespace TutorPins_Api.Controllers
         public async Task<TutorDto> AddTutor([FromBody] TutorDto objectDto)
         {
             return await _Repository.CreateTutor(objectDto);
+        }
+        [HttpGet]
+        [Route("GetTutorsBySubject/{id}")]
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsBySubject(string id)
+        {
+            return await _Repository.GetTutorsBySubject(Convert.ToInt32(id));
+        }
+        [HttpPost]
+        [Route("SaveMatchedTutor")]
+        public async Task<bool> SaveMatchedTutor([FromBody] SaveMatchedTutorRequest request)
+        {
+            return await _Repository.SaveMatchedTutor(request);
         }
     }
 }

@@ -39,5 +39,11 @@ namespace TutorPins_Api.Controllers
         {
             return await _courseSubjectRepository.GetSubjectsByCourse(id);
         }
+        [HttpGet]
+        [Route("GetSubjectsByCourseCategory/{id}")]
+        public async Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourseCategory(string id)
+        {
+            return await _courseSubjectRepository.GetSubjectsByCourseCategory(id);
+        }
     }
 }

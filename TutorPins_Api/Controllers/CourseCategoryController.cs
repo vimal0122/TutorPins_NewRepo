@@ -49,5 +49,17 @@ namespace TutorPins_Api.Controllers
             var allLocations = await _courseCategoryRepository.GetAllQualifications();
             return Ok(allLocations);
         }
+        [HttpGet]
+        [Route("GetTutorCategories/{id}")]
+        public async Task<IEnumerable<TutorCategoryDto>> GetTutorCategories(string id)
+        {
+            return await _courseCategoryRepository.GetTutorCategories(Convert.ToInt32(id));
+        }
+        [HttpGet]
+        [Route("GetTutorCategory/{id}")]
+        public async Task<TutorCategoryDto> GetTutorCategory(string id)
+        {
+            return await _courseCategoryRepository.GetTutorCategory(Convert.ToInt32(id));
+        }
     }
 }

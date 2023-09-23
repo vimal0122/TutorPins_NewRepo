@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Repository.IRepository;
 using DataAccess.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
@@ -65,9 +66,46 @@ namespace BusinessLayer.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TutorDto>> GetTutorsBySubject(int subjectId)
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsBySubject(int Id)
         {
-            throw new NotImplementedException();
+            await Task.Delay(1);
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@Id", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=Id },
+
+                };
+            //var list = await _db.Set<spGetMatchedTutor>().FromSqlRaw("[dbo].[spGetMatchedTutors]  @Id", param).ToListAsync();
+            var list = _mapper.Map<IEnumerable<spGetMatchedTutor>, IEnumerable<spGetMatchedTutorDto>>(_db.Set<spGetMatchedTutor>().FromSqlRaw("[dbo].[spGetMatchedTutors]  @Id", param));
+            
+            return list;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+}
+
+        public async Task<bool> SaveMatchedTutor(SaveMatchedTutorRequest request)
+        {
+            await Task.Delay(1);
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@StudentSubjectId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.StudentSubjectId },
+                new SqlParameter(){ParameterName="@TutorId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.TutorId },
+                new SqlParameter(){ParameterName="@UserId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.UserId },
+
+                };                
+                await _db.Database.ExecuteSqlRawAsync("[dbo].[spSaveMatchedTutors] @StudentSubjectId, @TutorId,@UserId", param);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public Task<TutorDto> UpdateTutor(int tutorId, TutorDto studentDto)

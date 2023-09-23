@@ -29,15 +29,21 @@ namespace TutorPins_Api.Controllers
             return await _Repository.CreateStudent(objectDto);
         }
         [HttpGet("{id}")]
-        public async Task<StudentDto> Get(int id)
+        public async Task<StudentDto> Get(string id)
         {
-            return await _Repository.GetStudent(id);
+            return await _Repository.GetStudent(Convert.ToInt32(id));
         }
         [HttpGet]
         [Route("GetStudentByStatus/{status}")]
         public async Task<IEnumerable<StudentDto>> GetStudentByStatus(string status)
         {
             return await _Repository.GetStudentsByStatus(status);
+        }
+        [HttpGet]
+        [Route("GetStudentSubject/{Id}")]
+        public async Task<StudentSubjectDto> GetStudentSubject(string Id)
+        {
+            return await _Repository.GetStudentSubject(Convert.ToInt32(Id));
         }
     }
 }

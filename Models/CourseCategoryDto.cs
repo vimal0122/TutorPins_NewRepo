@@ -18,5 +18,7 @@ namespace Models
         public DateTime CreatedDate { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public virtual ICollection<CourseDto> Courses { get; set; }
+        public virtual ICollection<TutorCategoryDto> TutorCategories { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace BusinessLayer.Repository.IRepository
         public Task<CourseSubjectDto> GetSubject(int courseSubjectId);
         public Task<IEnumerable<CourseSubjectDto>> GetAllSubjects();
         public Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourse(string courseId);
+        public Task<IEnumerable<CourseSubjectDto>> GetSubjectsByCourseCategory(string courseCategoryId);
     }
 }

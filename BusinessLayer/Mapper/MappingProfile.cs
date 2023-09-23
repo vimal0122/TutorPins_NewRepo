@@ -54,6 +54,15 @@ namespace BusinessLayer.Mapper
             CreateMap<StudentLocationDto, StudentLocation>();
             CreateMap<StudentLocation, StudentLocationDto>();
 
+            CreateMap<TutorCategoryDto, TutorCategory>();
+            CreateMap<TutorCategory, TutorCategoryDto>();
+
+            CreateMap<spGetMatchedTutorDto, spGetMatchedTutor>();
+            CreateMap<spGetMatchedTutor, spGetMatchedTutorDto>();
+
+            CreateMap<MatchedTuitionDto, MatchedTuition>();
+            CreateMap<MatchedTuition, MatchedTuitionDto>();
+
         }
     }
 }

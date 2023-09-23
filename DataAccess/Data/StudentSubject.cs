@@ -20,10 +20,12 @@ namespace DataAccess.Data
         public string PreferedTimeSlots { get; set; }
         public string SubjectFullName { get; set; }
         public string CreatedBy { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
-        public string UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public bool? TutorMatched { get;set; }
         public virtual Student Student { get; set; }
         public virtual CourseSubject CourseSubject { get; set; }
+        public virtual ICollection<MatchedTuition> MatchedTuitions { get; set; }
     }
 }

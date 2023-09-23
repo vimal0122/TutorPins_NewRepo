@@ -40,6 +40,7 @@ namespace DataAccess.Data
         public string HoursPerSubject           {get;set;}
         public string AdditionalDetails { get; set; }
         public int? ApproxBudget { get; set; }
+        public string MatchStatus { get; set; }
         public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
         public virtual ICollection<StudentLocation> StudentLocations { get; set; }
     }
