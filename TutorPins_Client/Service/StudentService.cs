@@ -29,6 +29,14 @@ namespace TutorPins_Client.Service
             return students;
         }
 
+        public async Task<IEnumerable<StudentDto>> GetMatchedStudents()
+        {
+            var response = await _client.GetAsync($"api/student/GetMatchedStudents");
+            var content = await response.Content.ReadAsStringAsync();
+            var students = JsonConvert.DeserializeObject<IEnumerable<StudentDto>>(content);
+            return students;
+        }
+
         public async Task<StudentDto> GetStudent(int studentId)
         {
             var response = await _client.GetAsync($"api/student/" + studentId.ToString());

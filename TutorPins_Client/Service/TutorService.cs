@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DataAccess.Data;
+using Models;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using TutorPins_Client.Service.IService;
@@ -41,9 +42,12 @@ namespace TutorPins_Client.Service
             return tutors;
         }
 
-        public Task<TutorDto> GetTutor(int tutorId)
+        public async Task<TutorDto> GetTutor(string tutorId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"api/tutor/" + tutorId);
+            var content = await response.Content.ReadAsStringAsync();
+            var tutor = JsonConvert.DeserializeObject<TutorDto>(content);
+            return tutor;
         }
 
         public Task<IEnumerable<TutorDto>> GetTutorsByStatus(string status)
@@ -66,9 +70,9 @@ namespace TutorPins_Client.Service
             return tutors;
         }
 
-        public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId)
+        public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId,string matchStatusId)
         {
-            var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId) };
+            var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId), MatchStatusId= Convert.ToInt32(matchStatusId) };
             var response = await _client.PostAsJsonAsync<SaveMatchedTutorRequest>($"api/tutor/SaveMatchedTutor/", request);
             var content = await response.Content.ReadAsStringAsync();
             return true;

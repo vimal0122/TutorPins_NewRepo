@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using Syncfusion.Blazor.SplitButtons
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="page">
     
@@ -10,11 +11,48 @@
             
             <a href="/public/studentregister"><i class="fa fa-fw fa-user"></i> Request a Tutor</a>
             <a href="/public/tutorregister"><i class="fa fa-fw fa-user"></i> Register as a Tutor</a>
-            <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
-            <a href="/admin"><i class="fa fa-fw fa-user"></i>Admin Login</a>
+            &nbsp;&nbsp;
+            @* <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> *@
+            @* <a href="/admin"><i class="fa fa-fw fa-user"></i>Admin Login</a> *@
+            <SfDropDownButton Content="Login" IconCss="e-icons e-people">
+                        <DropDownMenuItems>
+                            <DropDownMenuItem Text="Tutor" IconCss=@DASHBOARD></DropDownMenuItem>
+                            <DropDownMenuItem Text="Student" IconCss=@NOTIFICATION></DropDownMenuItem>
+                            <DropDownMenuItem Text="Administrator" IconCss=@SETTINGS></DropDownMenuItem>                            
+                        </DropDownMenuItems>
+                    </SfDropDownButton>
         </div>
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+<style>
+
+    .e-dropdown-btn, .e-btn {
+
+        /* background-color: rgb(240,240,240) !important; */
+        background-color: #f7f7f7 !important;
+        border: none !important;
+        color: #0071c1 !important;
+    }
+
+ 
+
+        .e-dropdown-btn:focus, .e-dropdown-btn:active, .e-dropdown-btn:hover,
+
+        .e-btn:focus, .e-btn:active, .e-btn:hover {
+
+            background-color: #f7f7f7 !important;
+            color: #0071c1 !important;
+            box-shadow: none !important;
+
+        }
+
+</style>
+@code {
+    const string DASHBOARD = "e-icons e-user";
+    const string NOTIFICATION = "e-icons e-user";
+    const string SETTINGS = "e-icons e-settings";
+    const string LOGOUT = "e-icons e-logout";
+}

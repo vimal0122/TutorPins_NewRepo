@@ -24,6 +24,7 @@ namespace Models
         public string CourseName { get; set; }
         public string SubjectName { get; set; }
         public bool? TutorMatched { get; set; }
+        public string TutorMatchStatus { get; set; }
         public string PreferedTimeSlots { get; set; }
         public virtual StudentDto Student { get; set; }
         public virtual CourseSubjectDto CourseSubject { get; set; }

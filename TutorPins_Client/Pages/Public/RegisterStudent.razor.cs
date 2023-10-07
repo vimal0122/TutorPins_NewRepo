@@ -115,6 +115,7 @@ namespace TutorPins_Client.Pages.Public
                     studentSubject.SubjectId = Convert.ToInt32(t.Id);
                     studentSubject.SubjectFullName = t.SubjectFullName;
                     studentSubject.CreatedDate = DateTime.Now;
+                    studentSubject.TutorMatchStatus = "Requested";
                     //studentSubject.DurationPerWeek = HourlyRate;
 
                     StoreSubjectDetails.Add(studentSubject);

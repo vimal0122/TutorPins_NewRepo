@@ -56,9 +56,20 @@ namespace BusinessLayer.Repository
             }
         }
 
-        public Task<TutorDto> GetTutor(int tutorId)
+        public async Task<TutorDto> GetTutor(int tutorId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Delay(1);
+                TutorDto tutorDtos = _mapper.Map<Tutor, TutorDto>( await _db.Tutors.Include(t => t.TutorLocations).ThenInclude(x => x.Location).Include(t => t.TutorQualifications).ThenInclude(t => t.Qualification).Include(t => t.TutorSubjects).ThenInclude(x => x.CourseSubject).FirstOrDefaultAsync(t => t.Id == tutorId));
+
+                return tutorDtos;
+                
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public Task<IEnumerable<TutorDto>> GetTutorsByStatus(string status)
@@ -96,10 +107,11 @@ namespace BusinessLayer.Repository
                 {
                 new SqlParameter(){ParameterName="@StudentSubjectId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.StudentSubjectId },
                 new SqlParameter(){ParameterName="@TutorId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.TutorId },
+                new SqlParameter(){ParameterName="@MatchStatusId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.MatchStatusId },
                 new SqlParameter(){ParameterName="@UserId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.UserId },
 
                 };                
-                await _db.Database.ExecuteSqlRawAsync("[dbo].[spSaveMatchedTutors] @StudentSubjectId, @TutorId,@UserId", param);
+                await _db.Database.ExecuteSqlRawAsync("[dbo].[spSaveMatchedTutors] @StudentSubjectId, @TutorId,@MatchStatusId,@UserId", param);
                 return true;
             }
             catch (Exception ex)

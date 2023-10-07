@@ -23,5 +23,9 @@ namespace TutorPins_Client.Service.IService
         {
             return GenericClass.GetTutorModes();
         }
+        public List<GeneralText> GetMatchStatusValues()
+        {
+            return GenericClass.GetMatchStatus();
+        }
     }
 }

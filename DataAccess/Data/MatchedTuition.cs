@@ -26,6 +26,8 @@ namespace DataAccess.Data
 		public DateTime? CreatedDate { get;set;}
 		public string UpdatedBy { get;set;}
 		public DateTime? UpdatedDate { get;set;}
+        public string TutorMatchStatus { get; set; }
+        
         public virtual Tutor Tutor { get; set; }
         public virtual StudentSubject StudentSubject { get; set; }
     }

@@ -23,11 +23,13 @@ namespace TutorPins_Client.Pages.Admin.Students
         protected SfSpinner SpinnerObj;
         protected SfGrid<StudentSubjectDto> Grid;
         protected string StudentName;
+        string studentStatus;
         protected override async Task OnInitializedAsync()
         {
             var studentdto = await studentService.GetStudent(Convert.ToInt32(Id));
             tempSubjectDetails = studentdto.StudentSubjects.ToList();
             StudentName= studentdto.StudentName.ToUpper();
+            studentStatus = studentdto.StudentStatus.ToLower();
             SubjectDetails = tempSubjectDetails;
             this.StateHasChanged();
            
@@ -49,6 +51,7 @@ namespace TutorPins_Client.Pages.Admin.Students
             if (firstRender)
             {
                 var studentdto = await studentService.GetStudent(Convert.ToInt32(Id));
+                studentStatus = studentdto.StudentStatus.ToLower();
                 SubjectDetails = studentdto.StudentSubjects.ToList(); 
             }
         }
@@ -58,6 +61,9 @@ namespace TutorPins_Client.Pages.Admin.Students
         }
         private void Back()
         {
+            if(studentStatus == "matched")
+                UriHelper.NavigateTo("matchedstudents");
+            else
             UriHelper.NavigateTo("students");
         }
     }

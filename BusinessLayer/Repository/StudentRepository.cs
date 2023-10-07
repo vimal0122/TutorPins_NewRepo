@@ -26,7 +26,7 @@ namespace BusinessLayer.Repository
             {
                 Student student = _mapper.Map<StudentDto, Student>(studentDto);
                 student.CreatedDate = DateTime.Now;
-                student.StudentStatus = "Registered";
+                student.StudentStatus = "Requested";
                 student.CreatedBy = "1";
                 var addedStudent = await _db.Students.AddAsync(student);
                 await _db.SaveChangesAsync();
@@ -45,7 +45,33 @@ namespace BusinessLayer.Repository
             try
             {
                 await Task.Delay(1);
-                IEnumerable<StudentDto> studentDtos = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(_db.Students.Include(t => t.StudentLocations).ThenInclude(x => x.Location).Include(t => t.StudentSubjects).ThenInclude(x => x.CourseSubject));
+                IEnumerable<StudentDto> studentDtos = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(_db.Students.Where(t=>t.StudentStatus != "Matched").Include(t => t.StudentLocations).ThenInclude(x => x.Location).Include(t => t.StudentSubjects).ThenInclude(x => x.CourseSubject));
+                /*
+                using (var sequenceEnum = studentDtos.GetEnumerator())
+                {
+                    while (sequenceEnum.MoveNext())
+                    {
+                        // Do something with sequenceEnum.Current.
+                        int c = sequenceEnum.Current.StudentSubjects.Count();
+                        int m = sequenceEnum.Current.StudentSubjects.Where(t=>t.TutorMatched==true).Count();
+                        sequenceEnum.Current.MatchStatus = string.Format("{0}/{1}", m.ToString(), c.ToString());
+                    }
+                }
+                */
+                return studentDtos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<StudentDto>> GetMatchedStudents()
+        {
+            try
+            {
+                await Task.Delay(1);
+                IEnumerable<StudentDto> studentDtos = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(_db.Students.Where(t => t.StudentStatus == "Matched").Include(t => t.StudentLocations).ThenInclude(x => x.Location).Include(t => t.StudentSubjects).ThenInclude(x => x.CourseSubject));
                 /*
                 using (var sequenceEnum = studentDtos.GetEnumerator())
                 {

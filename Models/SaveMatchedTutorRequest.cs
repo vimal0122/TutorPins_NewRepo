@@ -10,6 +10,7 @@ namespace Models
     {
         public int StudentSubjectId { get; set; }
         public int TutorId { get; set; }
+        public int MatchStatusId { get; set; }
         public int UserId { get; set; } = 1;
     }
 }

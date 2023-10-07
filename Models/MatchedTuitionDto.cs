@@ -18,6 +18,7 @@ namespace Models
         public string TutorFeedBack { get; set; }
         public string AdminRemarks { get; set; }
         public string TutitonTime { get; set; }
+        public string TutorMatchStatus { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

@@ -21,7 +21,7 @@
                 <GridColumn Field=@nameof(StudentSubjectDto.SubjectFullName) HeaderText="Subject" Width="115"></GridColumn>
                 <GridColumn Field=@nameof(StudentSubjectDto.DurationPerWeek) HeaderText="(Hours/week)" Width="95"></GridColumn>
                 <GridColumn Field=@nameof(StudentSubjectDto.PreferedTimeSlots) HeaderText="Time Slots" Width="90"></GridColumn>
-                <GridColumn Field=@nameof(StudentSubjectDto.TutorMatched) HeaderText="Match Tutor" Width="70">
+                @* <GridColumn Field=@nameof(StudentSubjectDto.TutorMatched) HeaderText="Match Tutor" Width="70" Visible="false">
                     <Template>
                         @{
                             var student = (context as StudentSubjectDto);
@@ -37,7 +37,7 @@
                             </div>
                         }
                     </Template>
-                </GridColumn>
+                </GridColumn> *@
                 <GridColumn Field=@nameof(StudentSubjectDto.CreatedDate) HeaderText="Requested On" Width="80" >
                     <Template>
                         @{
@@ -46,6 +46,7 @@
                         }
                     </Template>
                 </GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.TutorMatchStatus) HeaderText="Match Status" Width="90"></GridColumn>
                 <GridColumn  TextAlign="TextAlign.Center" Width="100">
                     <Template>
                         @{

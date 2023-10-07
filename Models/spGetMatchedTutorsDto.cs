@@ -32,5 +32,6 @@ namespace Models
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public int MatchStatusId { get; set; }
     }
 }

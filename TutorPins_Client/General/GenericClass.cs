@@ -49,13 +49,37 @@
             };
             return TutorMode;
         }
+        public static List<GeneralText> GetMatchStatus()
+        {
+            List<GeneralText> MatchStatus = new List<GeneralText>
+            {
+                new GeneralText() { Id = "1", Name = "Requested" },
+                new GeneralText() { Id = "2", Name = "Broadcasted" },
+                new GeneralText() { Id = "3", Name = "Accepted" },
+                new GeneralText() { Id = "4", Name = "Rejected" },
+                new GeneralText() { Id = "5", Name = "Matched" },
+                new GeneralText() { Id = "6", Name = "Completed" },
+                new GeneralText() { Id = "7", Name = "Terminated" }
 
-        
+            };
+            return MatchStatus;
+        }
+
     }
     public class GeneralText
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
+    }
+    public enum MatchStatusValues
+    {
+        Requested=1,  
+        Broadcasted,  
+        Accepted,     
+        Rejected,     
+        Matched,      
+        Completed,    
+        Terminated    
     }
 }

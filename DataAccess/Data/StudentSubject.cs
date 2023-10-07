@@ -24,7 +24,8 @@ namespace DataAccess.Data
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public bool? TutorMatched { get;set; }
-        public virtual Student Student { get; set; }
+        public string TutorMatchStatus { get; set; }
+        public virtual Student Student { get; set; }        
         public virtual CourseSubject CourseSubject { get; set; }
         public virtual ICollection<MatchedTuition> MatchedTuitions { get; set; }
     }

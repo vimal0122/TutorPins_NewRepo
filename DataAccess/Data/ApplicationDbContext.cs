@@ -25,6 +25,7 @@ namespace DataAccess.Data
         public DbSet<StudentLocation> StudentLocations { get; set; }
         public DbSet<TutorCategory> TutorCategories { get; set; }
         public DbSet<MatchedTuition> MatchedTuitions { get; set; }
+        public DbSet<MatchStatusValue> MatchStatusValues { get; set; }
         public DbSet<spGetMatchedTutor> spGetMatchedTutors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

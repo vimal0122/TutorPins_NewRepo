@@ -22,6 +22,13 @@ namespace TutorPins_Api.Controllers
             var allObjects = await _Repository.GetAllStudents();
             return Ok(allObjects);
         }
+        [HttpGet]
+        [Route("GetMatchedStudents")]
+        public async Task<IActionResult> GetMatchedStudents()
+        {
+            var allObjects = await _Repository.GetMatchedStudents();
+            return Ok(allObjects);
+        }
         [HttpPost]
         [Route("AddStudent")]
         public async Task<StudentDto> AddStudent([FromBody] StudentDto objectDto)

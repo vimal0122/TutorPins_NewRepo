@@ -63,6 +63,9 @@ namespace BusinessLayer.Mapper
             CreateMap<MatchedTuitionDto, MatchedTuition>();
             CreateMap<MatchedTuition, MatchedTuitionDto>();
 
+            CreateMap<MatchStatusValueDto, MatchStatusValue>();
+            CreateMap<MatchStatusValue, MatchStatusValueDto>();
+
         }
     }
 }

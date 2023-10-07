@@ -40,5 +40,10 @@ namespace TutorPins_Api.Controllers
         {
             return await _Repository.SaveMatchedTutor(request);
         }
+        [HttpGet("{id}")]
+        public async Task<TutorDto> Get(string id)
+        {
+            return await _Repository.GetTutor(Convert.ToInt32(id));
+        }
     }
 }
