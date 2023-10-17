@@ -9,6 +9,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
 using Syncfusion.Blazor.Notifications;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace TutorPins_Client.Pages.Public
 {
@@ -50,7 +51,7 @@ namespace TutorPins_Client.Pages.Public
         private string SubjectName = string.Empty;
         private string HourlyRate = string.Empty;
         string imagePath = string.Empty;
-
+        protected EditContext editContexttutor;
 
         string courseCategoryId { get; set; }
         public DateTime MinDate { get; set; } = new DateTime(DateTime.Now.Year - 85, 1, 01);
@@ -83,7 +84,8 @@ namespace TutorPins_Client.Pages.Public
         protected string ToastContent = "Tutor Registered Successfully.";
         protected override async Task OnInitializedAsync()
         {
-            await Task.Delay(2000);
+            await base.OnInitializedAsync();
+            editContexttutor = new EditContext(TutorModel);
             IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
             courseCategoryList = courseCategories.ToList();
             IEnumerable<LocationDto> locations = await courseCategoryService.GetAllLocations();

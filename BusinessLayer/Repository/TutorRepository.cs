@@ -89,14 +89,41 @@ namespace BusinessLayer.Repository
                 };
             //var list = await _db.Set<spGetMatchedTutor>().FromSqlRaw("[dbo].[spGetMatchedTutors]  @Id", param).ToListAsync();
             var list = _mapper.Map<IEnumerable<spGetMatchedTutor>, IEnumerable<spGetMatchedTutorDto>>(_db.Set<spGetMatchedTutor>().FromSqlRaw("[dbo].[spGetMatchedTutors]  @Id", param));
-            
+                
             return list;
             }
             catch (Exception ex)
             {
                 return null;
             }
-}
+        }
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsByFilters(FilterTutorRequest request)
+        {
+            await Task.Delay(1);
+           
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@Id", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.Id },
+                new SqlParameter() { ParameterName = "@FilterTutorCategoryId", SqlDbType = System.Data.SqlDbType.NVarChar, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = string.IsNullOrWhiteSpace(request.FilterTutorCategoryId)?DBNull.Value:request.FilterTutorCategoryId },
+                new SqlParameter() { ParameterName = "@FilterTutorGenderId", SqlDbType = System.Data.SqlDbType.NVarChar, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = string.IsNullOrWhiteSpace(request.FilterTutorGenderId)?DBNull.Value:request.FilterTutorGenderId },
+                new SqlParameter() { ParameterName = "@FilterRaceId", SqlDbType = System.Data.SqlDbType.NVarChar, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = string.IsNullOrWhiteSpace(request.FilterRaceId)?DBNull.Value:request.FilterRaceId },
+                new SqlParameter() { ParameterName = "@FilterRatingValue", SqlDbType = System.Data.SqlDbType.NVarChar, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = string.IsNullOrWhiteSpace(request.FilterRatingValue)?DBNull.Value:request.FilterRatingValue },
+                new SqlParameter() { ParameterName = "@FilterLocationId", SqlDbType = System.Data.SqlDbType.Int, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = request.FilterLocationId.HasValue?request.FilterLocationId.Value:DBNull.Value },
+                new SqlParameter() { ParameterName = "@FilterModeId", SqlDbType = System.Data.SqlDbType.NVarChar, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = string.IsNullOrWhiteSpace(request.FilterModeId)?DBNull.Value:request.FilterModeId },
+                new SqlParameter() { ParameterName = "@HourlyRateMinValue", SqlDbType = System.Data.SqlDbType.Int, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = request.HourlyRateMinValue.HasValue?request.HourlyRateMinValue.Value:DBNull.Value },
+                new SqlParameter() { ParameterName = "@HourlyRateMaxValue", SqlDbType = System.Data.SqlDbType.Int, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = request.HourlyRateMaxValue.HasValue?request.HourlyRateMaxValue.Value:DBNull.Value },
+            };
+                
+                var list = _mapper.Map<IEnumerable<spGetMatchedTutorsByFilter>, IEnumerable<spGetMatchedTutorDto>>(_db.Set<spGetMatchedTutorsByFilter>().FromSqlRaw("[dbo].[spGetMatchedTutorsByFilters]  @Id,@FilterTutorCategoryId,@FilterTutorGenderId,@FilterRaceId,@FilterRatingValue,@FilterLocationId,@FilterModeId,@HourlyRateMinValue,@HourlyRateMaxValue", param));
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         public async Task<bool> SaveMatchedTutor(SaveMatchedTutorRequest request)
         {

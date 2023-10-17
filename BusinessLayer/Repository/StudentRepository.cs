@@ -128,7 +128,7 @@ namespace BusinessLayer.Repository
         {
             try
             {
-                StudentSubjectDto objDto = _mapper.Map<StudentSubject, StudentSubjectDto>(await _db.StudentSubjects.Include(t => t.Student).ThenInclude(t => t.StudentLocations.Where(s => s.IsActive == true)).ThenInclude(d=>d.Location).Include(x=>x.CourseSubject).FirstOrDefaultAsync(t => t.Id == Id));
+                StudentSubjectDto objDto = _mapper.Map<StudentSubject, StudentSubjectDto>(await _db.StudentSubjects.Include(t => t.Student).ThenInclude(t => t.StudentLocations.Where(s => s.IsActive == true)).ThenInclude(d=>d.Location).Include(x=>x.CourseSubject).ThenInclude(t=>t.Course).ThenInclude(t => t.CourseCategory).FirstOrDefaultAsync(t => t.Id == Id));
                 return objDto;
             }
             catch (Exception ex)

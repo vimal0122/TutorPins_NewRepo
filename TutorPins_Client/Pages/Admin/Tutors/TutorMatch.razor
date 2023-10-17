@@ -23,32 +23,62 @@
 
 <div class="row mt-2">   
     <div class="col-12 mt-1">
-        <p id="rcorners3" class="rCorner" style="height:120px;">
+        <p id="rcorners3" class="rCorner" style="height:195px;">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
-                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Tutoring Mode"  DataSource="@TutorMode" FloatLabelType="FloatLabelType.Always">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Tutor Category" @bind-Value="@FilterTutorCategoryId" DataSource="@TutorCategory" FloatLabelType="FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+               
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Gender" @bind-Value="@FilterTutorGenderId" DataSource="@Genders" FloatLabelType="@FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Race" @bind-Value="@FilterRaceId" DataSource="@Race" FloatLabelType="@FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Rating" @bind-Value="@FilterRatingValue" DataSource="@RatingList" FloatLabelType="FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+
+                </div>
+                
+            </div>
+            <div class="row">
+               
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="LocationDto" Placeholder="Location" @bind-Value="@FilterLocationId" DataSource="@locationList" FloatLabelType="@FloatLabelType.Always">
+                        <DropDownListFieldSettings Text="LocationName" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Tutoring Mode" @bind-Value="@FilterModeId" DataSource="@TutorMode" FloatLabelType="FloatLabelType.Always">
                         <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                     </SfDropDownList>
 
                 </div>
                 <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
-                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Gender" DataSource="@Genders" FloatLabelType="@FloatLabelType.Always">
-                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
-                    </SfDropDownList>
+                    <SfNumericTextBox Placeholder="Min. Rate" TValue="int" @bind-Value="@HourlyRateMinValue"  FloatLabelType="@FloatLabelType.Always"></SfNumericTextBox>&nbsp;&nbsp;
                 </div>
                 <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
-                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Prefered Race" DataSource="@Race" FloatLabelType="@FloatLabelType.Always">
-                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
-                    </SfDropDownList>
+                    <SfNumericTextBox Placeholder="Max. Rate" TValue="int" @bind-Value="@HourlyRateMaxValue"  FloatLabelType="@FloatLabelType.Always"></SfNumericTextBox>
                 </div>
-                <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 mt-4" style="text-align:right">
-                    <SfButton IsPrimary="true">Filter</SfButton>
+                
+            </div>
+            <div class="row">               
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mb-3" style="text-align:right">
+                    <SfButton @onclick="@FilterTutor" IsPrimary="true">Filter</SfButton> &nbsp;&nbsp;&nbsp;
+                    <SfButton @onclick="@ClearFilterTutor" IsPrimary="true">Clear Filter</SfButton>
                 </div>
             </div>
-           
         </p>
     </div>
-    
+    <hr />
     <div class="col-12 mt-2">
         <SfGrid ID="gridTutors" DataSource="@Tutors" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
             <GridEvents CommandClicked="OnCommandClicked" TValue="spGetMatchedTutorDto"> </GridEvents>            
@@ -91,7 +121,7 @@
                             if (position.MatchStatusId < 2)
                             {
                                 //<SfButton Content="Delete" IconCss HtmlAttributes="@primButton" OnClick="@(()=>Del(position))"></SfButton>
-                                <SfButton Content="Assign" IconCss="e-icons e-add" OnClick="@(()=>AssignTutor(position))"></SfButton>
+                                <SfButton Content="Broadcast" IconCss="e-icons e-add" OnClick="@(()=>AssignTutor(position))"></SfButton>
                             }
                             else if (position.MatchStatusId > 1)
                             {

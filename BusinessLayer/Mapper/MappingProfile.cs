@@ -60,12 +60,18 @@ namespace BusinessLayer.Mapper
             CreateMap<spGetMatchedTutorDto, spGetMatchedTutor>();
             CreateMap<spGetMatchedTutor, spGetMatchedTutorDto>();
 
+            CreateMap<spGetMatchedTutorDto, spGetMatchedTutorsByFilter>();
+            CreateMap<spGetMatchedTutorsByFilter, spGetMatchedTutorDto>();
+
             CreateMap<MatchedTuitionDto, MatchedTuition>();
             CreateMap<MatchedTuition, MatchedTuitionDto>();
 
             CreateMap<MatchStatusValueDto, MatchStatusValue>();
             CreateMap<MatchStatusValue, MatchStatusValueDto>();
 
-        }
+			CreateMap<spDashboardCountDto, spDashboardCount>();
+			CreateMap<spDashboardCount, spDashboardCountDto>();
+
+		}
     }
 }

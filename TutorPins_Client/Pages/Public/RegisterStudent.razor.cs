@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using Models;
 using Syncfusion.Blazor.DropDowns;
@@ -33,9 +34,10 @@ namespace TutorPins_Client.Pages.Public
         public string[] SelectedSubjects { get; set; } = new string[] { };
         public string ModalDisplay = "none;";
         public DateTime? DOSValue { get; set; } = null;
-        //public int ApproxBudget { get; set; } = 10;
+		protected EditContext editContext;
+		//public int ApproxBudget { get; set; } = 10;
 
-        public List<StudentSubjectDto> StoreSubjectDetails = new List<StudentSubjectDto>();
+		public List<StudentSubjectDto> StoreSubjectDetails = new List<StudentSubjectDto>();
         protected List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
         public List<StudentLocationDto> StoreLocationDetails = new List<StudentLocationDto>();
 
@@ -60,7 +62,8 @@ namespace TutorPins_Client.Pages.Public
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+			editContext = new EditContext(StudentModel);
+			IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
             CourseCategoryList = courseCategories.ToList();
 
             this.StateHasChanged();

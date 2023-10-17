@@ -9,11 +9,14 @@
     <SfToast ID="toast_default" @ref="ToastObj" Title="Success !" Content="@ToastContent" Timeout="5000" CssClass="e-toast-success">
         <ToastPosition X="@ToastPosition"></ToastPosition>
     </SfToast>
-    <div class="content-wrapper">
+     <EditForm EditContext="@editContext">
+        <DataAnnotationsValidator />
+        <div class="content-wrapper">
         <div class="row">
             <div class="form-group mt-1">
-                <SfTextBox Placeholder="Student Full Name" @bind-Value="@StudentModel.StudentName" CssClass="e-corner e-input-group form-control" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-            </div>
+                <SfTextBox Placeholder="Your Full Name" @bind-Value="@StudentModel.StudentName" CssClass="e-corner e-input-group form-control" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                    <ValidationMessage For="() => StudentModel.StudentName" />
+                </div>
         </div>
         <div class="row">
             <div class="form-group mt-1 col-xs-6 col-sm-6 col-lg-6 col-md-6">
@@ -185,10 +188,12 @@
 
         <div class="row mt-2 mb-2 text-end float-end">
             <div class="form-group mt-2">
-                <input type="button" class="btn btn-primary" @onclick="@Save" value="Submit" />
-                
-            </div>
+                @* <input type="button" class="btn btn-primary" @onclick="@Save" value="Submit" /> *@
+                    <SfButton IsPrimary="true" @onclick="@Save" HtmlAttributes="@(new Dictionary<string, object> { { "type", "submit" } })">Save</SfButton>
+
+                </div>
         </div>
     </div>
+    </EditForm> 
 </div>
 

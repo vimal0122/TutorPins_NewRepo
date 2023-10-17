@@ -1,6 +1,8 @@
 ﻿using DataAccess.Data;
 using Models;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
+using System.Net;
 using TutorPins_Client.Service.IService;
 
 namespace TutorPins_Client.Service
@@ -17,8 +19,13 @@ namespace TutorPins_Client.Service
             var dataString = JsonConvert.SerializeObject(studentDto);
             var content = new StringContent(dataString);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = await _client.PostAsync($"api/student/AddStudent", content);
-            return true;
+            var response = await _client.PostAsync($"api/student/AddStudent", content);           
+
+            if (response.StatusCode == HttpStatusCode.BadRequest )
+            {
+                return false;
+            }
+                return true;
         }
 
         public async Task<IEnumerable<StudentDto>> GetAllStudents()

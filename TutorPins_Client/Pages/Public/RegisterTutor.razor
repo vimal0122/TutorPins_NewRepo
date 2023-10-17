@@ -9,11 +9,14 @@
     <SfToast ID="toast_default" @ref="ToastObj" Title="Success !" Content="@ToastContent" Timeout="5000" CssClass="e-toast-success">
         <ToastPosition X="@ToastPosition"></ToastPosition>
     </SfToast>
+     <EditForm EditContext="@editContexttutor">
+        <DataAnnotationsValidator />
     <div class="content-wrapper">
 
         <div class="row">
             <div class="form-group col-xs-6 col-sm-6 col-lg-6 col-md-6">
                 <SfTextBox Placeholder="First Name" @bind-Value="@TutorModel.FirstName" CssClass="e-corner e-input-group" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                    <ValidationMessage For="() => TutorModel.FirstName" />
             </div>
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
                 <SfTextBox EnableRtl="false" Placeholder="Last Name" CssClass="e-corner e-input-group" @bind-Value="@TutorModel.LastName" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
@@ -48,7 +51,7 @@
 
             </div>
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
+                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Tutor Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
                     <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                 </SfDropDownList>
             </div>
@@ -142,9 +145,11 @@
         </div>
         <div class="row mt-2 mb-2 text-end float-end">
             <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                <input type="button" class="btn btn-primary" @onclick="@Save" value="Submit" />                
+                @* <input type="button" class="btn btn-primary" @onclick="@Save" value="Submit" /> *@
+                    <SfButton IsPrimary="true" @onclick="@Save" HtmlAttributes="@(new Dictionary<string, object> { { "type", "submit" } })">Save</SfButton>
             </div>
         </div>
 
     </div>
+    </EditForm>
 </div>

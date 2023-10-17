@@ -45,5 +45,11 @@ namespace TutorPins_Api.Controllers
         {
             return await _Repository.GetTutor(Convert.ToInt32(id));
         }
+        [HttpPost]
+        [Route("GetTutorsByFilters")]
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsByFilters([FromBody] FilterTutorRequest request)
+        {
+            return await _Repository.GetTutorsByFilters(request);
+        }
     }
 }

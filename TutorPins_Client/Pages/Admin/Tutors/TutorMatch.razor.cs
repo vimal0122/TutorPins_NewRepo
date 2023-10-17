@@ -31,6 +31,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         [Inject]
         protected IConfiguration Configuration { get; set; }
         protected List<spGetMatchedTutorDto> Tutors { get; set; } = new List<spGetMatchedTutorDto>();
+        protected List<spGetMatchedTutorDto> TutorsBeforeFilter { get; set; } = new List<spGetMatchedTutorDto>();
         protected SfSpinner SpinnerObj;
         protected SfGrid<spGetMatchedTutorDto> Grid;
         protected SfDialog Dialog;
@@ -56,6 +57,22 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected List<GeneralText> Race = new List<GeneralText>();
         protected List<GeneralText> TutorCategory = new List<GeneralText>();
         protected List<GeneralText> MatchStatusList = new List<GeneralText>();
+        protected List<LocationDto> locationList = new List<LocationDto>();
+        protected List<GeneralText> RatingList = new List<GeneralText>();
+        
+        public int HourlyRateMinValue = 0;
+        public int HourlyRateMaxValue = 0;
+
+        protected string FilterTutorCategoryId;
+        protected string FilterTutorGenderId;
+        protected string FilterRaceId;
+        protected string FilterRatingValue;
+
+        protected string FilterLocationId;
+        protected string FilterModeId;
+        
+
+
         protected string Xvalue = "center";
         protected string Yvalue = "center";
         protected SfToast ToastObj;
@@ -63,15 +80,17 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected string ToastContent = "Tutor matched Successfully.";
         protected override async Task OnInitializedAsync()
         {
-            await Task.Delay(10);
+            await Task.Delay(5);
             //this.StateHasChanged();
             var objDto = await studentService.GetStudentSubject(Id);
+            int courseCategoryId = objDto.CourseSubject.Course.CourseCategoryId;
             StudentId = objDto.StudentId.ToString();
             student = objDto.Student;
+            
             student.PreferedTutorGender = genericService.GetGenders().Where(t => t.Id == student.PreferedTutorGender || t.Name == student.PreferedTutorGender).FirstOrDefault().Name;
             if (!student.PreferedTutorCategory.Equals("-1"))
             {
-                var tutorCategory = await courseCategoryService.GetTutorCategory(student.PreferedTutorCategory);
+                var tutorCategory = await courseCategoryService.GetTutorCategory(student.PreferedTutorCategory);                
                 student.PreferedTutorCategory = tutorCategory.TutorCategoryName;
             }
             else
@@ -92,6 +111,24 @@ namespace TutorPins_Client.Pages.Admin.Tutors
             Race = genericService.GetRaces();
             MatchStatusList=genericService.GetMatchStatusValues();
             TutorMode = genericService.GetTutorModes();
+            IEnumerable<LocationDto> locations = await courseCategoryService.GetAllLocations();
+            locationList = locations.ToList();
+            RatingList = genericService.GetRatings();
+            List<GeneralText> tempTutorCategory = new List<GeneralText>();
+            IEnumerable<TutorCategoryDto> tutorCategories = await courseCategoryService.GetTutorCategories(courseCategoryId.ToString());
+
+            if (tutorCategories.Any())
+            {
+                GeneralText generalText;
+                //TutorCategory.Clear();
+                foreach (var item in tutorCategories)
+                {
+                    generalText = new GeneralText();
+                    generalText.Name = item.TutorCategoryName;
+                    generalText.Id = item.Id.ToString();
+                    TutorCategory.Add(generalText);
+                }
+            }
         }
         private async Task LoadTutors()
         {
@@ -105,6 +142,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
                     string stringValue = Tutors[i].MatchStatusId >0? enumDisplayStatus.ToString():"No";
                     Tutors[i].AlreadyMatched = stringValue;
                 }
+                TutorsBeforeFilter = Tutors;
             }
         }
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -242,6 +280,80 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         private void Back()
         {
             UriHelper.NavigateTo("students/studentsubjects/" + StudentId);
+        }
+        protected async Task FilterTutor()
+        {
+            await Task.Delay(1);
+            if (!string.IsNullOrWhiteSpace(FilterLocationId))
+            {
+                FilterTutorRequest r = new FilterTutorRequest();
+                r.Id = Convert.ToInt32(Id);
+                r.FilterLocationId = Convert.ToInt32(FilterLocationId);
+                if (!string.IsNullOrWhiteSpace(FilterTutorCategoryId))
+                    r.FilterTutorCategoryId= FilterTutorCategoryId;
+
+                if (!string.IsNullOrWhiteSpace(FilterTutorGenderId))
+                    r.FilterTutorGenderId= FilterTutorGenderId;
+
+                if (!string.IsNullOrWhiteSpace(FilterRaceId))
+                    r.FilterRaceId= FilterRaceId;
+
+                if (!string.IsNullOrWhiteSpace(FilterModeId))
+                    r.FilterModeId= FilterModeId;
+
+                if (!string.IsNullOrWhiteSpace(FilterRatingValue))
+                    r.FilterRatingValue = FilterRatingValue;
+
+				if (HourlyRateMinValue > 0)
+					r.HourlyRateMinValue = HourlyRateMinValue;
+
+				if (HourlyRateMaxValue > 0)
+					r.HourlyRateMaxValue = HourlyRateMaxValue;
+
+				var x = await tutorService.GetTutorsByFilters(r);
+                Tutors = x.ToList();
+            }
+            else
+            {
+                Tutors = FilterTutorList().ToList();
+            }
+        }
+        private IQueryable<spGetMatchedTutorDto> FilterTutorList()
+        {
+            var query = TutorsBeforeFilter.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(FilterTutorCategoryId))
+                query = query.Where(d => d.TutorCategory == FilterTutorCategoryId);
+
+            if (!string.IsNullOrWhiteSpace(FilterTutorGenderId))
+                query = query.Where(d => d.TutorGender == FilterTutorGenderId);
+
+            if (!string.IsNullOrWhiteSpace(FilterRaceId))
+                query = query.Where(d => d.TutorRace == FilterRaceId);
+
+            if (!string.IsNullOrWhiteSpace(FilterModeId))
+                query = query.Where(d => d.TutorMode == FilterModeId);
+
+            if (!string.IsNullOrWhiteSpace(FilterRatingValue))
+                query = query.Where(d => d.TutorRating == FilterRatingValue);
+
+			if (HourlyRateMinValue > 0)
+				query = query.Where(d => d.TutorRate >= HourlyRateMinValue);
+
+			if (HourlyRateMaxValue > 0)
+				query = query.Where(d => d.TutorRate <= HourlyRateMaxValue);
+			return query;
+        }
+        protected async Task ClearFilterTutor()
+        {
+            await Task.Delay(1);
+                FilterTutorCategoryId  =string.Empty;
+                FilterTutorGenderId    =string.Empty;
+                FilterRaceId           =string.Empty;
+                FilterRatingValue      =string.Empty;
+                FilterLocationId       =string.Empty;
+                FilterModeId            = string.Empty;
+            Tutors = TutorsBeforeFilter;
         }
     }
 }

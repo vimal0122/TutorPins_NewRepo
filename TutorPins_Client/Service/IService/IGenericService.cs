@@ -9,6 +9,7 @@ namespace TutorPins_Client.Service.IService
         public List<GeneralText> GetCategories();
         public List<GeneralText> GetTutorModes();
         public List<GeneralText> GetMatchStatusValues();
+        public List<GeneralText> GetRatings();
     }
     
 }

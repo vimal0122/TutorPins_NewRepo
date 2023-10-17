@@ -1,6 +1,7 @@
 ﻿using DataAccess.Data;
 using Models;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Json;
 using TutorPins_Client.Service.IService;
 
@@ -26,6 +27,11 @@ namespace TutorPins_Client.Service
                 var content = new StringContent(dataString);
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 var response = await _client.PostAsync($"api/tutor/AddTutor", content);
+                if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    return false;
+                }
+                return true;
             }
             catch(Exception ex)
             {
@@ -69,12 +75,27 @@ namespace TutorPins_Client.Service
             var tutors = JsonConvert.DeserializeObject<IEnumerable<spGetMatchedTutorDto>>(content);
             return tutors;
         }
+        public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsByFilters(FilterTutorRequest request)
+        {
+            var dataString = JsonConvert.SerializeObject(request);
+            var content = new StringContent(dataString);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync($"api/tutor/GetTutorsByFilters", content);
+
+            var dataContent = await response.Content.ReadAsStringAsync();
+            var tutors = JsonConvert.DeserializeObject<IEnumerable<spGetMatchedTutorDto>>(dataContent);
+            return tutors;
+        }
 
         public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId,string matchStatusId)
         {
             var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId), MatchStatusId= Convert.ToInt32(matchStatusId) };
             var response = await _client.PostAsJsonAsync<SaveMatchedTutorRequest>($"api/tutor/SaveMatchedTutor/", request);
             var content = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return false;
+            }
             return true;
         }
     }

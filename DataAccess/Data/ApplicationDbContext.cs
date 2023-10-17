@@ -27,10 +27,14 @@ namespace DataAccess.Data
         public DbSet<MatchedTuition> MatchedTuitions { get; set; }
         public DbSet<MatchStatusValue> MatchStatusValues { get; set; }
         public DbSet<spGetMatchedTutor> spGetMatchedTutors { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<spGetMatchedTutorsByFilter> spGetMatchedTutorsByFilters { get; set; }
+		public DbSet<spDashboardCount> spDashboardCounts { get; set; }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<spGetMatchedTutor>().HasNoKey();
-            OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<spGetMatchedTutorsByFilter>().HasNoKey();
+			modelBuilder.Entity<spDashboardCount>().HasNoKey();
+			OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

@@ -64,7 +64,20 @@
             };
             return MatchStatus;
         }
+        public static List<GeneralText> GetRatings()
+        {
+            List<GeneralText> Category = new List<GeneralText>
+            {
+                new GeneralText() { Id = "0", Name =  "0" },
+                new GeneralText() { Id = "1", Name =  "1" },
+                new GeneralText() { Id = "2", Name =  "2" },
+                new GeneralText() { Id = "3", Name =  "3" },
+                new GeneralText() { Id = "4", Name =  "4" },
+                new GeneralText() { Id = "5", Name =  "5" }
 
+            };
+            return Category;
+        }
     }
     public class GeneralText
     {

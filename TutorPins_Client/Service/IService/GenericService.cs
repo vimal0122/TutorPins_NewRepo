@@ -27,5 +27,10 @@ namespace TutorPins_Client.Service.IService
         {
             return GenericClass.GetMatchStatus();
         }
+
+        public List<GeneralText> GetRatings()
+        {
+            return GenericClass.GetRatings();
+        }
     }
 }

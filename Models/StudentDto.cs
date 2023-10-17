@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Models
     public class StudentDto
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Full name is required")]
         public string StudentName { get; set; }
         public string StudentEmail { get; set; }
         public string StudentPhoneNo { get; set; }
