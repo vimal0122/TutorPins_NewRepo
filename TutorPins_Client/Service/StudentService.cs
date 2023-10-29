@@ -74,5 +74,16 @@ namespace TutorPins_Client.Service
         {
             throw new NotImplementedException();
         }
+        public async Task<IEnumerable<spGetStudentRequestLogDto>> GetStudentRequestLogs(StudentRequestLogRequest request)
+        {
+            var dataString = JsonConvert.SerializeObject(request);
+            var content = new StringContent(dataString);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync($"api/student/GetStudentRequestLogs", content);
+
+            var dataContent = await response.Content.ReadAsStringAsync();
+            var logs = JsonConvert.DeserializeObject<IEnumerable<spGetStudentRequestLogDto>>(dataContent);
+            return logs;
+        }
     }
 }

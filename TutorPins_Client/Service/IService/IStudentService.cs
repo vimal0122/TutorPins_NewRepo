@@ -12,5 +12,6 @@ namespace TutorPins_Client.Service.IService
         public Task<IEnumerable<StudentDto>> GetStudentsByStatus(string status);
         public Task<StudentSubjectDto> GetStudentSubject(string Id);
         public Task<IEnumerable<StudentDto>> GetMatchedStudents();
+        public Task<IEnumerable<spGetStudentRequestLogDto>> GetStudentRequestLogs(StudentRequestLogRequest request);
     }
 }

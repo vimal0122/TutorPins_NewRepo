@@ -27,6 +27,7 @@ namespace DataAccess.Data
         public DbSet<MatchedTuition> MatchedTuitions { get; set; }
         public DbSet<MatchStatusValue> MatchStatusValues { get; set; }
         public DbSet<spGetMatchedTutor> spGetMatchedTutors { get; set; }
+        public DbSet<spGetStudentRequestLog> spGetStudentRequestLogs { get; set; }
         public DbSet<spGetMatchedTutorsByFilter> spGetMatchedTutorsByFilters { get; set; }
 		public DbSet<spDashboardCount> spDashboardCounts { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,7 +35,8 @@ namespace DataAccess.Data
             modelBuilder.Entity<spGetMatchedTutor>().HasNoKey();
             modelBuilder.Entity<spGetMatchedTutorsByFilter>().HasNoKey();
 			modelBuilder.Entity<spDashboardCount>().HasNoKey();
-			OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<spGetStudentRequestLog>().HasNoKey();
+            OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

@@ -1,4 +1,6 @@
-﻿namespace TutorPins_Client.General
+﻿using System.Diagnostics;
+
+namespace TutorPins_Client.General
 {
     public class GenericClass
     {
@@ -59,9 +61,14 @@
                 new GeneralText() { Id = "4", Name = "Rejected" },
                 new GeneralText() { Id = "5", Name = "Matched" },
                 new GeneralText() { Id = "6", Name = "Completed" },
-                new GeneralText() { Id = "7", Name = "Terminated" }
+                new GeneralText() { Id = "7", Name = "Terminated" },
 
-            };
+				new GeneralText() { Id = "8", Name = "Awaiting Confirmation" },
+				new GeneralText() { Id = "9", Name = "Taken" },
+				new GeneralText() { Id = "10", Name = "No Show" },
+				new GeneralText() { Id = "11", Name = "In Process" }				
+
+			};
             return MatchStatus;
         }
         public static List<GeneralText> GetRatings()
@@ -93,6 +100,11 @@
         Rejected,     
         Matched,      
         Completed,    
-        Terminated    
+        Terminated,
+		AwaitingConfirmation,
+		Taken,
+		NoShow,
+        InProcess
+
     }
 }

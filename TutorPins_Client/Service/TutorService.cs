@@ -87,9 +87,9 @@ namespace TutorPins_Client.Service
             return tutors;
         }
 
-        public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId,string matchStatusId)
+        public async Task<bool> SaveMatchedTutor(string studentSubjectId, string tutorId,string matchStatusId,string adminRemarks)
         {
-            var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId), MatchStatusId= Convert.ToInt32(matchStatusId) };
+            var request = new SaveMatchedTutorRequest { StudentSubjectId=Convert.ToInt32(studentSubjectId), TutorId=Convert.ToInt32(tutorId), MatchStatusId= Convert.ToInt32(matchStatusId), AdminRemarks=adminRemarks };
             var response = await _client.PostAsJsonAsync<SaveMatchedTutorRequest>($"api/tutor/SaveMatchedTutor/", request);
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.BadRequest)

@@ -12,5 +12,6 @@ namespace Models
         public int TutorId { get; set; }
         public int MatchStatusId { get; set; }
         public int UserId { get; set; } = 1;
+        public string AdminRemarks { get; set; }
     }
 }

@@ -1,0 +1,27 @@
+﻿@inherits StudentRequestLogBase
+
+
+<div class="row mt-1">
+    <div class="col-12">
+        <SfGrid ID="gridTutors" DataSource="@RequestLogs" AllowPaging="false" AllowSorting="true" AllowFiltering="true">
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            @* <GridPageSettings PageSize="20"></GridPageSettings> *@
+            <GridColumns>               
+                <GridColumn Field=@nameof(spGetStudentRequestLogDto.ChangedDate) HeaderText="Date" Width="100">
+                    <Template>
+                        @{
+                            var reqlog = (context as spGetStudentRequestLogDto);
+                            <span>@reqlog?.ChangedDate.Value.ToString("dd-MMMM-yyyy")</span>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(spGetStudentRequestLogDto.ChangedStatus) HeaderText="Status" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetStudentRequestLogDto.TutorName) HeaderText="Tutor" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetStudentRequestLogDto.AdminRemarks) HeaderText="Remarks" Width="100"></GridColumn>                
+                
+            </GridColumns>
+        </SfGrid>
+    </div>
+
+
+</div>

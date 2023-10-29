@@ -72,6 +72,9 @@ namespace BusinessLayer.Mapper
 			CreateMap<spDashboardCountDto, spDashboardCount>();
 			CreateMap<spDashboardCount, spDashboardCountDto>();
 
-		}
+            CreateMap<spGetStudentRequestLogDto, spGetStudentRequestLog>();
+            CreateMap<spGetStudentRequestLog, spGetStudentRequestLogDto>();
+
+        }
     }
 }

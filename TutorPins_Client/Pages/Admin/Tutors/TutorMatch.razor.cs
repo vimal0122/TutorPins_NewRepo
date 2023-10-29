@@ -47,6 +47,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected string PreferedTutorCategory;
         protected string SelectedMatchStatusId;
         protected string tempTutorCategory;
+        protected string MatchRemarks;
         public bool flag = true;
         public bool studentInfoDialogflag = true;
         public bool tutorInfoDialogflag = true;
@@ -185,7 +186,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
             else if (args.CommandColumn.Title == "statusupdate" && statusInfoDialogflag)
             {
                 TutorId = args.RowData.Id.ToString();
-                string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Requested), Convert.ToString((int)MatchStatusValues.Completed), Convert.ToString((int)MatchStatusValues.Terminated), args.RowData.MatchStatusId.ToString() };                
+                string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Requested), Convert.ToString((int)MatchStatusValues.NoShow), args.RowData.MatchStatusId.ToString() };                
                 MatchStatusList = MatchStatusList.Where(x => !lstStrings.Contains(x.Id)).ToList();
                 await StatusDialog.ShowAsync();
                 statusInfoDialogflag = false;
@@ -205,7 +206,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
             if (statusInfoDialogflag)
             {
                 TutorId = pos.Id.ToString(); //args.RowData.Id.ToString();
-                string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Requested), Convert.ToString((int)MatchStatusValues.Completed), Convert.ToString((int)MatchStatusValues.Terminated), pos.MatchStatusId.ToString() };
+                string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Requested), Convert.ToString((int)MatchStatusValues.Completed), Convert.ToString((int)MatchStatusValues.Terminated), Convert.ToString((int)MatchStatusValues.NoShow), Convert.ToString((int)MatchStatusValues.InProcess), pos.MatchStatusId.ToString() };
                 MatchStatusList = MatchStatusList.Where(x => !lstStrings.Contains(x.Id)).ToList();
                 await StatusDialog.ShowAsync();
                 statusInfoDialogflag = false;
@@ -215,7 +216,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         {
             //Grid.DeleteRecord();   //Delete the record programmatically while clicking OK button.
             int matchStatusId = (int)MatchStatusValues.Broadcasted;
-            var t =  tutorService.SaveMatchedTutor(Id, TutorId, Convert.ToString(matchStatusId));
+            var t =  tutorService.SaveMatchedTutor(Id, TutorId, Convert.ToString(matchStatusId), MatchRemarks);
             
             Dialog.HideAsync();
                
@@ -229,7 +230,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected void OkStatusClick()
         {
             
-            var t = tutorService.SaveMatchedTutor(Id, TutorId, Convert.ToString(SelectedMatchStatusId));
+            var t = tutorService.SaveMatchedTutor(Id, TutorId, Convert.ToString(SelectedMatchStatusId),MatchRemarks);
 
             StatusDialog.HideAsync();
 

@@ -52,5 +52,11 @@ namespace TutorPins_Api.Controllers
         {
             return await _Repository.GetStudentSubject(Convert.ToInt32(Id));
         }
+        [HttpPost]
+        [Route("GetStudentRequestLogs")]
+        public async Task<IEnumerable<spGetStudentRequestLogDto>> GetStudentRequestLogs([FromBody] StudentRequestLogRequest request)
+        {
+            return await _Repository.GetStudentRequestLogs(request);
+        }
     }
 }

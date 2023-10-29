@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Repository.IRepository;
 using DataAccess.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
@@ -140,6 +141,27 @@ namespace BusinessLayer.Repository
         public Task<StudentDto> UpdateStudent(int studentId, StudentDto studentDto)
         {
             throw new NotImplementedException();
+        }
+        public async Task<IEnumerable<spGetStudentRequestLogDto>> GetStudentRequestLogs(StudentRequestLogRequest request)
+        {
+            await Task.Delay(1);
+
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@StudentSubjectId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=request.StudentSubjectId },                
+                new SqlParameter() { ParameterName = "@TutorId", SqlDbType = System.Data.SqlDbType.Int, Size = 100, Direction = System.Data.ParameterDirection.Input, Value = request.TutorId },
+                
+            };
+
+                var list = _mapper.Map<IEnumerable<spGetStudentRequestLog>, IEnumerable<spGetStudentRequestLogDto>>(_db.Set<spGetStudentRequestLog>().FromSqlRaw("[dbo].[spGetStudentRequestLogs]  @StudentSubjectId,@TutorId", param));
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }
