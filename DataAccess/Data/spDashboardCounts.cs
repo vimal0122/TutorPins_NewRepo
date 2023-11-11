@@ -12,4 +12,12 @@ namespace DataAccess.Data
         public int TutorRegCount { get; set; }
         public int TutorMatchCount { get; set; }
     }
+    public class spTutorDashboardCount
+    {
+        public int BroadCastCount { get; set; }
+        public int MyTutionCount { get; set; }
+        public int CompletedCount { get; set; }
+        public int PastRequestCount { get; set; }
+
+    }
 }

@@ -1,0 +1,50 @@
+﻿@page "/users"
+@inherits UserListBase
+<div class="row mt-2 mb-1">
+    <h4 class="card-title text-info mb-2 ml-3">Users</h4>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <SfGrid ID="gridTutors" @ref="userGrid" DataSource="@Users" AllowPaging="true" AllowSorting="true" AllowFiltering="true" Toolbar="@(new List<string>{"Add","Cancel"})">
+            <GridEditSettings AllowAdding="true" AllowEditing="true" Mode="EditMode.Dialog" ></GridEditSettings>
+            <GridEvents OnActionBegin="ActionBeginHandler" CommandClicked="OnCommandClicked" TValue="UserDetailDto"> </GridEvents>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridColumns>
+                <GridColumn AllowAdding="false" IsPrimaryKey="true" Visible="false" Field=@nameof(UserDetailDto.Id) HeaderText="Id" Width="10px"></GridColumn>
+                <GridColumn Field=@nameof(UserDetailDto.FullName) HeaderText="Name" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(UserDetailDto.EmailId) HeaderText="User Name" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(UserDetailDto.RoleId) HeaderText="Role" Width="100">
+                    <EditTemplate>
+                        <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Role" FloatLabelType="@FloatLabelType.Always" @bind-Value="@((context as UserDetailDto).RoleId)" DataSource="@Roles" >
+                            <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </EditTemplate>
+                </GridColumn> 
+                <GridColumn Field=@nameof(UserDetailDto.UserStatus) HeaderText="Status" Width="100">
+                    <EditTemplate>
+                        <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Status" FloatLabelType="@FloatLabelType.Always" @bind-Value="@((context as UserDetailDto).UserStatus)" DataSource="@UserStatus">
+                            <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </EditTemplate>
+                </GridColumn>
+                @* <GridColumn AllowAdding="false" AllowEditing="false" Field=@nameof(UserDetailDto.CreatedDate) HeaderText="Created On" Width="100">
+                    <Template>
+                        @{
+                            var user = (context as UserDetailDto);
+                            <span>@user?.CreatedDate.Value.ToString("dd-MMMM-yyyy")</span>
+                        }
+                    </Template>
+                </GridColumn> *@
+                <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="150">
+                    <GridCommandColumns>
+                        <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat"})" Title="View"></GridCommandColumn>
+                    </GridCommandColumns>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+        <SfSpinner @ref="@SpinnerObj"></SfSpinner>
+    </div>
+
+
+</div>

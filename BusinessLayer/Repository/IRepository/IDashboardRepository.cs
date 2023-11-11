@@ -10,5 +10,6 @@ namespace BusinessLayer.Repository.IRepository
 	public interface IDashboardRepository
 	{
 		public Task<spDashboardCountDto> GetDashboadCounts();
-	}
+        public Task<spTutorDashboardCountDto> GetTutorDashboardCounts(int tutorId);
+    }
 }

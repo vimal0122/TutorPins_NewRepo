@@ -53,8 +53,8 @@
                             var s = (context as StudentSubjectDto);
                             <div>
                                 <a href="/tutors/matchtutor/@s.Id">Match Tutor</a>
-                                <SfButton Content="No Show" IconCss="e-icons e-update" OnClick="@(()=>UpdateStatus(s))"></SfButton>
-                                <SfButton Content="Log" IconCss="e-icons e-view-details" OnClick="@(()=>ShowLog(s))"></SfButton>
+                                <SfButton Content="No Show" CssClass="e-flat"  OnClick="@(()=>UpdateStatus(s))"></SfButton>
+                                <SfButton Content="Log" CssClass="e-flat" OnClick="@(()=>ShowLog(s))"></SfButton>
                             </div>
                            
                         }                       

@@ -5,7 +5,10 @@ using TutorPins_Client;
 using TutorPins_Client.Service;
 using TutorPins_Client.Service.IService;
 using Syncfusion.Blazor;
-
+using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using TutorPins_Client.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2V1hhQlJAfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5bdENiWX1Wc31TRGVb; MjY2NDg0NEAzMjMyMmUzMDJlMzBPRGZzc2RNRVB2Tm5MZVBNeGd4QlR1S3lpeGRxeXdNWHNGdVdjVWxjbWVNPQ ==; MjY2NDg0NUAzMjMyMmUzMDJlMzBRRVZ6SFduWG53Y2Z2MzR6L0l0dHQ2UENGTUFsOTBRbjRtTVJrcDBCaEkwPQ ==");
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -21,6 +24,11 @@ builder.Services.AddScoped<ITutorService, TutorService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IGenericService, GenericService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
+
+builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();   
 builder.Services.AddSyncfusionBlazor();
 await builder.Build().RunAsync();

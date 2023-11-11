@@ -85,6 +85,27 @@ namespace TutorPins_Client.General
             };
             return Category;
         }
+        public static List<GeneralText> GetRoles()
+        {
+            List<GeneralText> Roles = new List<GeneralText>
+            {                
+                new GeneralText() { Id = "1", Name =  "Administrator" },
+                new GeneralText() { Id = "2", Name =  "Tutor" },
+                new GeneralText() { Id = "3", Name =  "Student" },
+                new GeneralText() { Id = "4", Name =  "User" }
+            };
+            return Roles;
+        }
+        public static List<GeneralText> GetUserStatus()
+        {
+            List<GeneralText> userStatus = new List<GeneralText>
+            {
+                new GeneralText() { Id = "1", Name = "Active" },
+                new GeneralText() { Id = "2", Name = "InActive" }
+
+            };
+            return userStatus;
+        }
     }
     public class GeneralText
     {

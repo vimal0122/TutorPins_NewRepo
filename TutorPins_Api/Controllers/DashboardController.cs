@@ -20,5 +20,12 @@ namespace TutorPins_Api.Controllers
 			var allObjects = await _Repository.GetDashboadCounts();
 			return Ok(allObjects);
 		}
-	}
+        [HttpGet]
+        [Route("GetTutorDashboardCounts/{id}")]
+        public async Task<IActionResult> GetTutorDashboardCounts(string id)
+        {
+            var allObjects = await _Repository.GetTutorDashboardCounts(Convert.ToInt32(id));
+            return Ok(allObjects);
+        }
+    }
 }

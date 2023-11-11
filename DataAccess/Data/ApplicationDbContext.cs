@@ -30,11 +30,14 @@ namespace DataAccess.Data
         public DbSet<spGetStudentRequestLog> spGetStudentRequestLogs { get; set; }
         public DbSet<spGetMatchedTutorsByFilter> spGetMatchedTutorsByFilters { get; set; }
 		public DbSet<spDashboardCount> spDashboardCounts { get; set; }
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<spTutorDashboardCount> spTutorDashboardCounts { get; set; }
+        public DbSet<UserDetail> UserDetails { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<spGetMatchedTutor>().HasNoKey();
             modelBuilder.Entity<spGetMatchedTutorsByFilter>().HasNoKey();
 			modelBuilder.Entity<spDashboardCount>().HasNoKey();
+            modelBuilder.Entity<spTutorDashboardCount>().HasNoKey();
             modelBuilder.Entity<spGetStudentRequestLog>().HasNoKey();
             OnModelCreatingPartial(modelBuilder);
         }

@@ -1,0 +1,148 @@
+﻿@page "/dashboardtutor"
+@inherits DashboardTutorBase
+<link href="css/dashboard.css" rel="stylesheet" />
+@using Syncfusion.Blazor
+
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Charts
+@using Syncfusion.Blazor.Grids
+<div class="control-section">
+	<SfDashboardLayout @ref="dashboardObject" Columns="8" CellSpacing="@Spacing" CellAspectRatio="@Ratio">
+		<DashboardLayoutPanels>
+			<DashboardLayoutPanel Column="0" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container income">
+							@* <p>10</p> *@
+							<p>
+								<NavLink class="nav-link" href="students">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.BroadCastCount
+								</NavLink>
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Broadcasted Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="2" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container expense">
+							@* <p>20</p> *@
+							<p>
+								<NavLink class="nav-link" href="students">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.MyTutionCount
+								</NavLink>
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">My Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="4" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container balance">
+							<p>
+								<NavLink class="nav-link" href="students">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.CompletedCount
+								</NavLink>
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Completed Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="6" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container transaction">
+							@* <p>100</p> *@
+							<p>
+								<NavLink class="nav-link" href="students">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.PastRequestCount
+								</NavLink>
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Past Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			@* <DashboardLayoutPanel Column="0" Row="1" SizeX="4" SizeY="3">
+				<HeaderTemplate>
+					<span class="title">Income - Expense</span>
+				</HeaderTemplate>
+				<ContentTemplate>
+					<SfChart Height="100%" Width="100%" Theme="@Theme">
+						<ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+						<ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" LabelFormat="MMM" IntervalType="IntervalType.Months" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+							<ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+						</ChartPrimaryXAxis>
+						<ChartPrimaryYAxis LabelFormat="${value}" Minimum="1000" Maximum="9000" Interval="2000">
+							<ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+							<ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+						</ChartPrimaryYAxis>
+						<ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+						<ChartSeriesCollection>
+							<ChartSeries DataSource="@IncomeExpenseData" Name="Income" XName="Period" Width="2"
+										 Opacity="0.5" YName="Income" Type="ChartSeriesType.SplineArea" Fill="#00BCD7">
+							</ChartSeries>
+							<ChartSeries DataSource="@IncomeExpenseData" Name="Expense" XName="Period" Width="2"
+										 Opacity="0.5" YName="Expense" Type="ChartSeriesType.SplineArea" Fill="#CDDE1F">
+							</ChartSeries>
+						</ChartSeriesCollection>
+					</SfChart>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="4" Row="1" SizeX="4" SizeY="3">
+				<HeaderTemplate>
+					<span class="title">Total Expenses</span>
+				</HeaderTemplate>
+				<ContentTemplate>
+					<SfAccumulationChart Height="100%" Width="100%" EnableAnimation="false" EnableSmartLabels="true" Theme="@Theme">
+						<AccumulationChartSeriesCollection>
+							<AccumulationChartSeries DataSource="@PieRenderingData" XName="Text" YName="Y" Radius="83%" StartAngle="0" EndAngle="360" InnerRadius="50%" Palettes="@palettes">
+								<AccumulationDataLabelSettings Visible="true" Name="X" Position="AccumulationLabelPosition.Outside">
+									<AccumulationChartConnector Length="10%"></AccumulationChartConnector>
+									<AccumulationChartDataLabelFont Size="14px" FontFamily="Roboto"></AccumulationChartDataLabelFont>
+								</AccumulationDataLabelSettings>
+							</AccumulationChartSeries>
+						</AccumulationChartSeriesCollection>
+						<AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
+						<AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
+					</SfAccumulationChart>
+				</ContentTemplate>
+			</DashboardLayoutPanel> *@
+			<DashboardLayoutPanel Column="0" Row="4" SizeX="8" SizeY="3">
+				<HeaderTemplate>
+					<span class="title">Recent Transactions</span>
+				</HeaderTemplate>
+				<ContentTemplate>
+
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+		</DashboardLayoutPanels>
+	</SfDashboardLayout>
+</div>
+

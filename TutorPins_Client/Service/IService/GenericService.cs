@@ -32,5 +32,13 @@ namespace TutorPins_Client.Service.IService
         {
             return GenericClass.GetRatings();
         }
+        public List<GeneralText> GetRoles()
+        {
+            return GenericClass.GetRoles();
+        }
+        public List<GeneralText> GetUserStatus()
+        {
+            return GenericClass.GetUserStatus();
+        }
     }
 }

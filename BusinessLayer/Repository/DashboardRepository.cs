@@ -41,5 +41,25 @@ namespace BusinessLayer.Repository
 			}
 			throw new NotImplementedException();
 		}
-	}
+        public async Task<spTutorDashboardCountDto> GetTutorDashboardCounts(int tutorId)
+        {
+            await Task.Delay(1);
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@Id", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=tutorId },
+
+                };
+                var list = _mapper.Map<IEnumerable<spTutorDashboardCount>, IEnumerable<spTutorDashboardCountDto>>(_db.Set<spTutorDashboardCount>().FromSqlRaw("[dbo].[spTutorDashboardCounts]", param));
+
+                return list.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            throw new NotImplementedException();
+        }
+    }
 }

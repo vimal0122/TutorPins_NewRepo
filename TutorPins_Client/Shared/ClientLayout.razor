@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
 @using Syncfusion.Blazor.SplitButtons
+@using TutorPins_Client.Authentication;
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="page">
     
@@ -11,6 +14,14 @@
             
             <a href="/public/studentregister"><i class="fa fa-fw fa-user"></i> Request a Tutor</a>
             <a href="/public/tutorregister"><i class="fa fa-fw fa-user"></i> Register as a Tutor</a>
+            <AuthorizeView>
+                <Authorized>
+                    <a @onclick="Logout" href="javascript:void(0)"></a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/Login" class="e-icons e-settings">Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
             &nbsp;&nbsp;
             @* <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> *@
             @* <a href="/admin"><i class="fa fa-fw fa-user"></i>Admin Login</a> *@
@@ -18,7 +29,8 @@
                         <DropDownMenuItems>
                             <DropDownMenuItem Text="Tutor" IconCss=@DASHBOARD></DropDownMenuItem>
                             <DropDownMenuItem Text="Student" IconCss=@NOTIFICATION></DropDownMenuItem>
-                    <DropDownMenuItem Text="Administrator" Url="/admindashboard" IconCss=@SETTINGS></DropDownMenuItem>
+                    @* <DropDownMenuItem Text="Administrator" Url="/admindashboard" IconCss=@SETTINGS></DropDownMenuItem> *@
+                    <DropDownMenuItem Text="Administrator" Url="/login" IconCss=@SETTINGS></DropDownMenuItem>
                 </DropDownMenuItems>
                     </SfDropDownButton>
         </div>
@@ -55,4 +67,10 @@
     const string NOTIFICATION = "e-icons e-user";
     const string SETTINGS = "e-icons e-settings";
     const string LOGOUT = "e-icons e-logout";
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        navManager.NavigateTo("/", true);
+    }
 }

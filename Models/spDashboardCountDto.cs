@@ -12,5 +12,13 @@ namespace Models
 		public int TutorRegCount { get; set; }
 		public int TutorMatchCount { get; set; }
 	
-}
+	}
+    public class spTutorDashboardCountDto
+    {
+        public int BroadCastCount { get; set; }
+        public int MyTutionCount { get; set; }
+        public int CompletedCount { get; set; }
+        public int PastRequestCount { get;set; }
+
+    }
 }
