@@ -81,6 +81,9 @@ namespace BusinessLayer.Mapper
             CreateMap<UserDetail, UserDetailDto>();
             CreateMap<UserDetailDto, UserDetail>();
 
+            CreateMap<spGetTuitionByTutorAndStatusDto, spGetTuitionByTutorAndStatus>();
+            CreateMap<spGetTuitionByTutorAndStatus, spGetTuitionByTutorAndStatusDto>();
+
         }
     }
 }

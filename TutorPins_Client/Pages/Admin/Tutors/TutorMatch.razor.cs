@@ -34,10 +34,14 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected List<spGetMatchedTutorDto> TutorsBeforeFilter { get; set; } = new List<spGetMatchedTutorDto>();
         protected SfSpinner SpinnerObj;
         protected SfGrid<spGetMatchedTutorDto> Grid;
+
         protected SfDialog Dialog;
         protected SfDialog StudentDialog;
         protected SfDialog TutorDialog;
         protected SfDialog StatusDialog;
+        protected SfDialog StudentHistoryDialog;
+       
+
         protected string StudentName;
         protected string SubjectFullName;
         protected StudentDto student;
@@ -52,6 +56,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         public bool studentInfoDialogflag = true;
         public bool tutorInfoDialogflag = true;
         public bool statusInfoDialogflag = true;
+        public bool studentHistoryInfoDialogflag = true;
 
         protected List<GeneralText> Genders = new List<GeneralText>();
         protected List<GeneralText> TutorMode = new List<GeneralText>();
@@ -79,7 +84,8 @@ namespace TutorPins_Client.Pages.Admin.Tutors
         protected SfToast ToastObj;
         protected string ToastPosition = "Center";
         protected string ToastContent = "Tutor matched Successfully.";
-        protected override async Task OnInitializedAsync()
+		public List<spGetTuitionByTutorAndStatusDto> OldTuitions = new List<spGetTuitionByTutorAndStatusDto>();
+		protected override async Task OnInitializedAsync()
         {
             await Task.Delay(5);
             //this.StateHasChanged();
@@ -130,6 +136,7 @@ namespace TutorPins_Client.Pages.Admin.Tutors
                     TutorCategory.Add(generalText);
                 }
             }
+            await LoadStudentHistory();
         }
         private async Task LoadTutors()
         {
@@ -356,5 +363,24 @@ namespace TutorPins_Client.Pages.Admin.Tutors
                 FilterModeId            = string.Empty;
             Tutors = TutorsBeforeFilter;
         }
+        protected async Task LoadStudentHistory()
+        {
+			StudentHistoryRequest request = new StudentHistoryRequest { StudentId = Convert.ToInt32(StudentId), StudentSubjectId= Convert.ToInt32(Id)};
+            var x = await studentService.GetTuitionHistoryByStudent(request);
+            OldTuitions = x.ToList();
+        }
+        protected void onStudentHistoryInfoClick()
+        {
+            if (studentHistoryInfoDialogflag)
+            {
+                StudentHistoryDialog.ShowAsync();
+                studentHistoryInfoDialogflag = false;
+            }
+        }
+        public void StudentHistoryInfoClosed()
+        {
+            studentHistoryInfoDialogflag = true;
+        }
+
     }
 }

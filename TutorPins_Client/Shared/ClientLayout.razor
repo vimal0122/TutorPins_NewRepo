@@ -19,20 +19,20 @@
                     <a @onclick="Logout" href="javascript:void(0)"></a>
                 </Authorized>
                 <NotAuthorized>
-                    <a href="/Login" class="e-icons e-settings">Login</a>
+                    <a href="/Login"><i class="e-icons e-people"></i> Login</a>
                 </NotAuthorized>
             </AuthorizeView>
             &nbsp;&nbsp;
             @* <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> *@
             @* <a href="/admin"><i class="fa fa-fw fa-user"></i>Admin Login</a> *@
-            <SfDropDownButton Content="Login" IconCss="e-icons e-people">
+            @* <SfDropDownButton Content="Login" IconCss="e-icons e-people">
                         <DropDownMenuItems>
                             <DropDownMenuItem Text="Tutor" IconCss=@DASHBOARD></DropDownMenuItem>
-                            <DropDownMenuItem Text="Student" IconCss=@NOTIFICATION></DropDownMenuItem>
+                            <DropDownMenuItem Text="Student" IconCss=@NOTIFICATION></DropDownMenuItem> *@
                     @* <DropDownMenuItem Text="Administrator" Url="/admindashboard" IconCss=@SETTINGS></DropDownMenuItem> *@
-                    <DropDownMenuItem Text="Administrator" Url="/login" IconCss=@SETTINGS></DropDownMenuItem>
-                </DropDownMenuItems>
-                    </SfDropDownButton>
+                    @* <DropDownMenuItem Text="Administrator" Url="/login" IconCss=@SETTINGS></DropDownMenuItem> *@
+                @* </DropDownMenuItems> *@
+                    @* </SfDropDownButton> *@
         </div>
         <article class="content px-4">
             @Body

@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+
+@using TutorPins_Client.Authentication;
+
+<div class="page">
+    
+    <main>
+        <div class="top-row1 px-4">
+            <a href="/" target="_blank">Home</a>            
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+@code {
+    const string DASHBOARD = "e-icons e-user";
+    const string NOTIFICATION = "e-icons e-user";
+    const string SETTINGS = "e-icons e-settings";
+    const string LOGOUT = "e-icons e-logout";
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        navManager.NavigateTo("/", true);
+    }
+}

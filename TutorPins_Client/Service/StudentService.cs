@@ -85,5 +85,17 @@ namespace TutorPins_Client.Service
             var logs = JsonConvert.DeserializeObject<IEnumerable<spGetStudentRequestLogDto>>(dataContent);
             return logs;
         }
+
+        public async Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionHistoryByStudent(StudentHistoryRequest request)
+        {
+            var dataString = JsonConvert.SerializeObject(request);
+            var content = new StringContent(dataString);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync($"api/student/GetTuitionHistoryByStudent", content);
+
+            var dataContent = await response.Content.ReadAsStringAsync();
+            var dataObject = JsonConvert.DeserializeObject<IEnumerable<spGetTuitionByTutorAndStatusDto>>(dataContent);
+            return dataObject;
+        }
     }
 }

@@ -12,33 +12,16 @@
     <div class="col-12">
 
 
-        <SfGrid ID="gridStudents" @ref="Grid" DataSource="@SubjectDetails" AllowPaging="true" AllowSorting="true" EnablePersistence=true AllowFiltering="true">
+        <SfGrid ID="gridStudents" @ref="Grid" DataSource="@SubjectDetails" AllowPaging="true" AllowSorting="true" EnablePersistence="false" AllowFiltering="true">
            
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
             <GridPageSettings PageSize="20"></GridPageSettings>
-            <GridColumns>
-                
-                <GridColumn Field=@nameof(StudentSubjectDto.SubjectFullName) HeaderText="Subject" Width="115"></GridColumn>
-                <GridColumn Field=@nameof(StudentSubjectDto.DurationPerWeek) HeaderText="(Hours/week)" Width="95"></GridColumn>
-                <GridColumn Field=@nameof(StudentSubjectDto.PreferedTimeSlots) HeaderText="Time Slots" Width="90"></GridColumn>
-                @* <GridColumn Field=@nameof(StudentSubjectDto.TutorMatched) HeaderText="Match Tutor" Width="70" Visible="false">
-                    <Template>
-                        @{
-                            var student = (context as StudentSubjectDto);
-                            <div class="template_checkbox">
-                                @if (student.TutorMatched.HasValue && student.TutorMatched.Value)
-                                {
-                                    <input type="checkbox" checked disabled>
-                                }
-                                else
-                                {
-                                    <input type="checkbox" disabled>
-                                }
-                            </div>
-                        }
-                    </Template>
-                </GridColumn> *@
-                <GridColumn Field=@nameof(StudentSubjectDto.CreatedDate) HeaderText="Requested On" Width="80" >
+            <GridColumns>     
+  
+                <GridColumn Field=@nameof(StudentSubjectDto.SubjectFullName) HeaderText="Subject" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.DurationPerWeek) HeaderText="(Hrs/Wk)" Width="60"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.PreferedTimeSlots) HeaderText="Time Slots" Width="60"></GridColumn>
+                <GridColumn Field=@nameof(StudentSubjectDto.CreatedDate) HeaderText="Req. Date" Width="60">
                     <Template>
                         @{
                             var student = (context as StudentSubjectDto);
@@ -46,21 +29,33 @@
                         }
                     </Template>
                 </GridColumn>
-                <GridColumn Field=@nameof(StudentSubjectDto.TutorMatchStatus) HeaderText="Match Status" Width="90"></GridColumn>
-                <GridColumn  TextAlign="TextAlign.Left" Width="180">
+                <GridColumn Field=@nameof(StudentSubjectDto.TutorMatchStatus) HeaderText="Subject Status" Width="60"></GridColumn>
+                <GridColumn HeaderText="Match Tutor" Width="70">
                     <Template>
                         @{
                             var s = (context as StudentSubjectDto);
                             <div>
                                 <a href="/tutors/matchtutor/@s.Id">Match Tutor</a>
-                                <SfButton Content="No Show" CssClass="e-flat"  OnClick="@(()=>UpdateStatus(s))"></SfButton>
-                                <SfButton Content="Log" CssClass="e-flat" OnClick="@(()=>ShowLog(s))"></SfButton>
+
                             </div>
-                           
-                        }                       
+
+                        }
                     </Template>
                 </GridColumn>
-                
+                <GridColumn HeaderText="Actions" Width="80">
+                    <Template>
+                        @{
+                            var s = (context as StudentSubjectDto);
+                            <div class="col-md-3">
+
+                                <SfButton Content="N" CssClass="e-round" title="No Show" OnClick="@(()=>UpdateStatus(s))"></SfButton>
+                                <SfButton Content="L" CssClass="e-round" title="Log" OnClick="@(()=>ShowLog(s))"></SfButton>
+                            </div>
+
+                        }
+                    </Template>
+                </GridColumn>
+
             </GridColumns>
         </SfGrid>
 

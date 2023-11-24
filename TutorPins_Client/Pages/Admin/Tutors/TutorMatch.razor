@@ -17,6 +17,7 @@
     </div>
     <div class="col-4" style="text-align:right">
         <SfButton CssClass="e-info" OnClick="@onStudentInfoClick">Student Info</SfButton>
+        <SfButton CssClass="e-info" OnClick="@onStudentHistoryInfoClick">History</SfButton>
     </div>
     <hr />
 </div>
@@ -218,6 +219,18 @@
             </DialogButtons>
         </SfDialog>
 
+        <SfDialog @ref="StudentHistoryDialog" Width="80%" Visible="false" ShowCloseIcon="true" IsModal="true">
+            <DialogEvents Closed="StudentHistoryInfoClosed"></DialogEvents>
+            <DialogTemplates>
+                <Header>Previous Tuitions</Header>
+                <Content>
+                    
+                    <StudentHistory OldTuitions="@OldTuitions"></StudentHistory>
+                </Content>
+            </DialogTemplates>
+            <DialogPositionData X="@Xvalue" Y="@Yvalue"></DialogPositionData>
+        </SfDialog>
+        
         <SfSpinner @ref="@SpinnerObj"></SfSpinner>
     </div>
     <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-2" style="text-align:right">

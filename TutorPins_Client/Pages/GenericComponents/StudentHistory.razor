@@ -1,0 +1,61 @@
+﻿@inherits StudentHistoryBase
+
+<div class="row mt-1">
+	<div class="col-12">
+		<SfGrid ID="gridStudents" DataSource="@OldTuitions" AllowPaging="true" AllowSorting="true"  AllowFiltering="true">
+
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+			<GridPageSettings PageSize="20"></GridPageSettings>
+			<GridColumns>
+				<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.StudentName) HeaderText="Name" Width="115"></GridColumn>
+				<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.SubjectName) HeaderText="Subject" Width="155"></GridColumn>
+				<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.DurationPerWeek) HeaderText="(Hrs/Wk)" Width="80"></GridColumn>
+				<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.ActualStartDate) HeaderText="Start Date" Width="80">
+					<Template>
+						@{
+							var student = (context as spGetTuitionByTutorAndStatusDto);
+							<span>@student?.ActualStartDate.Value.ToString("dd-MMM-yyyy")</span>
+						}
+					</Template>
+				</GridColumn>
+				<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.AdminRemarks)  HeaderText="Admin Remarks" Width="125">
+					<Template>
+						@{
+							var d = (context as spGetTuitionByTutorAndStatusDto);
+							<SfTooltip>
+								<TooltipTemplates @key="@d.StudentSubjectId">
+									<Content>
+										@d.AdminRemarks
+									</Content>
+								</TooltipTemplates>
+								<span>@d.AdminRemarks</span>
+							</SfTooltip>
+						}
+					</Template>
+				</GridColumn>
+				 <GridColumn TextAlign="TextAlign.Left" Width="40">
+				<Template>
+				@{
+				var s = (context as spGetTuitionByTutorAndStatusDto);
+				<div>						
+				<SfButton Content="L" CssClass="e-round" title="Log" OnClick="@(()=>ShowLog(s))"></SfButton>
+				</div>
+
+				}
+				</Template>
+				</GridColumn> 
+
+			</GridColumns>
+		</SfGrid>
+		<SfDialog @ref="LogDialog" Width="580px" Visible="false" ShowCloseIcon="true" IsModal="true">
+			<DialogTemplates>
+				@*Here you can customize the Header and Content of delete confirmation dialog*@
+				<Header> Request Log</Header>
+				<Content>
+					<StudentRequestLog RequestLogs="studentRequestLogDtoList"></StudentRequestLog>
+				</Content>
+			</DialogTemplates>
+
+		</SfDialog>
+    </div>
+</div>

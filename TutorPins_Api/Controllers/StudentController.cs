@@ -58,5 +58,11 @@ namespace TutorPins_Api.Controllers
         {
             return await _Repository.GetStudentRequestLogs(request);
         }
+        [HttpPost]
+        [Route("GetTuitionHistoryByStudent")]
+        public async Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionHistoryByStudent([FromBody] StudentHistoryRequest request)
+        {
+            return await _Repository.GetTuitionHistoryByStudent(request.StudentId, request.StudentSubjectId);
+        }
     }
 }

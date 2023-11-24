@@ -1,0 +1,224 @@
+﻿@page "/tutordashboard"
+@inherits TutorDashboardBase
+@inject AuthenticationStateProvider authStateProvider
+@inject ITutorService tutorService
+
+<link href="css/dashboard.css" rel="stylesheet" />
+@using Syncfusion.Blazor
+
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Charts
+@using Syncfusion.Blazor.Grids
+@using TutorPins_Client.Authentication;
+<div class="control-section">
+	<SfDashboardLayout @ref="dashboardObject" Columns="8" CellSpacing="@Spacing" CellAspectRatio="@Ratio">
+		<DashboardLayoutPanels>
+			<DashboardLayoutPanel Column="0" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container income">
+							@* <p>10</p> *@
+							<p>								
+								<SfButton Content="B" CssClass="e-round" title="Broadcasted Tuitions" OnClick="@(()=>GetTuitions("B"))"></SfButton>
+								<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.BroadCastCount
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Broadcasted Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="2" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container expense">
+							@* <p>20</p> *@
+							<p>
+								<SfButton Content="M" CssClass="e-round" title="My Tuitions" OnClick="@(()=>GetTuitions("M"))"></SfButton>
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.MyTutionCount
+								
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">My Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="4" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container balance">
+							<p>
+								<SfButton Content="C" CssClass="e-round" title="Completed Tuitions" OnClick="@(()=>GetTuitions("C"))"></SfButton>
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.CompletedCount
+								
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Completed Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="6" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container transaction">
+							@* <p>100</p> *@
+							<p>
+								<SfButton Content="P" CssClass="e-round" title="Past Tuitions" OnClick="@(()=>GetTuitions("P"))"></SfButton>
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.PastRequestCount
+								
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Past Tuitions</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			@* <DashboardLayoutPanel Column="0" Row="1" SizeX="4" SizeY="3">
+			<HeaderTemplate>
+			<span class="title">Income - Expense</span>
+			</HeaderTemplate>
+			<ContentTemplate>
+			<SfChart Height="100%" Width="100%" Theme="@Theme">
+			<ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+			<ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" LabelFormat="MMM" IntervalType="IntervalType.Months" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+			<ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+			</ChartPrimaryXAxis>
+			<ChartPrimaryYAxis LabelFormat="${value}" Minimum="1000" Maximum="9000" Interval="2000">
+			<ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+			<ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+			</ChartPrimaryYAxis>
+			<ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+			<ChartSeriesCollection>
+			<ChartSeries DataSource="@IncomeExpenseData" Name="Income" XName="Period" Width="2"
+			Opacity="0.5" YName="Income" Type="ChartSeriesType.SplineArea" Fill="#00BCD7">
+			</ChartSeries>
+			<ChartSeries DataSource="@IncomeExpenseData" Name="Expense" XName="Period" Width="2"
+			Opacity="0.5" YName="Expense" Type="ChartSeriesType.SplineArea" Fill="#CDDE1F">
+			</ChartSeries>
+			</ChartSeriesCollection>
+			</SfChart>
+			</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="4" Row="1" SizeX="4" SizeY="3">
+			<HeaderTemplate>
+			<span class="title">Total Expenses</span>
+			</HeaderTemplate>
+			<ContentTemplate>
+			<SfAccumulationChart Height="100%" Width="100%" EnableAnimation="false" EnableSmartLabels="true" Theme="@Theme">
+			<AccumulationChartSeriesCollection>
+			<AccumulationChartSeries DataSource="@PieRenderingData" XName="Text" YName="Y" Radius="83%" StartAngle="0" EndAngle="360" InnerRadius="50%" Palettes="@palettes">
+			<AccumulationDataLabelSettings Visible="true" Name="X" Position="AccumulationLabelPosition.Outside">
+			<AccumulationChartConnector Length="10%"></AccumulationChartConnector>
+			<AccumulationChartDataLabelFont Size="14px" FontFamily="Roboto"></AccumulationChartDataLabelFont>
+			</AccumulationDataLabelSettings>
+			</AccumulationChartSeries>
+			</AccumulationChartSeriesCollection>
+			<AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
+			<AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
+			</SfAccumulationChart>
+			</ContentTemplate>
+			</DashboardLayoutPanel> *@
+			<DashboardLayoutPanel Column="0" Row="3" SizeX="8" SizeY="3">
+				<HeaderTemplate>
+					<span class="title"></span>
+				</HeaderTemplate>
+				<ContentTemplate>
+					 <div class="col-12">
+						<SfGrid ID="gridStudents" @ref="Grid" DataSource="@SubjectDetails" AllowPaging="true" AllowSorting="true" EnablePersistence=false AllowFiltering="true">
+
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+							<GridPageSettings PageSize="20"></GridPageSettings>
+							<GridColumns>
+								<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.StudentName) HeaderText="Name" Width="115"></GridColumn>
+								<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.SubjectName) HeaderText="Subject" Width="115"></GridColumn>
+								<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.DurationPerWeek) HeaderText="(Hours/week)" Width="95"></GridColumn>								
+								<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.ActualStartDate) HeaderText="Start Date" Width="80">
+									<Template>
+										@{
+											var student = (context as spGetTuitionByTutorAndStatusDto);
+											<span>@student?.ActualStartDate.Value.ToString("dd-MMM-yyyy")</span>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Field=@nameof(spGetTuitionByTutorAndStatusDto.AdminRemarks) HeaderText="Admin Remarks" Width="115"></GridColumn>
+								<GridColumn TextAlign="TextAlign.Left" Width="80">
+									<Template>
+										@{
+											var s = (context as spGetTuitionByTutorAndStatusDto);
+											<div>
+												
+												<SfButton Content="U" CssClass="e-round" title="Update" OnClick="@(()=>UpdateStatus(s))"></SfButton>
+												
+											</div>
+
+										}
+									</Template>
+								</GridColumn>
+
+							</GridColumns>
+						</SfGrid>
+						 </div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+		</DashboardLayoutPanels>
+	</SfDashboardLayout>
+	<SfDialog @ref="StatusDialog" Width="500px" Visible="false" ShowCloseIcon="true" IsModal="true">
+		<DialogEvents Closed="StatusClosed"></DialogEvents>
+		<DialogTemplates>
+			@*Here you can customize the Header and Content of delete confirmation dialog*@
+			<Header> Tutor - Status Update</Header>
+			<Content>
+				<div class="row mt-1">
+					<div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+						<h6>Status</h6>
+					</div>
+					<div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
+						<SfDropDownList TValue="string" TItem="GeneralText" @bind-Value="@SelectedMatchStatusId" DataSource="@MatchStatusList">
+							<DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+						</SfDropDownList>
+					</div>
+
+				</div>
+				<div class="row mt-2">
+					<div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+						<h6>Remarks</h6>
+					</div>
+					<div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
+						<SfTextBox style="height: 90px" Multiline=true @bind-Value="@MatchRemarks"></SfTextBox>
+
+					</div>
+
+				</div>
+			</Content>
+		</DialogTemplates>
+		<DialogButtons>
+			<DialogButton OnClick="@OkStatusClick" Content="OK" IsPrimary="true"></DialogButton>
+			<DialogButton OnClick="@CancelStatusClick" Content="Cancel"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+</div>
+@code
+{
+	
+	
+}
+

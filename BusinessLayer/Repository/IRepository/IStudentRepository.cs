@@ -18,5 +18,6 @@ namespace BusinessLayer.Repository.IRepository
         public Task<StudentSubjectDto> GetStudentSubject(int Id);
         public Task<IEnumerable<StudentDto>> GetMatchedStudents();
         public Task<IEnumerable<spGetStudentRequestLogDto>> GetStudentRequestLogs(StudentRequestLogRequest request);
+        public Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionHistoryByStudent(int studentId, int studentsubjectId);
     }
 }

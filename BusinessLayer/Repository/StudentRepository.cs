@@ -163,5 +163,27 @@ namespace BusinessLayer.Repository
                 return null;
             }
         }
+
+        public async Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionHistoryByStudent(int studentId, int studentsubjectId)
+        {
+            await Task.Delay(1);
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@StudentId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=studentId },
+                                new SqlParameter(){ParameterName="@StudentSubjectId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=studentsubjectId },
+
+
+                };
+                var list = _mapper.Map<IEnumerable<spGetTuitionByTutorAndStatus>, IEnumerable<spGetTuitionByTutorAndStatusDto>>(_db.Set<spGetTuitionByTutorAndStatus>().FromSqlRaw("[dbo].[spGetTuitionHistoryByStudent]  @StudentId,@StudentSubjectId", param));
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -34,9 +34,9 @@
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(Task.FromResult(userSession));
             if(userSession.Role=="1")
-            navManager.NavigateTo("/admindashboard", true);
+                navManager.NavigateTo("/administratordashboard", true);
             else if(userSession.Role=="2")
-                navManager.NavigateTo("/dashboardtutor", true);
+                navManager.NavigateTo("/tutordashboard", true);
         }
         else if(loginResponse.StatusCode ==System.Net.HttpStatusCode.Unauthorized)
         {

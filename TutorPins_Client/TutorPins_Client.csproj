@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Dashboard\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>
 

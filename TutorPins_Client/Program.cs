@@ -27,8 +27,9 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 
-builder.Services.AddBlazoredSessionStorage();
+
 builder.Services.AddAuthorizationCore();
+builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();   
 builder.Services.AddSyncfusionBlazor();
 await builder.Build().RunAsync();

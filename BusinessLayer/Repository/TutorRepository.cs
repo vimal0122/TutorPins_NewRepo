@@ -97,6 +97,27 @@ namespace BusinessLayer.Repository
                 return null;
             }
         }
+        public async Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionByTutorAndStatus(int tutorId,int statusId)
+        {
+            await Task.Delay(1);
+            try
+            {
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@TutorId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=tutorId },
+                                new SqlParameter(){ParameterName="@StatusId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=statusId },
+
+
+                };
+                var list = _mapper.Map<IEnumerable<spGetTuitionByTutorAndStatus>, IEnumerable<spGetTuitionByTutorAndStatusDto>>(_db.Set<spGetTuitionByTutorAndStatus>().FromSqlRaw("[dbo].[spGetTuitionsByTutorAndStatus]  @TutorId,@StatusId", param));
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public async Task<IEnumerable<spGetMatchedTutorDto>> GetTutorsByFilters(FilterTutorRequest request)
         {
             await Task.Delay(1);
