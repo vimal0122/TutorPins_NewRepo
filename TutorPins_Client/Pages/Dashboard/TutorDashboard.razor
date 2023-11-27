@@ -167,7 +167,7 @@
 											<div>
 												
 												<SfButton Content="U" CssClass="e-round" title="Update" OnClick="@(()=>UpdateStatus(s))"></SfButton>
-												
+												<SfButton Content="F" CssClass="e-round" title="Update" OnClick="@(()=>AddFeedback(s))"></SfButton>
 											</div>
 
 										}
@@ -213,6 +213,30 @@
 		<DialogButtons>
 			<DialogButton OnClick="@OkStatusClick" Content="OK" IsPrimary="true"></DialogButton>
 			<DialogButton OnClick="@CancelStatusClick" Content="Cancel"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+	<SfDialog @ref="FeedbackDialog" Width="500px" Visible="false" ShowCloseIcon="true" IsModal="true">
+		<DialogEvents Closed="FeedbackClosed"></DialogEvents>
+		<DialogTemplates>
+			@*Here you can customize the Header and Content of delete confirmation dialog*@
+			<Header> Tutor - Feedback</Header>
+			<Content>
+				
+				<div class="row mt-2">
+					<div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+						<h6>Comments</h6>
+					</div>
+					<div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
+						<SfTextBox style="height: 90px" Multiline=true @bind-Value="@FeedbackComments"></SfTextBox>
+
+					</div>
+
+				</div>
+			</Content>
+		</DialogTemplates>
+		<DialogButtons>
+			<DialogButton OnClick="@OkFeedbackClick" Content="OK" IsPrimary="true"></DialogButton>
+			<DialogButton OnClick="@CancelFeedbackClick" Content="Cancel"></DialogButton>
 		</DialogButtons>
 	</SfDialog>
 </div>

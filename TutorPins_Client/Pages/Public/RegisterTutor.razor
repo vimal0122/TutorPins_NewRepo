@@ -14,13 +14,11 @@
     <div class="content-wrapper">
 
         <div class="row">
-            <div class="form-group col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfTextBox Placeholder="First Name" @bind-Value="@TutorModel.FirstName" CssClass="e-corner e-input-group" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-                    <ValidationMessage For="() => TutorModel.FirstName" />
+                <div class="form-group mt-1">
+                <SfTextBox Placeholder="Full Name" @bind-Value="@TutorModel.TutorName" CssClass="e-corner e-input-group" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                    <ValidationMessage For="() => TutorModel.TutorName" />
             </div>
-            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfTextBox EnableRtl="false" Placeholder="Last Name" CssClass="e-corner e-input-group" @bind-Value="@TutorModel.LastName" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
-            </div>
+           
         </div>
         <div class="row mt-1">
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
@@ -36,22 +34,29 @@
                 <SfDatePicker TValue="DateTime?" @bind-Value="@DOBValue" Placeholder="Select Birth Date" Min="@MinDate" Max="@MaxDate" FloatLabelType="@FloatLabelType.Auto">
                 </SfDatePicker>
             </div>
-            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+            <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
                 <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Gender" @bind-Value="@TutorModel.TutorGender" DataSource="@Genders" FloatLabelType="@FloatLabelType.Auto">
                     <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                 </SfDropDownList>
 
             </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Race" @bind-Value="@TutorModel.TutorRace" DataSource="@Race" FloatLabelType="@FloatLabelType.Auto">
+                        <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
+                    </SfDropDownList>
+
+                </div>
         </div>
         <div class="row mt-1">
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Race" @bind-Value="@TutorModel.TutorRace" DataSource="@Race" FloatLabelType="@FloatLabelType.Auto">
-                    <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
-                </SfDropDownList>
+                    <SfDropDownList TItem="CourseCategoryDto" TValue="string" Placeholder="Select Category" @bind-Value="@SelectedCourseCategory" DataSource="@courseCategoryList" FloatLabelType="FloatLabelType.Auto">
+                        <DropDownListEvents TItem="CourseCategoryDto" TValue="string" ValueChange="OnCourseCategoryChange" />
+                        <DropDownListFieldSettings Text="CategoryName" Value="Id" />
+                    </SfDropDownList>
 
             </div>
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Tutor Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@Category" FloatLabelType="FloatLabelType.Auto">
+                    <SfDropDownList TValue="string" TItem="GeneralText" Placeholder="Select Tutor Category" @bind-Value="@TutorModel.TutorCategory" DataSource="@TutorCategory" FloatLabelType="FloatLabelType.Auto">
                     <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                 </SfDropDownList>
             </div>

@@ -110,5 +110,48 @@ namespace TutorPins_Client.Service
             var dataObject = JsonConvert.DeserializeObject<IEnumerable<spGetTuitionByTutorAndStatusDto>>(dataContent);
             return dataObject;
         }
+
+		public async Task<bool> SaveFeedback(TutorFeedbackDto dto)
+		{
+			try
+			{
+				
+				var dataString = JsonConvert.SerializeObject(dto);
+				var content = new StringContent(dataString);
+				content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+				var response = await _client.PostAsync($"api/tutor/SaveFeedback", content);
+				if (response.StatusCode == HttpStatusCode.BadRequest)
+				{
+					return false;
+				}
+				return true;
+			}
+			catch (Exception ex)
+			{
+
+			}
+			return true;
+		}
+
+		public async Task<IEnumerable<spGetAllFeedbackDto>> GetAllFeedbacks(string tutorId)
+		{
+			var response = await _client.GetAsync($"api/tutor/GetAllFeedbacks/" + tutorId);
+			var content = await response.Content.ReadAsStringAsync();
+			var feedbacks = JsonConvert.DeserializeObject<IEnumerable<spGetAllFeedbackDto>>(content);
+			return feedbacks;
+		}
+
+        public async Task<bool> UpdateFeedback(int feedBackId, TutorFeedbackDto dto)
+        {
+            var dataString = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(dataString);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync($"api/tutor/UpdateFeedback", content);
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

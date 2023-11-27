@@ -10,6 +10,7 @@ using Syncfusion.Blazor.Inputs;
 using System.Net.Http.Json;
 using Syncfusion.Blazor.Notifications;
 using Microsoft.AspNetCore.Components.Forms;
+using DataAccess.Data;
 
 namespace TutorPins_Client.Pages.Public
 {
@@ -69,6 +70,7 @@ namespace TutorPins_Client.Pages.Public
         protected List<CourseDto> courseList = new List<CourseDto>();
         protected List<CourseSubjectDto> courseSubjectList = new List<CourseSubjectDto>();
         protected List<QualificationDto> defaultQualificationList = new List<QualificationDto>();
+        
         public string[] SelectedLocations { get; set; } = new string[] { };
         public string[] SelectedSubjects { get; set; } = new string[] { };
 
@@ -78,10 +80,12 @@ namespace TutorPins_Client.Pages.Public
         protected List<GeneralText> Race = new List<GeneralText>();
         protected List<GeneralText> Category = new List<GeneralText>();
         protected List<GeneralText> TutorMode = new List<GeneralText>();
+        protected List<GeneralText> TutorCategory = new List<GeneralText>();
 
         protected SfToast ToastObj;
         protected string ToastPosition = "Center";
         protected string ToastContent = "Tutor Registered Successfully.";
+        public string SelectedCourseCategory;
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -99,7 +103,7 @@ namespace TutorPins_Client.Pages.Public
 
             Genders = genericSerice.GetGenders();
             Race = genericSerice.GetRaces();
-            Category = genericSerice.GetCategories();
+            //Category = genericSerice.GetCategories();
             TutorMode = genericSerice.GetTutorModes();
         }
         public void CheckboxClicked(ChangeEventArgs e)
@@ -199,7 +203,7 @@ namespace TutorPins_Client.Pages.Public
             TutorModel.OtherLocation = TutorOtherLocations;
             TutorModel.TutorDOB = DOBValue;
             TutorModel.TutorStatus = TutorModel.TutorStatus==null? "Registered" : TutorModel.TutorStatus;
-            TutorModel.TutorName = string.Format("{0} {1}", TutorModel.FirstName, TutorModel.LastName);
+            //TutorModel.TutorName = string.Format("{0} {1}", TutorModel.FirstName, TutorModel.LastName);
             var response = await tutorService.CreateTutor(TutorModel);
             if (response)
             {
@@ -305,6 +309,37 @@ namespace TutorPins_Client.Pages.Public
         {
             StoreSubjectDetails.Clear();
             SaveSubjectData();
+        }
+        public async void OnCourseCategoryChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, CourseCategoryDto> args)
+        {
+            var courseCategoryId = args.ItemData.Id;
+            List<GeneralText> tempTutorCategory = new List<GeneralText>();
+            IEnumerable<TutorCategoryDto> tutorCategories = await courseCategoryService.GetTutorCategories(args.ItemData.Id.ToString());
+
+            if (tutorCategories.Any())
+            {
+                GeneralText generalText;
+                //TutorCategory.Clear();
+                foreach (var item in tutorCategories)
+                {
+                    generalText = new GeneralText();
+                    generalText.Name = item.TutorCategoryName;
+                    generalText.Id = item.Id.ToString();
+                    tempTutorCategory.Add(generalText);
+                }
+            }
+            else
+            {
+                TutorCategory = genericSerice.GetCategories();
+            }
+            IEnumerable<CourseSubjectDto> courseSubjects = await courseSubjectService.GetSubjectsByCourseCategory(args.ItemData.Id.ToString());
+            courseSubjectList = courseSubjects.ToList();
+            var noPreference = new GeneralText { Id = "-1", Name = "No Preference" };
+            tempTutorCategory.Add(noPreference);
+            TutorCategory = tempTutorCategory;
+
+            this.StateHasChanged();
+
         }
     }
 }

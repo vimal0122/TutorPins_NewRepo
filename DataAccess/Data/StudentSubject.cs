@@ -29,5 +29,6 @@ namespace DataAccess.Data
 		public virtual Student Student { get; set; }        
         public virtual CourseSubject CourseSubject { get; set; }
         public virtual ICollection<MatchedTuition> MatchedTuitions { get; set; }
-    }
+		public virtual ICollection<TutorFeedback> TutorFeedbacks { get; set; }
+	}
 }

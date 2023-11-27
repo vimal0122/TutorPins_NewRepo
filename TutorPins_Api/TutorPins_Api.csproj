@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\TutorPins_Client\TutorPins_Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

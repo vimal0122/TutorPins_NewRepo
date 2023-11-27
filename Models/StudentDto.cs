@@ -12,7 +12,9 @@ namespace Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Full name is required")]
         public string StudentName { get; set; }
+        [Required(ErrorMessage = "Email is required")]
         public string StudentEmail { get; set; }
+        [Required(ErrorMessage = "Student Phoneno is required")]
         public string StudentPhoneNo { get; set; }
         public string ParentName { get; set; }
         public string ParentRelation { get; set; }
@@ -26,6 +28,7 @@ namespace Models
         public DateTime? UpdatedDate { get; set; }
         public string RequestFrom { get; set; }
         public string PostalCode { get; set; }
+        [Required(ErrorMessage = "Contact mode is required")]
         public string PreferedContactMode { get; set; }
         public string PreferedTutorCategory { get; set; }
         public string PreferedTutoringMode { get; set; }

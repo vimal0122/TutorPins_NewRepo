@@ -174,5 +174,73 @@ namespace BusinessLayer.Repository
         {
             throw new NotImplementedException();
         }
+		public async Task<bool> SaveFeedback(TutorFeedbackDto dto)
+		{
+			try
+			{
+				TutorFeedback tutorFeedback = _mapper.Map<TutorFeedbackDto, TutorFeedback>(dto);
+
+				tutorFeedback.CreatedDate = DateTime.Now;
+				tutorFeedback.CreatedBy = dto.TutorId.ToString();
+				var addedFeedback = await _db.TutorFeedbacks.AddAsync(tutorFeedback);
+				await _db.SaveChangesAsync();
+
+                return true;
+			}
+			catch (Exception ex)
+			{
+
+			}
+			return false;
+		}
+
+		public async Task<IEnumerable<spGetAllFeedbackDto>> GetAllFeedbacks(int tutorId)
+		{
+			await Task.Delay(1);
+			try
+			{
+                var param = new SqlParameter[]
+                {
+                new SqlParameter(){ParameterName="@TutorId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=tutorId },
+                            //    new SqlParameter(){ParameterName="@StatusId", SqlDbType=System.Data.SqlDbType.Int, Size=100, Direction=System.Data.ParameterDirection.Input,Value=statusId },
+
+
+                };
+                var list = _mapper.Map<IEnumerable<spGetAllFeedback>, IEnumerable<spGetAllFeedbackDto>>(_db.Set<spGetAllFeedback>().FromSqlRaw("[dbo].[spGetAllFeedbacks]  @TutorId", param));
+
+				return list;
+			}
+			catch (Exception ex)
+			{
+				return null;
+			}
+		}
+        public async Task<bool> UpdateFeedback(int feedBackId, TutorFeedbackDto dto)
+        {
+            try
+            {
+                if (feedBackId == dto.Id)
+                {
+                    await Task.Delay(1);
+                    //var fbObject =  _db.TutorFeedbacks.Where(x => x.Id == feedBackId).FirstOrDefault();
+                    //TutorFeedback fb = _mapper.Map<TutorFeedbackDto, TutorFeedback>(dto, fbObject);
+                   // fb.UpdatedDate = DateTime.Now;
+                    //user.UpdatedBy = "1";
+                    //fbObject.HasRead = true;
+                    //var uFB = _db.TutorFeedbacks.Update(fbObject);
+                    //await _db.SaveChangesAsync();
+                    _db.Database.ExecuteSqlRaw("UPDATE dbo.TutorFeedbacks SET HasRead=1 WHERE Id={0}", feedBackId);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

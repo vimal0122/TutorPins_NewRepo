@@ -13,6 +13,9 @@ namespace TutorPins_Client.Service.IService
         public Task<IEnumerable<TutorDto>> GetTutorsByStatus(string status);
         public Task<bool> SaveMatchedTutor(string studentSubjectId,string tutorId, string matchStatusId, string adminRemarks);
         public Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionByTutorAndStatus(FilterTutionRequest request);
+		public Task<bool> SaveFeedback(TutorFeedbackDto dto);
+        public Task<IEnumerable<spGetAllFeedbackDto>> GetAllFeedbacks(string tutorId);
+        public Task<bool> UpdateFeedback(int feedBackId, TutorFeedbackDto dto);
 
     }
 }

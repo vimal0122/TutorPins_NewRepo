@@ -10,11 +10,14 @@ namespace Models
     public class TutorDto
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "First name is required")]
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Tutor name is required")]
         public string TutorName { get; set; }
+        [Required(ErrorMessage = "Tutor email is required")]
         public string TutorEmail { get; set; }
+        [Required(ErrorMessage = "Tutor phone no is required")]
         public string TutorPhoneNo { get; set; }
         public string TutorGender { get; set; }
         public DateTime? TutorDOB { get; set; }
@@ -40,5 +43,6 @@ namespace Models
         public virtual ICollection<TutorLocationDto> TutorLocations { get; set; }
         public virtual ICollection<TutorQualificationDto> TutorQualifications { get; set; }
         public virtual ICollection<MatchedTuitionDto> MatchedTuitions { get; set; }
-    }
+		public virtual ICollection<TutorFeedbackDto> TutorFeedbacks { get; set; }
+	}
 }

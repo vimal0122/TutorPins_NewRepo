@@ -1,0 +1,69 @@
+﻿@page "/feedbacks"
+@inherits FeedbackListBase
+<div class="row mt-4">
+    <div class="col-8">
+        <h4 class="card-title text-info">
+            Tutor Feedbacks
+        </h4>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+
+
+        <SfGrid ID="gridStudents" @ref="Grid" DataSource="@feedbacks" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <GridEvents CommandClicked="OnCommandClicked" TValue="spGetAllFeedbackDto"> </GridEvents>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(spGetAllFeedbackDto.TutorName) HeaderText="Tutor Name" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetAllFeedbackDto.StudentName) HeaderText="Student Name" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(spGetAllFeedbackDto.SubjectFullName) HeaderText="Subject" Width="100"></GridColumn>                
+                <GridColumn Field=@nameof(StudentDto.CreatedDate) HeaderText="Created On" Width="130">
+                    <Template>
+                        @{
+                            var f = (context as spGetAllFeedbackDto);
+                            <span>@f?.CreatedDate.Value.ToString("dd-MMM-yyyy")</span>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(spGetAllFeedbackDto.HasRead) HeaderText="Has Read" Width="80"></GridColumn>
+
+                <GridColumn HeaderText="View Comments" TextAlign="TextAlign.Center" Width="100">
+                    <GridCommandColumns>
+                        <GridCommandColumn ButtonOption="@(new CommandButtonOptions() { CssClass="e-icons e-view-details"})" Title="View"></GridCommandColumn>
+                    </GridCommandColumns>
+                </GridColumn>
+                
+                
+            </GridColumns>
+        </SfGrid>
+        <SfSpinner @ref="@SpinnerObj"></SfSpinner>
+    </div>
+</div>
+<SfDialog Width="580" @bind-Visible="@IsVisible" ShowCloseIcon="true" IsModal="false" Target="#MyGrid">
+    <DialogTemplates>
+        <Header>@RowDetails?.StudentName.ToUpper() - @RowDetails?.SubjectFullName</Header>
+        <Content>
+            @{
+                @if (RowDetails != null)
+                {
+                    <div style="display:inline-flex;padding-bottom:5px">
+
+                        <div style="padding-top:5px;padding-left:10px;">
+                            <div style="padding-bottom:10px;">
+                                <span style="font-size:large;font-weight: bold">@RowDetails?.Comments</span>
+                            </div>                           
+
+                        </div>
+                    </div>
+                   
+                    
+                    <hr />
+                    
+                }
+            }
+        </Content>
+    </DialogTemplates>
+    <DialogPositionData X="@Xvalue" Y="@Yvalue"></DialogPositionData>
+</SfDialog>

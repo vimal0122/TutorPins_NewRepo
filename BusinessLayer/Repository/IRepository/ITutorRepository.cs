@@ -18,5 +18,10 @@ namespace BusinessLayer.Repository.IRepository
         public Task<IEnumerable<TutorDto>> GetTutorsByStatus(string status);
         public Task<bool> SaveMatchedTutor(SaveMatchedTutorRequest request);
         public Task<IEnumerable<spGetTuitionByTutorAndStatusDto>> GetTuitionByTutorAndStatus(int tutorId, int statusId);
+        public Task<bool> SaveFeedback(TutorFeedbackDto dto);
+		public Task<IEnumerable<spGetAllFeedbackDto>> GetAllFeedbacks(int tutorId);
+        public Task<bool> UpdateFeedback(int feedBackId, TutorFeedbackDto dto);
+
+
     }
 }

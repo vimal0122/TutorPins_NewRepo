@@ -7,7 +7,7 @@
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Grids
 <div class="control-section">
-	<SfDashboardLayout @ref="dashboardObject" Columns="8" CellSpacing="@Spacing" CellAspectRatio="@Ratio">
+	<SfDashboardLayout @ref="dashboardObject" Columns="10" CellSpacing="@Spacing" CellAspectRatio="@Ratio">
 		<DashboardLayoutPanels>
 			<DashboardLayoutPanel Column="0" Row="0" SizeX="2" SizeY="1">
 				<ContentTemplate>
@@ -53,7 +53,12 @@
 				<ContentTemplate>
 					<div class="root-container">
 						<div class="item-container balance">
-							<p>10</p>
+							@* <p>10</p> *@
+							<p>
+								<NavLink class="nav-link" href="students">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.TutorMatchCount
+								</NavLink>
+							</p>
 							<div class="auto-left">
 								<span class="balance-icon e-icon"></span>
 							</div>
@@ -71,7 +76,7 @@
 							@* <p>100</p> *@
 							<p>
 								<NavLink class="nav-link" href="students">
-									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.TutorMatchCount
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.OngoingTuitionCount
 								</NavLink>
 							</p>
 							<div class="auto-left">
@@ -84,7 +89,27 @@
 					</div>
 				</ContentTemplate>
 			</DashboardLayoutPanel>
-			<DashboardLayoutPanel Column="0" Row="1" SizeX="4" SizeY="3">
+			<DashboardLayoutPanel Column="8" Row="0" SizeX="2" SizeY="1">
+				<ContentTemplate>
+					<div class="root-container">
+						<div class="item-container transaction">
+							@* <p>100</p> *@
+							<p>
+								<NavLink class="nav-link" href="feedbacks">
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.FeedbackCount
+								</NavLink>
+							</p>
+							<div class="auto-left">
+								<span class="balance-icon e-icon"></span>
+							</div>
+						</div>
+						<div class="bottom-container">
+							<p style="font-weight:bold">Tutor Feedbacks</p>
+						</div>
+					</div>
+				</ContentTemplate>
+			</DashboardLayoutPanel>
+			<DashboardLayoutPanel Column="0" Row="1" SizeX="5" SizeY="3">
 				<HeaderTemplate>
 					<span class="title">Income - Expense</span>
 				</HeaderTemplate>
@@ -110,7 +135,7 @@
 					</SfChart>
 				</ContentTemplate>
 			</DashboardLayoutPanel>
-			<DashboardLayoutPanel Column="4" Row="1" SizeX="4" SizeY="3">
+			<DashboardLayoutPanel Column="5" Row="1" SizeX="5" SizeY="3">
 				<HeaderTemplate>
 					<span class="title">Total Expenses</span>
 				</HeaderTemplate>

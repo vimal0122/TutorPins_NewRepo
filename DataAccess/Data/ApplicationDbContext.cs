@@ -33,7 +33,8 @@ namespace DataAccess.Data
         public DbSet<spTutorDashboardCount> spTutorDashboardCounts { get; set; }
         public DbSet<spGetTuitionByTutorAndStatus> spGetTuitionsByTutorAndStatus { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		public DbSet<TutorFeedback> TutorFeedbacks { get; set; }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<spGetMatchedTutor>().HasNoKey();
             modelBuilder.Entity<spGetMatchedTutorsByFilter>().HasNoKey();
@@ -41,7 +42,8 @@ namespace DataAccess.Data
             modelBuilder.Entity<spTutorDashboardCount>().HasNoKey();
             modelBuilder.Entity<spGetStudentRequestLog>().HasNoKey();
             modelBuilder.Entity<spGetTuitionByTutorAndStatus>().HasNoKey();
-            OnModelCreatingPartial(modelBuilder);
+			modelBuilder.Entity<spGetAllFeedback>().HasNoKey();
+			OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

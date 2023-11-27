@@ -30,5 +30,6 @@ namespace Models
 		public virtual StudentDto Student { get; set; }
         public virtual CourseSubjectDto CourseSubject { get; set; }
         public virtual ICollection<MatchedTuitionDto> MatchedTuitions { get; set; }
-    }
+		public virtual ICollection<TutorFeedbackDto> TutorFeedbacks { get; set; }
+	}
 }

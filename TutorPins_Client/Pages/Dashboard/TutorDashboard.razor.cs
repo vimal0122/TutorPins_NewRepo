@@ -33,9 +33,13 @@ namespace TutorPins_Client.Pages.Dashboard
 		[Inject] AuthenticationStateProvider authStateProvider { get; set; }
         [Inject] ITutorService tutorService { get; set; }
 		protected SfDialog StatusDialog;
+		protected SfDialog FeedbackDialog;
 		public bool statusInfoDialogflag = true;
+		public bool feedbackInfoDialogflag = true;
+		public int tutorId;
+        public int studentSubjectId;
 
-		protected SfDashboardLayout dashboardObject;
+        protected SfDashboardLayout dashboardObject;
         protected Theme Theme { get; set; }
         protected double[] Spacing = new double[] { 15, 15 };
         protected double Ratio = 160 / 100;
@@ -48,7 +52,9 @@ namespace TutorPins_Client.Pages.Dashboard
 		protected List<GeneralText> MatchStatusList = new List<GeneralText>();
 		protected string SelectedMatchStatusId;
 		protected string MatchRemarks;
+		protected string FeedbackComments;
 		protected int SelectedSubjectId;
+		protected int TutorId = 17;
 		protected override async Task OnInitializedAsync()
         {
            // await base.OnInitializedAsync();
@@ -77,11 +83,16 @@ namespace TutorPins_Client.Pages.Dashboard
 			statusInfoDialogflag = true;
 
 		}
+		public void FeedbackClosed()
+		{
+			feedbackInfoDialogflag = true;
+
+		}
 		protected async Task UpdateStatus(spGetTuitionByTutorAndStatusDto pos)
 		{
 			if (statusInfoDialogflag)
 			{				
-				string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Accepted), Convert.ToString((int)MatchStatusValues.Rejected) };
+				string[] lstStrings = new string[] { Convert.ToString((int)MatchStatusValues.Accepted), Convert.ToString((int)MatchStatusValues.Rejected), Convert.ToString((int)MatchStatusValues.Completed) };
 				MatchStatusList = MatchStatusList.Where(x => lstStrings.Contains(x.Id)).ToList();
 				await StatusDialog.ShowAsync();
 				statusInfoDialogflag = false;
@@ -89,9 +100,8 @@ namespace TutorPins_Client.Pages.Dashboard
 		}
 		protected void OkStatusClick()
 		{
-			//Grid.DeleteRecord();   //Delete the record programmatically while clicking OK button.
-			int matchStatusId = (int)MatchStatusValues.NoShow;
-			var t = tutorService.SaveMatchedTutor(SelectedSubjectId.ToString(), "0", Convert.ToString(matchStatusId), MatchRemarks);
+			//Grid.DeleteRecord();   //Delete the record programmatically while clicking OK button.			
+			var t = tutorService.SaveMatchedTutor(SelectedSubjectId.ToString(), TutorId.ToString(), Convert.ToString(SelectedMatchStatusId), MatchRemarks);
 
 			StatusDialog.HideAsync();
 
@@ -101,6 +111,34 @@ namespace TutorPins_Client.Pages.Dashboard
 		protected void CancelStatusClick()
 		{
 			StatusDialog.HideAsync();
+		}
+		protected async Task AddFeedback(spGetTuitionByTutorAndStatusDto pos)
+		{
+			if (feedbackInfoDialogflag)
+			{
+				tutorId = pos.TutorId.Value;
+				studentSubjectId=pos.StudentSubjectId.Value;
+                await FeedbackDialog.ShowAsync();
+				feedbackInfoDialogflag = false;
+			}
+		}
+		protected void OkFeedbackClick()
+		{
+            //Grid.DeleteRecord();   //Delete the record programmatically while clicking OK button.
+            TutorFeedbackDto f = new TutorFeedbackDto();
+			f.TutorId = tutorId;
+			f.StudentSubjectId = studentSubjectId;
+			f.Comments = FeedbackComments;
+			var t = tutorService.SaveFeedback(f);
+
+			FeedbackDialog.HideAsync();
+
+
+			//Back();
+		}
+		protected void CancelFeedbackClick()
+		{
+			FeedbackDialog.HideAsync();
 		}
 	}
 }

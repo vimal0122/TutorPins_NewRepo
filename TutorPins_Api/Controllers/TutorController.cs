@@ -57,5 +57,23 @@ namespace TutorPins_Api.Controllers
         {
             return await _Repository.GetTuitionByTutorAndStatus(request.TutorId,request.StatusId);
         }
+		[HttpPost]
+		[Route("SaveFeedback")]
+		public async Task<bool> SaveFeedback([FromBody] TutorFeedbackDto objectDto)
+		{
+			return await _Repository.SaveFeedback(objectDto);
+		}
+		[HttpGet]
+		[Route("GetAllFeedbacks/{id}")]
+		public async Task<IEnumerable<spGetAllFeedbackDto>> GetAllFeedbacks(string id)
+		{
+			return await _Repository.GetAllFeedbacks(Convert.ToInt32(id));
+		}
+        [HttpPost]
+        [Route("UpdateFeedback")]
+        public async Task<bool> UpdateFeedback([FromBody] TutorFeedbackDto dto)
+        {
+            return await _Repository.UpdateFeedback(dto.Id,dto);
+        }
     }
 }
