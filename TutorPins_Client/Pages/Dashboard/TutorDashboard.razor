@@ -21,7 +21,9 @@
 							@* <p>10</p> *@
 							<p>								
 								<SfButton Content="B" CssClass="e-round" title="Broadcasted Tuitions" OnClick="@(()=>GetTuitions("B"))"></SfButton>
-								<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.BroadCastCount
+								<span class="oi oi-list-rich" aria-hidden="true"></span> @if (dashboadCount != null)
+									@dashboadCount.BroadCastCount
+
 							</p>
 							<div class="auto-left">
 								<span class="balance-icon e-icon"></span>
@@ -40,7 +42,7 @@
 							@* <p>20</p> *@
 							<p>
 								<SfButton Content="M" CssClass="e-round" title="My Tuitions" OnClick="@(()=>GetTuitions("M"))"></SfButton>
-									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.MyTutionCount
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @if(dashboadCount != null) @dashboadCount.MyTutionCount
 								
 							</p>
 							<div class="auto-left">
@@ -59,7 +61,9 @@
 						<div class="item-container balance">
 							<p>
 								<SfButton Content="C" CssClass="e-round" title="Completed Tuitions" OnClick="@(()=>GetTuitions("C"))"></SfButton>
-									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.CompletedCount
+									<span class="oi oi-list-rich" aria-hidden="true"></span> @if (dashboadCount != null)
+									@dashboadCount.CompletedCount
+
 								
 							</p>
 							<div class="auto-left">
@@ -79,7 +83,7 @@
 							@* <p>100</p> *@
 							<p>
 								<SfButton Content="P" CssClass="e-round" title="Past Tuitions" OnClick="@(()=>GetTuitions("P"))"></SfButton>
-									<span class="oi oi-list-rich" aria-hidden="true"></span> @dashboadCount.PastRequestCount
+									<span class="oi oi-list-rich" aria-hidden="true"></span>  @if(dashboadCount != null) @dashboadCount.PastRequestCount
 								
 							</p>
 							<div class="auto-left">

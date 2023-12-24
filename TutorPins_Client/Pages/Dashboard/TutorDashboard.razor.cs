@@ -11,6 +11,7 @@ using TutorPins_Client.Service;
 using Syncfusion.Blazor.Popups;
 using TutorPins_Client.General;
 using DataAccess.Data;
+using Newtonsoft.Json;
 
 namespace TutorPins_Client.Pages.Dashboard
 {
@@ -57,17 +58,21 @@ namespace TutorPins_Client.Pages.Dashboard
 		protected int TutorId = 17;
 		protected override async Task OnInitializedAsync()
         {
-           // await base.OnInitializedAsync();
+            await base.OnInitializedAsync();
             var authState = await authenticationState;
-            dashboadCount = await dashboardService.GetTutorDashboardCounts(authState.User.Identity.Name);
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            
+            var sessionUser = await customAuthStateProvider.GetSessionUser();
+			TutorId = Convert.ToInt32(sessionUser.UserId);
+            dashboadCount = await dashboardService.GetTutorDashboardCounts(TutorId.ToString());
 			MatchStatusList = genericService.GetMatchStatusValues();
 
 		}
 		protected async Task GetTuitions(string statusValue)
 		{
-			var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-			var token = await customAuthStateProvider.GetToken();
-			FilterTutionRequest request = new FilterTutionRequest { TutorId = 17, StatusId = 5 };
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            var sessionUser = await customAuthStateProvider.GetToken();
+            FilterTutionRequest request = new FilterTutionRequest { TutorId = this.TutorId, StatusId = 5 };
 			switch (statusValue)
 			{
 				case "M":

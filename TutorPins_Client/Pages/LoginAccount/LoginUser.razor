@@ -1,0 +1,48 @@
+﻿@page "/loginuser"
+@using TutorPins_Client.Authentication;
+@inject HttpClient httpClient
+@inject IJSRuntime js
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+
+<div class="row">
+    <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+        <div class="mb-3 text-center">
+            <h3>Login</h3>
+        </div>
+        <div class="mb-3">
+            <label>User Name</label>
+            <input @bind="loginRequest.UserName" class="form-control" placeholder="User Name" />
+        </div>
+        <div class="mb-3">
+            <label>Password</label>
+            <input @bind="loginRequest.Password" type="password" class="form-control" placeholder="Password" />
+        </div>
+        <div>
+            <button @onclick="Authenticate" class="btn btn-primary">Login</button>
+        </div>
+    </div>
+</div>
+@code {
+    private LoginRequest loginRequest = new LoginRequest();
+    private async Task Authenticate()
+    {
+        var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("/api/Account/Login", loginRequest);
+        if (loginResponse.IsSuccessStatusCode)
+        {
+            var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(Task.FromResult(userSession));
+            await Task.Delay(5);
+            if (userSession.Role == "1")
+                navManager.NavigateTo("/administratordashboard", true);
+            else if (userSession.Role == "2")
+                navManager.NavigateTo("/tutordashboard", true);
+        }
+        else if (loginResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            await js.InvokeVoidAsync("alert", "Invalid username or password");
+            return;
+        }
+    }
+}

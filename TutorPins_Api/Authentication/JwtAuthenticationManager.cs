@@ -50,6 +50,7 @@ namespace TutorPins_Api.Authentication
             var token = jwtSecurityTokenHandler.WriteToken(securityToken);
             var userSession = new UserSession
             {
+                UserId=userAccount.Id,
                 UserName = username,
                 Role = userAccount.RoleId,
                 Token = token,

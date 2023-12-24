@@ -23,7 +23,7 @@ namespace TutorPins_Client.Service
 			//return null;
 		}
         public async Task<spTutorDashboardCountDto> GetTutorDashboardCounts(string tutorId)
-        {            var response = await _client.GetAsync("api/dashboard/GetDashboardCounts/" + tutorId);
+        {            var response = await _client.GetAsync("api/dashboard/GetTutorDashboardCounts/" + tutorId);
             var content = await response.Content.ReadAsStringAsync();
             var dashbooardCounts = JsonConvert.DeserializeObject<spTutorDashboardCountDto>(content);
             return dashbooardCounts;            

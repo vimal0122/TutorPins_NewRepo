@@ -1,0 +1,810 @@
+﻿@inherits LayoutComponentBase
+<link href="assets/img/logo.jpg" rel="icon">
+<link href="assets/img/logo.jpg" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Krub:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="assets/css/style.css" rel="stylesheet">
+
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid">Tutorpins</a>
+        <!--<h1 class="logo"><a href="index.html">Tutorpins</a></h1> -->
+
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="#steps">Steps</a></li>
+                <li><a class="nav-link scrollto" href="#services">For Students</a></li>
+                <li><a class="nav-link scrollto" href="#services">Open Requests</a></li>
+                <li class="dropdown">
+                    <a href="/Login"><span>For Tutors</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="/loginuser" target="_blank">Tutor Login</a></li>
+                        @* <li><SfButton Content="Tutor Login" title="Log" OnClick="@(()=>ShowLoginForm())"></SfButton></li> *@
+                        <li class="dropdown">
+                            <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                            <ul>
+                                <li><a href="#">Deep Drop Down 1</a></li>
+                                <li><a href="#">Deep Drop Down 2</a></li>
+                                <li><a href="#">Deep Drop Down 3</a></li>
+                                <li><a href="#">Deep Drop Down 4</a></li>
+                                <li><a href="#">Deep Drop Down 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Tutor Registration</a></li>
+                        <li><a href="#">Tutor Dashboard</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                @* <li><a class="getstarted scrollto" href="#about">Register as A Tutor</a></li> *@
+                <li><SfButton Content="Register as A Tutor" class="getstarted scrollto"  title="Log" OnClick="@(()=>ShowTutorRegForm())"></SfButton></li>
+                
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+      <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container d-flex flex-column align-items-center justify-content-center" >
+      <h1>Pinning the Perfect Tutor to Every Student</h1>
+      <h2>Using the State-of-the-art Tutorpins Matching Engine</h2>
+      @* <a  class="btn-get-started scrollto">Requst For Tutor</a> *@
+        <SfButton Content="Request For Tutor" class="btn-get-started scrollto" title="Log" OnClick="@(()=>ShowTutorReqForm())"></SfButton>
+      <!--<img src="assets/img/hero-img.png" class="img-fluid hero-img" alt="" data-aos="zoom-in" data-aos-delay="150"> -->
+    </div>
+
+  </section><!-- End Hero -->
+  <main id="main">
+
+<!-- ======= Carriculam Section ======= -->
+    <section id="carriculam" class="clients">
+      <div class="container" >
+
+        <div class="row">
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/MOE.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/CBSE.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/IGCSE.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/NUS.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/NTU.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+            <img src="assets/img/clients/SMU.png" class="img-fluid" alt="">
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Carriculam Section -->
+
+ <!-- ======= Steps Section ======= -->
+    <section id="steps" class="steps">
+      <div class="container">
+
+        <div class="row no-gutters" >
+
+	<h3>How Does Tutorpins Work</h3>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>01</span>
+            <h4>Tutor Registration</h4>
+            <p>Tutor registrations are received in Tutorpins Admin Dashboard
+		<br><br><a href="#" class="about-btn">Register As A Tutor<i class="bx bx-chevron-right"></i></a></p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>02</span>
+            <h4>Tutor Approval</h4>
+            <p>Tutor registration details are reviewed carefully by Tutorpins team. Tutors are contacted for additional details if needed. Admin team 				approves or rejects the tutor requests based on review</p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>03</span>
+            <h4> Receive Student Requests</h4>
+            <p>Student request for a tuter is received through online requests, whatsapp, email or phone. 
+		Admin team contacts parent/student through communication mode preferred by them
+		@* <br><br><a href="#" class="about-btn">Request For A Tutor<i class="bx bx-chevron-right"></i></a></p> *@
+                        <br><br> <SfButton Content="Request For Tutor" class="btn-get-started scrollto" title="Log" OnClick="@(()=>ShowTutorReqForm())"></SfButton>
+                    </p>
+                   
+          </div>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>04</span>
+            <h4>Tutor Matching</h4>
+            <p>Tutorpin Matching Engine suggests available tutors based on requirements and tutor ratings. 
+		Admin team reviews the list and pick the best options to boradcast to the respective tutors. 
+		Details of tutors accepted the request is shared with parent/student</p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>05</span>
+            <h4>Commencement of Session and Payment</h4>
+            <p>Parent/Student selects a tutor and confirms the session start date. After the first session, 50% of the first session is paid to Tutorpins 		and the remaining 50% to the tutor. Payments for the second sessions onwards to be done directly to the tutor</p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 content-item"  >
+            <span>06</span>
+            <h4>Follow-up</h4>
+            <p>Tutorpins team follows up with parents/students and tutors periodically to get their feedback. 
+		Required details are shared bewtween them for the improvement of future lessons. Student feedback will be used for tutor rating.
+	</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Steps Section -->
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row no-gutters">
+          <div class="content col-xl-5 d-flex align-items-stretch" >
+            <div class="content">
+              <h3>Ensuring the Well-being of Every Child</h3>
+              <p>
+                Trust Tutorpins to present you with a reliable selection for tailored in-home tutoring. Committed to achieving excellence and fostering meaningful connections, our seasoned private instructors are wholeheartedly devoted to fostering academic achievement and shaping a brighter future for each student
+              </p>
+              <a href="#" class="about-btn">Find Your Tutor<i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+          <div class="col-xl-7 d-flex align-items-stretch" >
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-md-6 icon-box"  >
+                  <i class="bx bx-receipt"></i>
+                  <h4>Tutor Grading</h4>
+                  <p>We do continuous follow-ups with Parents, Students and the Tutors on the tuition assignments done by Tutorpins <br><br>Tutors are graded based on various factors including ratings given by parents, students and Tutorpins admins</p>
+                </div>
+                <div class="col-md-6 icon-box"  >
+                  <i class="bx bx-cube-alt"></i>
+                  <h4>Tutorpins Matching Engine</h4>
+                  <p>We have developed Tutorpins Matching Engine which is intelligent to find the best matches for every student request<br><br>
+			Experienced Tutorpin administrators do additional manual filtering based on the communication with student/parent to select the best 			suitable trutor for you
+		</p>
+                </div>
+                <div class="col-md-6 icon-box" >
+                  <i class="bx bx-images"></i>
+                  <h4>Free Of Cost</h4>
+                  <p>Students do not pay any charges for getting a tutor.  It is aboslutely FREE!</p>
+                </div>
+                <div class="col-md-6 icon-box" >
+                  <i class="bx bx-shield"></i>
+                  <h4>No False Promises</h4>
+                  <p>No false promises of getting the best tutor in few hours. We do manual assessments for each requirement on top of the tutors selected by our state-of-the-art Tutorpins matching engine. We chose the best for you</p>
+                </div>
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features" >
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Features</h2>
+          <p>Perfection, Transparency and the Ease-of-Use is the primary objectives of Tutorpins</p>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5" >
+            <img src="assets/img/features-1.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-4" >
+            <h3>Simple and Straight-forward User Interfaces</h3>
+             <ul>
+              <li><i class="bi bi-check"></i> Simple tutor request form for parents and students - <a href="#" class="about-btn">Try It<i class="bx bx-				chevron-right"></i></a></li>
+	      <li><i class="bi bi-check"></i> Communication through preferred mode such as Whatsapp, Email or Phone</li>
+              <li><i class="bi bi-check"></i> Simple tutor registration form - <a href="#" class="about-btn">Register As A Tutor<i class="bx bx-chevron-		right"></i></a></li>		
+              <li><i class="bi bi-check"></i> Excellent tutor dashboards for tutors</li>
+                        <li><i class="bi bi-check"></i> Whatsapp groups for tutors to get student requests - <a href="#" class="about-btn">Join Whatsapp Group<i class="bx bx-chevron-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5 order-1 order-md-2" >
+            <img src="assets/img/features-2.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1" >
+            <h3>Dedicated Admin Team</h3>
+            <p class="fst-italic">
+                          </p>
+            <p>
+              A dedicated administration team works round-the-clock to screen tutor registrations, to serve student requests and to follow-up continuously 		to get feedback from parents, students as well as tutors
+            </p>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5" >
+            <img src="assets/img/features-3.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5" >
+            <h3>Communication Is The Key</h3>
+             <ul>
+              <li><i class="bi bi-check"></i> Our team contact the parent/student through preferred communication mode immediately after getting a 		request</li>
+              <li><i class="bi bi-check"></i> The selected tutors are notified through their dashboards, emails and Whatsapp</li>
+              <li><i class="bi bi-check"></i> Details of the selected tutors are communicated back to parent/student for their selection</li>
+	      <li><i class="bi bi-check"></i> Once lessons are started, we contact parents, students and tutors periodically and communicate 				the feedback each other to make the sessions better.  The feedback from parents and students are also used for tutor rating</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5 order-1 order-md-2" >
+            <img src="assets/img/features-4.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1" >
+            <h3>Interactive Platform For Tutors</h3>
+		<p> Registered tutors get own account and dashboard to monitor the following </p>
+             <ul>
+              <li><i class="bi bi-check"></i> Open student requests sent by Tutorpins. Tutor can accept the request from here </li>
+              <li><i class="bi bi-check"></i> Current sessions arranged through Tutorpins. Tutor can update the status of the session once completed </li>
+              <li><i class="bi bi-check"></i> Tutor profile update page</li>
+	      
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+    
+    <!-- ======= Services Section ======= -->
+   <!-- <section id="services" class="services">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Services</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bxl-dribbble"></i></div>
+              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <h4 class="title"><a href="">Magni Dolores</a></h4>
+              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-layer"></i></div>
+              <h4 class="title"><a href="">Nemo Enim</a></h4>
+              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section> -->
+	<!-- End Services Section -->
+
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container" >
+
+        <div class="section-title">
+          <h2>Testimonials</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="testimonials-slider swiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                <h3>Saul Goodman</h3>
+                <h4>Ceo &amp; Founder</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                <h3>Sara Wilsson</h3>
+                <h4>Designer</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                <h3>Jena Karlis</h3>
+                <h4>Store Owner</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                <h3>Matt Brandon</h3>
+                <h4>Freelancer</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                <h3>John Larson</h3>
+                <h4>Entrepreneur</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= Team Section ======= 
+    <section id="team" class="team">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Team</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Walter White</h4>
+                  <span>Chief Executive Officer</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Sarah Jhonson</h4>
+                  <span>Product Manager</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>William Anderson</h4>
+                  <span>CTO</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="member">
+              <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Amanda Jepson</h4>
+                  <span>Accountant</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section> -->
+	<!-- End Team Section -->
+
+    <!-- ======= Pricing Section ======= 
+    <section id="pricing" class="pricing section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Pricing</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+            <div class="box">
+              <h3>Free</h3>
+              <h4><sup>$</sup>0<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li class="na">Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
+            <div class="box featured">
+              <h3>Business</h3>
+              <h4><sup>$</sup>19<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
+            <div class="box">
+              <h3>Developer</h3>
+              <h4><sup>$</sup>29<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li>Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section> -->
+	<!-- End Pricing Section -->
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq">
+      <div class="container" >
+
+        <div class="section-title">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <ul class="faq-list">
+
+          <li>
+            <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">What type of tutors are available? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                - Full-time Tutors <br>
+		- Part-time Tutors <br>
+		- MOE/IB/IGCSE/CBSE School Teachers <br>
+		- Teachers from Singapore and abroad <br>
+		- University Students
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Do I need to pay any agency fee to get a tutor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                No. Student do not pay any additional fee.  We charge 50% of the first lesson from the turor towards the agency fee.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">How does Tutorpins find a matching tutor for me? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Tutorpins has an extensive database of tutors after strict selection process. When you request for a tutor, the Tutorpins Matching Engine developed by professionals picks up best suited tutors from the database. The admin team will then reviews this list for further filtering and share the details of the tutors with you for your selection.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">How do I make the payment? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq4" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                After the first lesson, you pay 50% of the fees to Tutorpins through PayNow or Bank Transfer and the remaining 50% to the tutor. <br>
+		For example, the tution fee is $30 per hour and you have opted for 2 hour lesson, you pay $30 to Tutorpins and $30 to the tutor (only for the first lesson) <br><br>
+		From second session onwards, you will pay full tution fee directly to the tutor.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">How do tutors get notified of a tuition request? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq5" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                There are few options to get the tuiton requests <br><br>
+		- All approved tutors with Tutorpins will have their own login with a dashboard to see open tuition requests sent by Tutorpins admins. Tutor can accept or reject any requests. Once accepted, Tutorpins admin will contact you on Whatsapp. <br>
+		- Tutors can opt to be added to Tutorpins Whatsapp group to get general updates <br>
+		- Email notifications will be sent to tutors who are selected for a tuition assignment.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">How does tutor rating is done? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq6" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Tutor ratings are done primarily based on the feedback from parents and students. <br>
+		We also rate a tutor based on his periodic feedback on assignments. <br>
+		When a tuition request is received, the admin team picks the top-rated tutors from the list the matching engine provides.
+              </p>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container" >
+
+        <div class="section-title">
+          <h2>Contact</h2>
+         
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-6">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="info-box">
+                  <i class="bx bx-map"></i>
+                  <h3>Crimson Routes Pte Ltd</h3>
+                  <p>100 Peck Seah Street, #08-14 PS100, Singapore 079333</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4">
+                  <i class="bx bx-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>info@tutorpins.sg<br>contact@tutorpins.sg</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4">
+                  <i class="bx bx-phone-call"></i>
+                  <h3>Call Us</h3>
+                  <p>+65 8123 4567<br>+65 8987 6543</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 mt-4 mt-md-0">
+            
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+<SfDialog @ref="TutorRegisterDialog" Width="580px" Visible="false" ShowCloseIcon="true" IsModal="true">
+    <DialogEvents Closed="TutorRegClosed"></DialogEvents>
+    <DialogTemplates>
+        @*Here you can customize the Header and Content of delete confirmation dialog*@
+        <Header> Tutor Registration</Header>
+        <Content>
+            <TutorPins_Client.Pages.Public.RegisterTutor></TutorPins_Client.Pages.Public.RegisterTutor>
+        </Content>
+    </DialogTemplates>
+
+</SfDialog>
+<SfDialog @ref="TutorRequestDialog" Width="580px" Visible="false" ShowCloseIcon="true" IsModal="true">
+    <DialogEvents Closed="TutorReqClosed"></DialogEvents>
+    <DialogTemplates>
+        @*Here you can customize the Header and Content of delete confirmation dialog*@
+        <Header> Tutor Request</Header>
+        <Content>
+            <TutorPins_Client.Pages.Public.RegisterStudent></TutorPins_Client.Pages.Public.RegisterStudent>
+        </Content>
+    </DialogTemplates>
+
+</SfDialog>
+<SfDialog @ref="LoginDialog" Width="580px" Visible="false" ShowCloseIcon="true" IsModal="true">
+    <DialogEvents Closed="LoginClosed"></DialogEvents>
+    <DialogTemplates>
+        @*Here you can customize the Header and Content of delete confirmation dialog*@
+        <Header> Tutor Request</Header>
+        <Content>
+            <TutorPins_Client.Pages.Login></TutorPins_Client.Pages.Login>
+        </Content>
+    </DialogTemplates>
+
+</SfDialog>
+@code {
+    protected SfDialog TutorRegisterDialog;
+    protected SfDialog TutorRequestDialog;
+    protected SfDialog LoginDialog;
+    public bool TutorRegisterInfoDialogflag = true;
+    public bool StudentRegisterInfoDialogflag = true;
+    public bool LoginfoDialogflag = true;
+    protected async Task ShowTutorRegForm()
+    {
+        if (TutorRegisterInfoDialogflag)
+        {           
+            await TutorRegisterDialog.ShowAsync();
+            TutorRegisterInfoDialogflag = false;
+        }
+    }
+    public void TutorRegClosed()
+    {
+        TutorRegisterInfoDialogflag = true;
+    }
+    protected async Task ShowTutorReqForm()
+    {
+        if (StudentRegisterInfoDialogflag)
+        {
+            await TutorRequestDialog.ShowAsync();
+            StudentRegisterInfoDialogflag = false;
+        }
+    }
+    public void TutorReqClosed()
+    {
+        StudentRegisterInfoDialogflag = true;
+    }
+    protected async Task ShowLoginForm()
+    {
+        if (LoginfoDialogflag)
+        {
+            await LoginDialog.ShowAsync();
+            LoginfoDialogflag = false;
+        }
+    }
+    public void LoginClosed()
+    {
+        LoginfoDialogflag = true;
+    }
+}
+

@@ -1,6 +1,7 @@
 ﻿using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Models;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using TutorPins_Client.Extensions;
 
@@ -44,12 +45,15 @@ namespace TutorPins_Client.Authentication
             {
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
+                    //new Claim(ClaimTypes.PrimarySid,userSession.Result.UserId),
                     new Claim(ClaimTypes.Name,userSession.Result.UserName),
                     new Claim(ClaimTypes.Role, userSession.Result.Role)
 
                 }));
                 userSession.Result.ExpiryTimeStamp = DateTime.Now.AddSeconds(userSession.Result.ExpiresIn);
-                await _sessionStorage.SaveItemEncryptedAsync("UserSession", userSession);
+                string json = JsonConvert.SerializeObject(userSession.Result);
+                await _sessionStorage.SetItemAsync<string>("userinfo", json);
+               // await _sessionStorage.SaveItemEncryptedAsync("UserSession", Task.FromResult(userSession.Result));
                 
             }
             else
@@ -73,6 +77,24 @@ namespace TutorPins_Client.Authentication
 
             }
             return result;
+        }
+        public async Task<UserSession> GetSessionUser()
+        {
+            var result = string.Empty;
+            try
+            {
+                string json = await _sessionStorage.GetItemAsync<string>("userinfo");                
+               
+                UserSession myCustomObject = JsonConvert.DeserializeObject<UserSession>(json);
+                //var userSession = await _sessionStorage.ReadEncryptedItemAsync<UserSession>("UserSession");
+                if (myCustomObject != null && DateTime.Now < myCustomObject.ExpiryTimeStamp)
+                    return myCustomObject;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
         }
     }
 }

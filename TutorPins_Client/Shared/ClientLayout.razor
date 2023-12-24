@@ -12,8 +12,8 @@
         </div>*@
         <div class="top-row px-4">
             
-            <a href="/public/studentregister"><i class="fa fa-fw fa-user"></i> Request a Tutor</a>
-            <a href="/public/tutorregister"><i class="fa fa-fw fa-user"></i> Register as a Tutor</a>
+           @*  <a href="/public/studentregister"><i class="fa fa-fw fa-user"></i> Request a Tutor</a>
+            <a href="/public/tutorregister"><i class="fa fa-fw fa-user"></i> Register as a Tutor</a>*@
             <AuthorizeView>
                 <Authorized>
                     <a @onclick="Logout" href="javascript:void(0)"></a>
@@ -21,7 +21,7 @@
                 <NotAuthorized>
                     <a href="/Login"><i class="e-icons e-people"></i> Login</a>
                 </NotAuthorized>
-            </AuthorizeView>
+            </AuthorizeView> 
             &nbsp;&nbsp;
             @* <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> *@
             @* <a href="/admin"><i class="fa fa-fw fa-user"></i>Admin Login</a> *@
