@@ -23,11 +23,22 @@ namespace BusinessLayer.Repository
         public async Task<CourseDto> CreateCourse(CourseDto courseDto)
         {
             Course course = _mapper.Map<CourseDto,Course>(courseDto);
-            course.CreatedDate = DateTime.Now;
-            course.CreatedBy = "1";
-            var addedCourse = await _db.Courses.AddAsync(course);
-            await _db.SaveChangesAsync();
-            return _mapper.Map<Course, CourseDto>(addedCourse.Entity);
+            if (courseDto.Id > 0)
+            {
+                course.UpdatedDate = DateTime.Now;
+                course.UpdatedBy = "1";
+                var addedCourse = _db.Courses.Update(course);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<Course, CourseDto>(addedCourse.Entity);
+            }
+            else
+            {
+                course.CreatedDate = DateTime.Now;
+                course.CreatedBy = "1";
+                var addedCourse = await _db.Courses.AddAsync(course);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<Course, CourseDto>(addedCourse.Entity);
+            }
         }
 
         public async Task<IEnumerable<CourseDto>> GetAllCourses()
@@ -36,6 +47,10 @@ namespace BusinessLayer.Repository
             {
                 await Task.Delay(1);
                 IEnumerable<CourseDto> courseDtos = _mapper.Map<IEnumerable<Course>, IEnumerable<CourseDto>>(_db.Courses.Include(x=>x.CourseCategory));
+                foreach(CourseDto c in courseDtos)
+                {
+                    c.CourseCategoryName = c.CourseCategory.CategoryName;
+                }
                 return courseDtos;
             }
             catch(Exception ex)
@@ -48,7 +63,7 @@ namespace BusinessLayer.Repository
         {
             try
             {
-                CourseDto courseDto = _mapper.Map<Course, CourseDto>(await _db.Courses.FirstOrDefaultAsync(x=>x.Id==courseId));
+                CourseDto courseDto = _mapper.Map<Course, CourseDto>(await _db.Courses.Include(x => x.CourseCategory).FirstOrDefaultAsync(x=>x.Id==courseId));
                 return courseDto;
             }
             catch(Exception ex)
@@ -100,6 +115,10 @@ namespace BusinessLayer.Repository
             {
                 await Task.Delay(1);
                 IEnumerable<CourseDto> courseDtos = _mapper.Map<IEnumerable<Course>, IEnumerable<CourseDto>>(_db.Courses.Include(x => x.CourseCategory).Where(t => t.CourseCategoryId==categoryId));
+                foreach (CourseDto c in courseDtos)
+                {
+                    c.CourseCategoryName = c.CourseCategory.CategoryName;
+                }
                 return courseDtos;
             }
             catch (Exception ex)

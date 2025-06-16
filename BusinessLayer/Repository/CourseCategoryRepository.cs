@@ -24,12 +24,26 @@ namespace BusinessLayer.Repository
         }
         public async Task<CourseCategoryDto> CreateCourseCategory(CourseCategoryDto courseCategoryDto)
         {
+            
             CourseCategory courseCategory = _mapper.Map<CourseCategoryDto, CourseCategory>(courseCategoryDto);
-            courseCategory.CreatedDate = DateTime.Now;
-            courseCategory.CreatedBy = "1";
-            var addedCourseCategory = await _db.CourseCategories.AddAsync(courseCategory);
-            await _db.SaveChangesAsync();
-            return _mapper.Map<CourseCategory, CourseCategoryDto>(addedCourseCategory.Entity);
+            
+            if (courseCategoryDto.Id > 0)
+            {
+                courseCategory.UpdatedDate = DateTime.Now;
+                courseCategory.UpdatedBy = "1";
+                var addedCourseCategory =  _db.CourseCategories.Update(courseCategory);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<CourseCategory, CourseCategoryDto>(addedCourseCategory.Entity);
+            }
+            else
+            {
+                courseCategory.CreatedDate = DateTime.Now;
+                courseCategory.CreatedBy = "1";
+                var addedCourseCategory = await _db.CourseCategories.AddAsync(courseCategory);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<CourseCategory, CourseCategoryDto>(addedCourseCategory.Entity);
+            }
+           
         }
 
         public async Task<IEnumerable<CourseCategoryDto>> GetAllCourseCategories()

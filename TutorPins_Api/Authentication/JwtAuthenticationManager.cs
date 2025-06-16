@@ -54,7 +54,8 @@ namespace TutorPins_Api.Authentication
                 UserName = username,
                 Role = userAccount.RoleId,
                 Token = token,
-                ExpiresIn = (int)tokenExpiryTimeStamp.Subtract(DateTime.Now).TotalSeconds
+                ExpiresIn = (int)tokenExpiryTimeStamp.Subtract(DateTime.Now).TotalSeconds,
+                HasChangedDefaultPwd = userAccount.HasChangedDefaultPwd
             };
             return userSession;
         }

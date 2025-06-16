@@ -3,47 +3,37 @@
 @inject ICourseCategoryService courseCategoryService
 
 
-<div class="row mt-4">
+<div class="row mt-3">
     <div class="col-8">
         <h4 class="card-title text-info">
              Categories
         </h4>
-    </div>
-    <div class="col-3 offset-1">
-        <NavLink href="coursecategory/create" class="btn btn-info form-control">
-            Add New 
-        </NavLink>
-    </div>
+    </div>   
 </div>
 <div class="row mt-4">
     <div class="col-12">
-        <SfGrid DataSource="@CourseCategories" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+        
+
+        <SfGrid ID="gridTutors" @ref="courseCategoryGrid" DataSource="@CourseCategories" AllowPaging="true" AllowSorting="true" AllowFiltering="true" Toolbar="@(new List<string>{"Add","Cancel"})">
+            <GridEditSettings AllowAdding="true" AllowEditing="true" Mode="EditMode.Dialog"></GridEditSettings>
+            <GridEvents OnActionBegin="ActionBeginHandler" CommandClicked="OnCommandClicked" TValue="CourseCategoryDto"> </GridEvents>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
             <GridPageSettings PageSize="20"></GridPageSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(CourseCategoryDto.CategoryName) HeaderText="Category"  Width="160"></GridColumn>
-                <GridColumn Field=@nameof(CourseCategoryDto.IsActive) HeaderText="Status" FilterSettings="@(new FilterSettings { Type = Syncfusion.Blazor.Grids.FilterType.CheckBox })" Width="50">
-                    <Template>
-                        @{
-                            var cc = (context as CourseCategoryDto);
-                            if (cc.IsActive == true)
-                            {
-                                <div class="statustemp e-activecolor">
-                                    <span class="statustxt e-activecolor">Active</span>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="statustemp e-inactivecolor">
-                                    <span class="statustxt e-inactivecolor">InActive</span>
-                                </div>
-                            }
-                        }
-                    </Template>
+                <GridColumn AllowAdding="false" IsPrimaryKey="true" Visible="false" Field=@nameof(CourseCategoryDto.Id) HeaderText="Id" Width="10px"></GridColumn>
+                <GridColumn Field=@nameof(CourseCategoryDto.CategoryName) HeaderText="Category" Width="160"></GridColumn>              
+                
+                
+                <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="150">
+                    <GridCommandColumns>
+                        <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat"})" Title="View"></GridCommandColumn>
+
+                    </GridCommandColumns>
                 </GridColumn>
-                <GridColumn Field=@nameof(CourseCategoryDto.CreatedDate) HeaderText=" Created Date" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right" Width="80"></GridColumn>
+                
             </GridColumns>
-            </SfGrid>
+        </SfGrid>
+        
         <SfSpinner  @ref="@SpinnerObj"></SfSpinner>
     </div>
     
@@ -52,6 +42,8 @@
 
 @code {
     private IEnumerable<CourseCategoryDto> CourseCategories { get; set; } = new List<CourseCategoryDto>();
+    protected SfGrid<CourseCategoryDto> courseCategoryGrid { get; set; }
+    
     SfSpinner SpinnerObj;
     protected override async Task OnInitializedAsync()
     {
@@ -78,5 +70,25 @@
         {
             await SpinnerObj.ShowAsync();
         }
+    }
+    public async void ActionBeginHandler(ActionEventArgs<CourseCategoryDto> Args)
+    {
+        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (Args.Action == "Add" || Args.Action == "Edit")
+            {
+                var newUser = await courseCategoryService.CreateCourseCategory(Args.Data); //await Task.Delay(1);
+                if (newUser != null)
+                {
+                    CourseCategories.Append(newUser);
+                    //await LoadUsers();
+                    //await userGrid.Refresh();
+                }
+            }
+        }
+    }
+    public void OnCommandClicked(CommandClickEventArgs<CourseCategoryDto> Args)
+    {
+
     }
 }

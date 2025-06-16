@@ -19,6 +19,7 @@ namespace Models
         public string ParentName { get; set; }
         public string ParentRelation { get; set; }
         public string ParentEmail { get; set; }
+        [RequiredIf("ParentName","Parent Phone no is required")]
         public string ParentPhoneNo { get; set; }
         public string AdminRemarks { get; set; }
         public string StudentStatus { get; set; }
@@ -44,6 +45,7 @@ namespace Models
         public int? ApproxBudget { get; set; }
         public string OtherLocation { get; set; }
         public string LocationDetails { get; set; }
+        [Required(ErrorMessage = "Subject details is required")]
         public string SubjectDetails { get; set; }
         public string MatchStatus { get; set; }
         public virtual ICollection<StudentSubjectDto> StudentSubjects { get; set; }

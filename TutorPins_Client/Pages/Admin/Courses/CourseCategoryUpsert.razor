@@ -1,4 +1,4 @@
-﻿@page "/coursecategory/create"
+﻿@page "/coursecategory/create/{id}"
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @inject ICourseCategoryService courseCategoryService
@@ -27,12 +27,22 @@
 
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
     private CourseCategoryDto CourseCategoryModel { get; set; } = new CourseCategoryDto();
     private string Title { get; set; } = "Create";
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        if(!string.IsNullOrEmpty(Id))
+        {
+            CourseCategoryModel = await courseCategoryService.GetCourseCategory(Convert.ToInt32(Id));
+        }
+    }
     protected async Task Save()
     {
         var response = await courseCategoryService.CreateCourseCategory(CourseCategoryModel);
-        if(response)
+        if(response !=null)
         {
             NavigationManager.NavigateTo("coursecategories");
         }

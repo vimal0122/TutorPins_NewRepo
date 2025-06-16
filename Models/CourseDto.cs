@@ -12,6 +12,7 @@ namespace Models
         public int Id { get; set; }
         [Required(ErrorMessage ="Course name is mandatory.")]
         public string CourseName { get; set; }
+        public string CourseCategoryName { get; set; }
         public int CourseCategoryId { get; set; }
         public bool IsActive { get; set; }
         public CourseCategoryDto CourseCategory { get; set; }

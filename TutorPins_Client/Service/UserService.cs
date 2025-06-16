@@ -12,6 +12,17 @@ namespace TutorPins_Client.Service
             _client = client;
         }
 
+        public async Task<UserDetailDto> ChangePassword(ChangePwdRequest changePwdRequest)
+        {
+            var dataString = JsonConvert.SerializeObject(changePwdRequest);
+            var content = new StringContent(dataString);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync($"api/user/ChangePassword", content);
+            var content1 = await response.Content.ReadAsStringAsync();
+            var userData = JsonConvert.DeserializeObject<UserDetailDto>(content1);
+            return userData;
+        }
+
         public async Task<UserDetailDto> CreateUser(UserDetailDto userDetailDto)
         {
             userDetailDto.CreatedDate = DateTime.Now;

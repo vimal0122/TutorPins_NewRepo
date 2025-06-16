@@ -16,14 +16,21 @@ namespace TutorPins_Client.Service
         }
         public async Task<bool> CreateStudent(StudentDto studentDto)
         {
-            var dataString = JsonConvert.SerializeObject(studentDto);
-            var content = new StringContent(dataString);
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = await _client.PostAsync($"api/student/AddStudent", content);           
-
-            if (response.StatusCode == HttpStatusCode.BadRequest )
+            try
             {
-                return false;
+                var dataString = JsonConvert.SerializeObject(studentDto);
+                var content = new StringContent(dataString);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var response = await _client.PostAsync($"api/student/AddStudent", content);
+                
+                if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
                 return true;
         }

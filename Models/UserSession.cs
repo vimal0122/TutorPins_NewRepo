@@ -15,5 +15,6 @@ namespace Models
         public string Role { get; set; }
         public int ExpiresIn { get;set; }
         public DateTime ExpiryTimeStamp { get; set;}
+        public bool? HasChangedDefaultPwd { get; set; }
     }
 }

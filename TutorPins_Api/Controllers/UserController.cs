@@ -6,8 +6,9 @@ using Models;
 
 namespace TutorPins_Api.Controllers
 {
-    [Route("api/[controller]")]
+    
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -33,6 +34,12 @@ namespace TutorPins_Api.Controllers
         public async Task<UserDetailDto> AddUser([FromBody] UserDetailDto userDetailDto)
         {
             return await _userRepository.CreateUser(userDetailDto);
+        }
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<UserDetailDto> ChangePassword([FromBody] ChangePwdRequest changePwdRequest)
+        {
+            return await _userRepository.ChangePassword(changePwdRequest);
         }
     }
 }

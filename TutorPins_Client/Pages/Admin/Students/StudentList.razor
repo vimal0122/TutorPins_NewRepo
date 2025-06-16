@@ -60,6 +60,17 @@
                         </GridCommandColumn>
                     </GridCommandColumns>
                 </GridColumn> *@
+                <GridColumn HeaderText="" Width="70">
+                    <Template>
+                        @{
+                            var s = (context as StudentDto);
+                            <div>
+                                <a href="/students/create/@s.Id">Edit</a>
+                            </div>
+
+                        }
+                    </Template>
+                </GridColumn>
             </GridColumns>
         </SfGrid>
         <SfSpinner @ref="@SpinnerObj"></SfSpinner>
@@ -157,13 +168,25 @@
     </DialogTemplates>
     <DialogPositionData X="@Xvalue" Y="@Yvalue"></DialogPositionData>
 </SfDialog>
+<SfDialog @ref="TutorRequestDialog" Width="580px" Visible="false" ShowCloseIcon="true" IsModal="true">
+    <DialogEvents Closed="TutorReqClosed"></DialogEvents>
+    <DialogTemplates>
+        @*Here you can customize the Header and Content of delete confirmation dialog*@
+        <Header> Tutor Request</Header>
+        <Content>
+            <TutorPins_Client.Pages.Public.RegisterStudent></TutorPins_Client.Pages.Public.RegisterStudent>
+        </Content>
+    </DialogTemplates>
+
+</SfDialog>
 @code {
     private IEnumerable<StudentDto> Students { get; set; } = new List<StudentDto>();
     public StudentDto RowDetails { get; set; }
     public bool IsVisible { get; set; } = false;
     private string Xvalue = "center";
     private string Yvalue = "center";
-
+    protected SfDialog TutorRequestDialog;
+    public bool StudentRegisterInfoDialogflag = true;
     SfSpinner SpinnerObj;
     SfGrid<StudentDto> Grid;
     protected override async Task OnInitializedAsync()
@@ -194,5 +217,17 @@
          RowDetails.LocationDetails = RowDetails.StudentLocations.Select(t => t.Location.LocationName).ToArray().Aggregate("", // start with empty string to handle empty list case.
          (current, next) => current + ", " + next);
         IsVisible = true;
+    }
+    protected async Task ShowTutorReqForm()
+    {
+        if (StudentRegisterInfoDialogflag)
+        {
+            await TutorRequestDialog.ShowAsync();
+            StudentRegisterInfoDialogflag = false;
+        }
+    }
+    public void TutorReqClosed()
+    {
+        StudentRegisterInfoDialogflag = true;
     }
 }

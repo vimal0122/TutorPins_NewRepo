@@ -1,75 +1,145 @@
 ﻿@page "/coursesubjectlist"
 @inject IJSRuntime JSRuntime
 @inject ICourseSubjectService courseSubjectService
+@inject ICourseCategoryService courseCategoryService
+@inject ICourseService courseService
+
 <div class="row mt-4">
     <div class="col-8">
         <h4 class="card-title text-info">
             Subjects
         </h4>
     </div>
-    <div class="col-3 offset-1">
+    @* <div class="col-3 offset-1">
         <NavLink href="subjects/create" class="btn btn-info form-control">
             Add New
         </NavLink>
-    </div>
+    </div> *@
 </div>
 <div class="row mt-4">
     <div class="col-12">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Level</th>
-                    <th>Subject</th>
-                    <th>Active</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (CourseSubjects.Any())
-                {
-                    foreach (var c in CourseSubjects)
-                    {
-                        <tr>
-                            <td>
-                                @c.Course.CourseCategory.CategoryName
-                            </td>
-                            <td>
-                                @c.Course.CourseName
-                            </td>
-                            <td>
-                                @c.SubjectName
-                            </td>
-                            <td>
-                                @if (c.IsActive)
-                                {
-                                    <span>Yes</span>
-                                }
-                                else
-                                {
-                                    <span>Yes</span>
-                                }
+        
+        <SfGrid ID="gridTutors" @ref="courseSubjectGrid" DataSource="@CourseSubjects" AllowPaging="true" AllowSorting="true" AllowFiltering="true" Toolbar="@(new List<string>{"Add","Cancel"})">
+            @* <GridEvents OnBeginEdit="BeginEditHandler" TValue="CourseSubjectDto"></GridEvents> *@
+            <GridEvents OnActionBegin="ActionBeginHandler" CommandClicked="OnCommandClicked" TValue="CourseSubjectDto"> </GridEvents>
+            
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSize="20"></GridPageSettings>
+            <GridEditSettings AllowAdding="true" AllowEditing="true" Mode="EditMode.Dialog"></GridEditSettings>
+            <GridColumns>
+                <GridColumn AllowAdding="false" IsPrimaryKey="true" Visible="false" Field=@nameof(CourseSubjectDto.Id) HeaderText="Id" Width="10px"></GridColumn>
+                <GridColumn Field=@nameof(CourseSubjectDto.CategoryName) HeaderText="Category" Width="100">
+                    <EditTemplate>
+                        <SfDropDownList ID="Code" TValue="string" TItem="TempCourseCategory" Placeholder="Select Category" FloatLabelType="@FloatLabelType.Always" @bind-Value="@((context as CourseSubjectDto).CourseCategoryId)" DataSource="@tempCourseCategoryList">
+                            <DropDownListEvents TItem="TempCourseCategory" TValue="string" ValueChange="OnCourseCategoryChange" />
+                            <DropDownListFieldSettings Text="Name" Value="Code"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </EditTemplate>
+                </GridColumn>
+                
+                <GridColumn Field=@nameof(CourseSubjectDto.CourseLevelName)  HeaderText="Level" Width="90">
+                    <EditTemplate>
+                        
+                        <SfDropDownList ID="Id" TValue="int" TItem="CourseDto" Placeholder="Select Level" FloatLabelType="@FloatLabelType.Always" @bind-Value="@((context as CourseSubjectDto).CourseId)" DataSource="@courseList">
+                            <DropDownListFieldSettings Text="CourseName" Value="Id"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn Field=@nameof(CourseSubjectDto.SubjectName) HeaderText="Subject" Width="90"></GridColumn>
+                <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="150">
+                    <GridCommandColumns>
+                        <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat"})" Title="View"></GridCommandColumn>
 
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-success">Edit</a>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+                    </GridCommandColumns>
+                </GridColumn>
+
+            </GridColumns>
+            
+            
+        </SfGrid>
+        <SfSpinner @ref="@SpinnerObj"></SfSpinner>
     </div>
 </div>
 @code {
     private IEnumerable<CourseSubjectDto> CourseSubjects { get; set; } = new List<CourseSubjectDto>();
+    protected SfGrid<CourseSubjectDto> courseSubjectGrid { get; set; }
+    List<CourseCategoryDto> courseCategoryList = new List<CourseCategoryDto>();
+    List<CourseDto> AllcourseList = new List<CourseDto>();
+    List<CourseDto> courseList = new List<CourseDto>();
+    SfSpinner SpinnerObj;
+    public bool Enabled = false;
+    public class TempCourseCategory
+    {
+        public string Name { get; set; }
+
+        public string Code { get; set; }
+    }
+    public List<TempCourseCategory> tempCourseCategoryList = new List<TempCourseCategory>();
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(5000);
-        await LoadCourseSubjects();        
+        await Task.Delay(50);
+        IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+        courseCategoryList = courseCategories.ToList();
+        foreach(CourseCategoryDto cc in courseCategoryList)
+        {
+            tempCourseCategoryList.Add(new TempCourseCategory { Name = cc.CategoryName, Code = cc.Id.ToString() });
+        }
+        await LoadCourseSubjects();  
+        await SpinnerObj.HideAsync();
+        IEnumerable<CourseDto> courses = await courseService.GetCourses();//.GetCoursesByCategory(courseCategoryId.ToString());
+        courseList = courses.ToList();
+        AllcourseList = courseList;
     }
     private async Task LoadCourseSubjects()
     {
         CourseSubjects = await courseSubjectService.GetCourseSubjects();
+    }
+    public async void OnCourseCategoryChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TempCourseCategory> args)
+    {
+        //courseList.Clear();
+
+        var courseCategoryId = args.ItemData.Code;
+        // IEnumerable<CourseDto> courses = await courseService.GetCoursesByCategory(courseCategoryId.ToString());
+        // courseList = courses.ToList();
+        var x = AllcourseList.Where(t => t.CourseCategoryId.ToString() == courseCategoryId).ToList();
+        courseList = x.ToList();
+        Enabled = true;
+        //this.StateHasChanged();
+        await Task.Delay(1);
+        courseSubjectGrid.PreventRender(false);
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SpinnerObj.ShowAsync();
+        }
+    }
+    public async void ActionBeginHandler(ActionEventArgs<CourseSubjectDto> Args)
+    {
+        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (Args.Action == "Add" || Args.Action == "Edit")
+            {
+                var newData = await courseSubjectService.CreateCourseSubject(Args.Data); 
+                if (newData != null)
+                {
+                    CourseSubjects.Append(newData);
+                    //await LoadUsers();
+                    //await userGrid.Refresh();
+                }
+            }
+        }
+    }
+    public void OnCommandClicked(CommandClickEventArgs<CourseSubjectDto> Args)
+    {
+
+    }
+    public void BeginEditHandler(BeginEditArgs<CourseSubjectDto> args)
+    {
+        //courseSubjectGrid.PreventRender(false);
+         // IEnumerable<CourseDto> courses = await courseService.GetCoursesByCategory(args.RowData.CourseCategoryId.ToString());
+         //  courseList = courses.ToList();
+        courseList = AllcourseList.Where(t => t.CourseCategoryId.ToString() == args.RowData.CourseCategoryId).ToList();
     }
 }

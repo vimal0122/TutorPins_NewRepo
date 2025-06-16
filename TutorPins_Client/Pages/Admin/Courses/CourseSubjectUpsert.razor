@@ -70,7 +70,7 @@
     protected async Task Save()
     {
         var response = await courseSubjectService.CreateCourseSubject(CourseSubjectModel);
-        if (response)
+        if (response != null)
         {
             NavigationManager.NavigateTo("coursesubjectlist");
         }

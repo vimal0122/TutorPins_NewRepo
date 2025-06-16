@@ -12,13 +12,16 @@ namespace TutorPins_Client.Service
         {
             _client = client;
         }
-        public async Task<bool> CreateCourseSubject(CourseSubjectDto courseSubjectDto)
+        public async Task<CourseSubjectDto> CreateCourseSubject(CourseSubjectDto courseSubjectDto)
         {
             var dataString = JsonConvert.SerializeObject(courseSubjectDto);
             var content = new StringContent(dataString);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var response = await _client.PostAsync($"api/coursesubject/AddCourseSubject", content);
-            return true;
+            var content1 = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<CourseSubjectDto>(content1);
+            return data;
+            
         }
 
         public async Task<IEnumerable<CourseSubjectDto>> GetCourseSubjects()

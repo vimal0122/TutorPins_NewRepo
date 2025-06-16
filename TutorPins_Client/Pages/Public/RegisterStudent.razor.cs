@@ -14,6 +14,8 @@ namespace TutorPins_Client.Pages.Public
 {
     public class RegisterStudentBase : ComponentBase
     {
+        [Parameter]
+        public string Id { get; set; }
         [Inject]
         HttpClient Http { get; set; }
         [Inject]
@@ -62,28 +64,31 @@ namespace TutorPins_Client.Pages.Public
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-			editContext = new EditContext(StudentModel);
-			IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
+            editContext = new EditContext(StudentModel);
+            IEnumerable<CourseCategoryDto> courseCategories = await courseCategoryService.GetCourseCategories();
             CourseCategoryList = courseCategories.ToList();
-
             this.StateHasChanged();
-
             IEnumerable<LocationDto> locations = await courseCategoryService.GetAllLocations();
             locationList = locations.ToList();
 
             Genders = genericSerice.GetGenders();
             Race = genericSerice.GetRaces();
-            
+
             TutorMode = genericSerice.GetTutorModes();
+            
         }
         protected async Task Save()
         {
             SaveLocationData();
+            var subjectCount = StoreSubjectDetails.Count();
             StudentModel.StudentSubjects = StoreSubjectDetails;
             StudentModel.StudentLocations = StoreLocationDetails;
             StudentModel.EarliestStartDate = DOSValue;
             StudentModel.OtherLocation = StudentOtherLocations;
-            StudentModel.MatchStatus = string.Format("{0}/{1}", 0, StoreSubjectDetails.Count());
+            StudentModel.MatchStatus = string.Format("{0}/{1}", 0, subjectCount);
+            
+                StudentModel.SubjectDetails = subjectCount > 0? subjectCount.ToString():null;
+            
             var response = await studentService.CreateStudent(StudentModel);
             if (response)
             {

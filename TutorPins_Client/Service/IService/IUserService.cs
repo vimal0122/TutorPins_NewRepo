@@ -8,5 +8,7 @@ namespace TutorPins_Client.Service.IService
         public Task<IEnumerable<UserDetailDto>> GetUsers();
         public Task<UserDetailDto> CreateUser(UserDetailDto userDetailDto);
         public Task<UserDetailDto> UpdateUser(int userId, UserDetailDto userDetailDto);
+        public Task<UserDetailDto> ChangePassword(ChangePwdRequest changePwdRequest);
+
     }
 }

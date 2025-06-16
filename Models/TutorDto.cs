@@ -19,10 +19,14 @@ namespace Models
         public string TutorEmail { get; set; }
         [Required(ErrorMessage = "Tutor phone no is required")]
         public string TutorPhoneNo { get; set; }
+        [Required(ErrorMessage = "Gender not selected")]
         public string TutorGender { get; set; }
         public DateTime? TutorDOB { get; set; }
+        [Required(ErrorMessage = "Race not selected")]
         public string TutorRace { get; set; }
+        [Required(ErrorMessage = "Tutor category not selected")]
         public string TutorCategory { get; set; }
+        [Required(ErrorMessage = "Tutor rate is required")]
         public string TutorRate { get; set; }        
         public string TutorMode { get; set; }
         public string TutorAcademicResults { get; set; }
@@ -33,7 +37,9 @@ namespace Models
         public string AdminRemarks { get; set; }
         public string TutorStatus { get; set; }        
         public string LocationDetails { get; set; }
+        [Required(ErrorMessage = "Subject is required")]
         public string SubjectDetails { get; set; }
+        [Required(ErrorMessage = "Qualification is required")]
         public string QualificationDetails { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

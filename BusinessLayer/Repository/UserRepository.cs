@@ -22,18 +22,55 @@ namespace BusinessLayer.Repository
             _mapper = mapper;
         }
 
+        public async Task<UserDetailDto> ChangePassword(ChangePwdRequest changePwdRequest)
+        {
+           if(changePwdRequest.UserId > 0)
+            {
+
+                try
+                {
+                    var userDetailDto = this.GetUserById(changePwdRequest.UserId);
+                    UserDetail userDetail = _mapper.Map<UserDetailDto, UserDetail>(userDetailDto);
+                    userDetail.PasswordChangeCount = userDetail.PasswordChangeCount + 1;
+                    userDetail.UserPassword = changePwdRequest.NewPwd;
+                    userDetail.HasChangedDefaultPwd = true;
+                    userDetail.UpdatedBy = "1";
+                    userDetail.UpdatedDate = DateTime.Now;
+                    var updatedUser = _db.UserDetails.Update(userDetail);
+                    await _db.SaveChangesAsync();
+                    return _mapper.Map<UserDetail, UserDetailDto>(updatedUser.Entity);
+                }
+                catch(Exception ex)
+                {
+                    var t = 0;
+                }
+            }
+            return null;
+        }
+
         public async Task<UserDetailDto> CreateUser(UserDetailDto userDetailDto)
         {
             UserDetail userDetail = _mapper.Map<UserDetailDto, UserDetail>(userDetailDto);
-            userDetail.CreatedDate = DateTime.Now;
-            userDetail.CreatedBy = "1";
-            userDetail.UpdatedDate=DateTime.Now;
-            userDetail.UpdatedBy = "1";
-            userDetail.UserPassword = "password";
-            userDetail.PasswordChangeCount = 0;
-            var addedUser = await _db.UserDetails.AddAsync(userDetail);
-            await _db.SaveChangesAsync();
-            return _mapper.Map<UserDetail, UserDetailDto>(addedUser.Entity);
+            if (userDetailDto.Id > 0)
+            {
+                userDetail.UpdatedDate = DateTime.Now;
+                userDetail.UpdatedBy = "1";
+                var addedUser =  _db.UserDetails.Update(userDetail);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<UserDetail, UserDetailDto>(addedUser.Entity);
+            }
+            else
+            {
+                userDetail.CreatedDate = DateTime.Now;
+                userDetail.CreatedBy = "1";
+                userDetail.UpdatedDate = DateTime.Now;
+                userDetail.UpdatedBy = "1";
+                userDetail.UserPassword = "password";
+                userDetail.PasswordChangeCount = 0;
+                var addedUser = await _db.UserDetails.AddAsync(userDetail);
+                await _db.SaveChangesAsync();
+                return _mapper.Map<UserDetail, UserDetailDto>(addedUser.Entity);
+            }
         }
 
         public UserDetailDto GetUser(string username, string pwd)
@@ -54,6 +91,19 @@ namespace BusinessLayer.Repository
             try
             {
                 UserDetailDto userDetailDto = _mapper.Map<UserDetail, UserDetailDto>( _db.UserDetails.FirstOrDefault(x => x.EmailId.Equals(email)));
+                return userDetailDto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public UserDetailDto GetUserById(long userId)
+        {
+            try
+            {
+                UserDetailDto userDetailDto = _mapper.Map<UserDetail, UserDetailDto>(_db.UserDetails.AsNoTracking().FirstOrDefault(x => x.Id.Equals(userId)));
                 return userDetailDto;
             }
             catch (Exception ex)

@@ -4,6 +4,8 @@ using Models;
 using Syncfusion.Blazor.Layouts;
 using Syncfusion.Blazor;
 using TutorPins_Client.Service.IService;
+using TutorPins_Client.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace TutorPins_Client.Pages.Dashboard
 {
@@ -19,7 +21,8 @@ namespace TutorPins_Client.Pages.Dashboard
         IJSRuntime JSRuntime { get; set; }
         [Inject]
         IDashboardService dashboardService { get; set; }
-
+        [Inject] 
+        AuthenticationStateProvider authStateProvider { get; set; }
         protected SfDashboardLayout dashboardObject;
         protected Theme Theme { get; set; }
         protected double[] Spacing = new double[] { 15, 15 };
@@ -60,6 +63,13 @@ namespace TutorPins_Client.Pages.Dashboard
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+
+            var sessionUser = await customAuthStateProvider.GetSessionUser();
+            if(sessionUser == null)
+            {
+                NavigationManager.NavigateTo("/loginuser", true);
+            }
             dashboadCount = await dashboardService.GetDashboadCounts();
         }
     }

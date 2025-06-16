@@ -12,13 +12,16 @@ namespace TutorPins_Client.Service
             _client = client;
         }
 
-        public async Task<bool> CreateCourseCategory(CourseCategoryDto courseCategoryDto)
+        public async Task<CourseCategoryDto> CreateCourseCategory(CourseCategoryDto courseCategoryDto)
         {
             var dataString = JsonConvert.SerializeObject(courseCategoryDto);    
             var content = new StringContent(dataString);
             content.Headers.ContentType= new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var response = await _client.PostAsync($"api/coursecategory/AddCourseCategory", content);
-            return true;
+            var content1 = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<CourseCategoryDto>(content1);
+            return data;
+           
         }
 
         public async Task<IEnumerable<CourseCategoryDto>?> GetCourseCategories()
@@ -29,9 +32,12 @@ namespace TutorPins_Client.Service
             return data;
         }
 
-        public Task<CourseCategoryDto> GetCourseCategory(int courseCategoryId)
+        public async Task<CourseCategoryDto> GetCourseCategory(int courseCategoryId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"api/coursecategory/"+courseCategoryId.ToString());
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<CourseCategoryDto>(content);
+            return data;
         }
 
         public Task<CourseCategoryDto> UpdateCourseCategory(int courseCategoryId, CourseCategoryDto courseCategoryDto)

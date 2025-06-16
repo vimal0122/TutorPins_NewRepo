@@ -1,4 +1,4 @@
-﻿@page "/public/studentregister"
+﻿@page "/public/studentregister/{id}"
 @inherits RegisterStudentBase
 <link href="https://cdn.syncfusion.com/blazor/22.2.10/styles/bootstrap4.css" rel="stylesheet" />
 @* <div class="row mt-2 mb-1">
@@ -61,6 +61,7 @@
 
             <div class="form-group mt-1 col-xs-6 col-sm-6 col-lg-6 col-md-6">
                 <SfTextBox Placeholder="Parent/Guardian Contact No" CssClass="e-corner e-input-group" @bind-Value="@StudentModel.ParentPhoneNo" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                    <ValidationMessage For="() => StudentModel.ParentPhoneNo" />
             </div>
         </div>
         <div class="row">

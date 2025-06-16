@@ -39,7 +39,19 @@
                 <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="150">
                     <GridCommandColumns>
                         <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss="e-icons e-edit", CssClass="e-flat"})" Title="View"></GridCommandColumn>
+                       
                     </GridCommandColumns>
+                </GridColumn>
+                <GridColumn HeaderText="" TextAlign="TextAlign.Center" Width="150">
+                    <Template>
+                        @{
+                            var s = (context as UserDetailDto);
+                            <div>
+                                <a href="/students/studentsubjects/@s.Id">Reset Password</a>
+                            </div>
+                        }
+                    </Template>
+                    
                 </GridColumn>
             </GridColumns>
         </SfGrid>

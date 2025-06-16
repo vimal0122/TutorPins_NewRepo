@@ -25,11 +25,22 @@ namespace BusinessLayer.Repository
             try
             {
                 CourseSubject courseSubject = _mapper.Map<CourseSubjectDto, CourseSubject>(courseSubjectDto);
-                courseSubject.CreatedDate = DateTime.Now;
-                courseSubject.CreatedBy = "1";
-                var addedCourseSubject = await _db.CourseSubjects.AddAsync(courseSubject);
-                await _db.SaveChangesAsync();
-                return _mapper.Map<CourseSubject, CourseSubjectDto>(addedCourseSubject.Entity);
+                if (courseSubjectDto.Id > 0)
+                {
+                    courseSubject.UpdatedDate = DateTime.Now;
+                    courseSubject.UpdatedBy = "1";
+                    var addedCourseSubject =  _db.CourseSubjects.Update(courseSubject);
+                    await _db.SaveChangesAsync();
+                    return _mapper.Map<CourseSubject, CourseSubjectDto>(addedCourseSubject.Entity);
+                }
+                else
+                {
+                    courseSubject.CreatedDate = DateTime.Now;
+                    courseSubject.CreatedBy = "1";
+                    var addedCourseSubject = await _db.CourseSubjects.AddAsync(courseSubject);
+                    await _db.SaveChangesAsync();
+                    return _mapper.Map<CourseSubject, CourseSubjectDto>(addedCourseSubject.Entity);
+                }
             }
             catch(Exception ex) 
             {
@@ -47,6 +58,9 @@ namespace BusinessLayer.Repository
                 IEnumerable<CourseSubjectDto> courseSubjectDtos = _mapper.Map<IEnumerable<CourseSubject>, IEnumerable<CourseSubjectDto>>(_db.CourseSubjects.Include(x=>x.Course).ThenInclude(t=>t.CourseCategory));
                 foreach (var courseSubject in courseSubjectDtos)
                 {
+                    courseSubject.CategoryName = courseSubject.Course.CourseCategory.CategoryName;
+                    courseSubject.CourseLevelName= courseSubject.Course.CourseName;
+                    courseSubject.CourseCategoryId = courseSubject.Course.CourseCategoryId.ToString();
                     courseSubject.LevelName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName;
                     courseSubject.SubjectFullName = courseSubject.Course.CourseCategory.CategoryName + " - " + courseSubject.Course.CourseName + " - " + courseSubject.SubjectName;
                 } 

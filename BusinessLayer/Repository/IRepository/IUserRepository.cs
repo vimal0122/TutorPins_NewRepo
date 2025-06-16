@@ -10,9 +10,11 @@ namespace BusinessLayer.Repository.IRepository
     public interface IUserRepository
     {
         public UserDetailDto GetUserByEmail(string email);
+        public UserDetailDto GetUserById(Int64 userId);
         public UserDetailDto GetUser(string username,string pwd);
         public Task<IEnumerable<UserDetailDto>> GetUsers();
         public Task<UserDetailDto> CreateUser(UserDetailDto userDetailDto);
         public Task<UserDetailDto> UpdateUser(int userId, UserDetailDto userDetailDto);
+        public Task<UserDetailDto> ChangePassword(ChangePwdRequest changePwdRequest);
     }
 }

@@ -197,12 +197,17 @@ namespace TutorPins_Client.Pages.Public
             //SaveSubjectData();
             SaveLocationData();
             SaveQualificationData();
+            var subjectCount = StoreSubjectDetails.Count();
+            var QualCount = StoreQualificationDetails.Count();
             TutorModel.TutorSubjects = StoreSubjectDetails;
             TutorModel.TutorLocations = StoreLocationDetails;
             TutorModel.TutorQualifications = StoreQualificationDetails;
             TutorModel.OtherLocation = TutorOtherLocations;
             TutorModel.TutorDOB = DOBValue;
             TutorModel.TutorStatus = TutorModel.TutorStatus==null? "Registered" : TutorModel.TutorStatus;
+            TutorModel.SubjectDetails = subjectCount > 0 ? subjectCount.ToString() : null;
+            TutorModel.QualificationDetails = QualCount > 0 ? QualCount.ToString() : null;
+            TutorModel.TutorRate = subjectCount > 0 ? subjectCount.ToString() : null;
             //TutorModel.TutorName = string.Format("{0} {1}", TutorModel.FirstName, TutorModel.LastName);
             var response = await tutorService.CreateTutor(TutorModel);
             if (response)

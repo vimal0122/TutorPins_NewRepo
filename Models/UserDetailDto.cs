@@ -19,5 +19,7 @@ namespace Models
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string UserStatus { get; set; }
+        public bool? HasChangedDefaultPwd { get; set; }
+        public DateTime? NextPwdChangeDate { get; set; }
     }
 }
